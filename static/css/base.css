@@ -1,0 +1,17 @@
+h1 {
+    color: red;
+}
+
+h2 {
+    color: blue;
+}
+
+/* .item {
+    border: black 1px solid;
+} */
+
+.item img {
+    max-width: 70%;
+    margin: auto;
+    display: block;
+}
