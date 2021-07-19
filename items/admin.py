@@ -28,13 +28,51 @@ class AuthorAdmin(admin.ModelAdmin):
     ordering = ('surname',)
 
 
+# class AuthorInline(admin.TabularInline):
+#     model = Item.author.through
+#     extra = 1
+
+
 class ItemAdmin(admin.ModelAdmin):
 
+    def author_display(self, obj):
+        author_list = []
+
+        for author in obj.author.all():
+            author_list.append(author)
+        
+        return author_list
+
+    author_display.short_description = 'author/s'
+
+    def genre_display(self, obj):
+        genre_list = []
+
+        for genre in obj.genre.all():
+            genre_list.append(genre)
+        
+        return genre_list
+
+    genre_display.short_description = 'genre/s'
+
+    def age_range_display(self, obj):
+        age_range_list = []
+
+        for age_range in obj.age_range.all():
+            age_range_list.append(age_range)
+        
+        return age_range_list
+
+    age_range_display.short_description = 'age_range/s'
+        
     list_display = (
         'sku',
         'title',
         'image',
         'description',
+        'author_display',
+        'genre_display',
+        'age_range_display',
     )
 
     ordering = ('title',)
