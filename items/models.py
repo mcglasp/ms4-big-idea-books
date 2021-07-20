@@ -39,7 +39,9 @@ class Item(models.Model):
     age_range = models.ManyToManyField(
         'Age_range')
     image = models.ImageField(null=True, blank=True)
-    image_url = models.URLField(max_length=1024, null=True, blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    discount = models.BooleanField(default=False, null=True, blank=True)
+    discounted_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.title

@@ -8,16 +8,18 @@
         <div class="col-4 item">
             <div class="card">
                 <div class="card-body">
-                    <p><strong>{{ item.title }}</strong></p>
+                    <a href="{% url 'item_detail' item.id %}">
+                        <p><strong>{{ item.title }}</strong></p>
+                    </a>
                     {% for author in item.author.all %}
                     <p><em>{{ author }}</em></p>
                     {% endfor %}
                     {% for age in item.age_range.all %}
                     <p><em>{{ age }}</em></p>
                     {% endfor %}
-
+                    <p>{{ item.price }}</p>
                     <p class="text-truncate">{{ item.description }}</p>
-                    <img src="/media/{{ item.image }}">
+                    <a href="{% url 'item_detail' item.id %}"><img src="/media/{{ item.image }}"></a>
                 </div>
                 <div class="card-footer">
                     {% for genre in item.genre.all %}
@@ -31,5 +33,6 @@
     </div>
 </div>
 
+</script>
 
 {% endblock %}

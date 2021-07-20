@@ -73,6 +73,9 @@ class ItemAdmin(admin.ModelAdmin):
         'author_display',
         'genre_display',
         'age_range_display',
+        'price',
+        'discount',
+        'discounted_price'
     )
 
     ordering = ('title',)

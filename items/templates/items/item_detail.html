@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <a href="/media/{{ item.image }}" target="_blank">
+                <img class="card-img-top img-fluid" src="/media/{{ item.image }}" alt="{{ item.name }}">
+            </a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-8">
+            <p>{{ item.title }}</p>
+                {% for author in item.author.all %}
+                    <p>{{ author }}</p>
+                {% endfor %}
+                {% for age_range in item.age_range.all %}
+                    <p>{{ age_range }}</p>
+                {% endfor %}
+            <p>{{ item.description }}</p>
+                {% if item.discount is True %}
+                    <p>Was <strike>£{{ item.price }}</strike></p>
+                    <p>Currently on sale for £{{ item.discounted_price }}</p>
+                {% else %}
+                    <p>£{{ item.price }}</p>
+                {% endif %}
+        </div>
+    </div>
+    <div class="row">
+    <h4>Items related to your search...</h4>
+    </div>
+    <div class="row">
+        {% for related in related_items %}
+        <div class="col-sm-12 col-md-2">
+            <img src="/media/{{ related.image }}" alt="" width="100px">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+{% endblock %}
