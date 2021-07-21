@@ -31,7 +31,9 @@ class Author(models.Model):
 
 
 class Item(models.Model):
-    sku = models.CharField(max_length=254, null=True, blank=True, default=create_new_sku)
+    sku = models.CharField(
+        max_length=254, null=True, blank=True, 
+        default=create_new_sku)
     title = models.CharField(max_length=254)
     genre = models.ManyToManyField('Genre')
     author = models.ManyToManyField('Author')
@@ -41,7 +43,10 @@ class Item(models.Model):
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     discount = models.BooleanField(default=False, null=True, blank=True)
-    discounted_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    discounted_price = models.DecimalField(
+        max_digits=6, decimal_places=2, default=0.00)
+    quantity_sold = models.DecimalField(
+        max_digits=6, decimal_places=0, default=0)
 
     def __str__(self):
         return self.title

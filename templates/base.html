@@ -49,7 +49,7 @@
 
 <body>
   <header>
-    <h1 id=logo-header>All-abouts books</h1>
+    <h1 id=logo-header>Booksabout</h1>
     <h3>curated non-fiction for kids</h3>
   </header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -74,6 +74,15 @@
           <li class="nav-item">
             <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genre=history">History</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=preschool">Little learners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7,6-8">Little Readers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=8-10,teen">Big readers</a>
+          </li>
         </ul>
         <form class="d-flex" id="search-field">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -82,6 +91,7 @@
       </div>
     </div>
   </nav>
+  
 
 
 

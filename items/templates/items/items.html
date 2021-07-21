@@ -4,6 +4,25 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+        <!-- <select class="sort-select" aria-label="">
+            <option selected>sort by</option>
+            <option value="price_high_low">Price: high-low</option>
+            <option value="price_low_high">Price: low-high</option>
+            <option value="name_az">Name (A-Z)</option>
+          </select> -->
+    </div>
+</div>
+<div class="row">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }},{% endfor %}&genre=animals">Animals</a>
+        </li>
+
+      </ul>
+</div>
+    <div class="row">
         {% for item in items %}
         <div class="col-4 item">
             <div class="card">
@@ -36,3 +55,30 @@
 </script>
 
 {% endblock %}
+
+{% block postloadjs %}
+
+<!-- Code below is based on Code Institue Boutique Ado project -->
+
+<!-- $('#sort-select').change(function() {
+    var selector = $(this);
+    var currentUrl = new URL(window.location);
+
+    var selectedVal = selector.val();
+    if(selectedVal != "reset"){
+        var sort = selectedVal.split("_")[0];
+        var direction = selectedVal.split("_")[1];
+
+        currentUrl.searchParams.set("sort", sort);
+        currentUrl.searchParams.set("direction", direction);
+
+        window.location.replace(currentUrl);
+    } else {
+        currentUrl.searchParams.delete("sort");
+        currentUrl.searchParams.delete("direction");
+
+        window.location.replace(currentUrl);
+    }
+})
+
+{% endblock %} -->

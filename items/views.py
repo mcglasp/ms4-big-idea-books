@@ -9,16 +9,31 @@ def all_items(request):
     items = Item.objects.all()
 
     genres = None
+    ages = None
 
     if request.GET:
         if 'genre' in request.GET:
             genres = request.GET['genre'].split(',')
             items = items.filter(genre__name__in=genres)
-            genres = Genre.objects.filter(name__in=genres)
+            # genres = Genre.objects.filter(name__in=genres)
+        
+        if 'ages' in request.GET:
+            ages = request.GET['ages'].split(',')
+            items = items.filter(age_range__age_range__in=ages)
+            # ages = Age_range.objects.filter(age_range__in=ages)
+
+        if 'ages' in request.GET and 'genre' in request.GET:
+            genres = request.GET['genre'].split(',')
+            ages = request.GET['ages'].split(',')
+            items = items.filter(age_range__age_range__in=ages).filter(genre__name__in=genres)
+            # genres = Genre.objects.filter(name__in=genres)
+            # ages = Age_range.objects.filter(age_range__in=ages)
+
 
     context = {
         'items': items,
         'genres': genres,
+        'ages': ages,
     }
 
     return render(request, 'items/items.html', context)
