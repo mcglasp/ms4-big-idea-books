@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from .models import Genre, Item, Author, Age_range
 
@@ -12,6 +13,7 @@ def all_items(request):
     ages = None
     narrow_age = None
     narrow_genre = None
+    user_query = None
 
     if request.GET:
         if 'genres' in request.GET and 'ages' not in request.GET:
@@ -33,7 +35,14 @@ def all_items(request):
         if 'ages_narrow' in request.GET:
             ages = request.GET['ages_narrow'].split(',')
             genres = request.GET['genres'].split(',')
-            items = items.filter(genre__name__in=genres).filter(age_range__age_range__in=ages)
+            items = items.filter(genre__name__in=genres).filter(
+                                age_range__age_range__in=ages)
+
+        if 'q' in request.GET:
+            user_query = request.GET['q']
+            
+            user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query)| Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query)
+            items = items.filter(user_queries).distinct()
 
     context = {
         'items': items,
