@@ -6,7 +6,6 @@ from .models import Genre, Item, Author, Age_range
 
 
 def all_items(request):
-    """ Display the selected genre at the top of the page """
     items = Item.objects.all()
 
     genres = None
