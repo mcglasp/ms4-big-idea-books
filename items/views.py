@@ -10,30 +10,37 @@ def all_items(request):
 
     genres = None
     ages = None
+    narrow_age = None
+    narrow_genre = None
 
     if request.GET:
-        if 'genre' in request.GET:
-            genres = request.GET['genre'].split(',')
+        if 'genres' in request.GET and 'ages' not in request.GET:
+            genres = request.GET['genres'].split(',')
             items = items.filter(genre__name__in=genres)
-            # genres = Genre.objects.filter(name__in=genres)
+            narrow_age = True
         
-        if 'ages' in request.GET:
+        if 'ages' in request.GET and 'genres' not in request.GET:
             ages = request.GET['ages'].split(',')
             items = items.filter(age_range__age_range__in=ages)
-            # ages = Age_range.objects.filter(age_range__in=ages)
+            narrow_genre = True
 
-        if 'ages' in request.GET and 'genre' in request.GET:
-            genres = request.GET['genre'].split(',')
+        if 'genres_narrow' in request.GET:
+            genres = request.GET['genres_narrow'].split(',')
             ages = request.GET['ages'].split(',')
-            items = items.filter(age_range__age_range__in=ages).filter(genre__name__in=genres)
-            # genres = Genre.objects.filter(name__in=genres)
-            # ages = Age_range.objects.filter(age_range__in=ages)
+            items = items.filter(age_range__age_range__in=ages).filter(
+                                 genre__name__in=genres)
 
+        if 'ages_narrow' in request.GET:
+            ages = request.GET['ages_narrow'].split(',')
+            genres = request.GET['genres'].split(',')
+            items = items.filter(genre__name__in=genres).filter(age_range__age_range__in=ages)
 
     context = {
         'items': items,
         'genres': genres,
         'ages': ages,
+        'narrow_age': narrow_age,
+        'narrow_genre': narrow_genre,
     }
 
     return render(request, 'items/items.html', context)

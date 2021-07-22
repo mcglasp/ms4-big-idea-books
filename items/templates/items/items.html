@@ -14,13 +14,24 @@
     </div>
 </div>
 <div class="row">
+    {% if narrow_age is True %}
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }},{% endfor %}&genre=animals">Animals</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres={% for g in genres %}{{ g }},{% endfor %}&ages_narrow=preschool">Little learners</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres={% for g in genres %}{{ g }},{% endfor %}&ages_narrow=5-7,6-8">Little readers</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres={% for g in genres %}{{ g }},{% endfor %}&ages_narrow=8-10,teen">Big readers</a>
         </li>
-
       </ul>
+    {% endif %}
+    {% if narrow_genre is True %}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }},{% endfor %}&genres_narrow=animals">Animals</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }},{% endfor %}&genres_narrow=space">Space</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }},{% endfor %}&genres_narrow=history">History</a>
+        </li>
+      </ul>
+      {% endif %}
 </div>
     <div class="row">
         {% for item in items %}

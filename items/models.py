@@ -51,19 +51,8 @@ class Item(models.Model):
     def __str__(self):
         return self.title
     
-    # CREDIT karthikr Stack Overflow
-    # def get_author(self):
-        
-    #     return "\n".join([a.authors_set for a in self.authors_set.all()])
-        
-       
-
-
-
-    # CREDIT karthikr Stack Overflow
-    # def get_age_range(self):
-    #     return "\n".join([a.age_range for a in self.age_range.all()])
-
+ 
+  
 
 
 
