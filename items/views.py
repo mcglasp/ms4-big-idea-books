@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from .models import Genre, Item, Author, Age_range
+from django.db.models.functions import Lower
+
 
 # Create your views here.
 
@@ -13,6 +15,7 @@ def all_items(request):
     narrow_age = None
     narrow_genre = None
     user_query = None
+    sort_by = None
 
     if request.GET:
         if 'genres' in request.GET and 'ages' not in request.GET:
@@ -43,12 +46,31 @@ def all_items(request):
             user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query)| Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query)
             items = items.filter(user_queries).distinct()
 
+        if 'sort' in request.GET:
+            sort_by = request.GET['sort']
+            if sort_by == 'price_low_high':
+                sort_by = '-price'
+                # items = items.order_by(sort_by)
+
+            if sort_by == 'price_high_low':
+                sort_by = 'price'
+                # items = items.order_by(sort_by)
+
+            if sort_by == 'title_az':
+                items = items.annotate(lower_title=Lower('title'))
+                sort_by = 'lower_title'
+            
+            items = items.order_by(sort_by)
+
+    
+
     context = {
         'items': items,
         'genres': genres,
         'ages': ages,
         'narrow_age': narrow_age,
         'narrow_genre': narrow_genre,
+        'sort_by': sort_by,
     }
 
     return render(request, 'items/items.html', context)

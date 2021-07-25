@@ -28,10 +28,12 @@ class AuthorAdmin(admin.ModelAdmin):
     ordering = ('surname',)
 
 
-class ItemAdmin(admin.ModelAdmin):
+# class AuthorInline(admin.TabularInline):
+#     model = Item.author.through
+#     extra = 1
 
-# CREDIT karthikr of Stack Overflow for guidance towards this solution
-# to including ManyToManyField in list display
+
+class ItemAdmin(admin.ModelAdmin):
 
     def author_display(self, obj):
         author_list = []
@@ -74,7 +76,6 @@ class ItemAdmin(admin.ModelAdmin):
         'price',
         'discount',
         'discounted_price',
-        'quantity_sold',
     )
 
     ordering = ('title',)
