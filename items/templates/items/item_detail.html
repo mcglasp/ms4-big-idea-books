@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load price_tools %}
 
 
 {% block content %}
@@ -19,9 +20,9 @@
             <p>{{ age_range }}</p>
             {% endfor %}
             <p>{{ item.description }}</p>
-            {% if item.discount is True %}
+            {% if item.discount > 0 %}
             <p>Was <strike>£{{ item.price }}</strike></p>
-            <p>Currently on sale for £{{ item.discounted_price }}</p>
+            <p>Currently on sale for £{{ item.price | calc_discount:item.discount }}</p>
             {% else %}
             <p>£{{ item.price }}</p>
             {% endif %}

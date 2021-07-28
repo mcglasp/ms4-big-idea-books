@@ -42,14 +42,22 @@ class Item(models.Model):
         'Age_range')
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    discount = models.BooleanField(default=False, null=True, blank=True)
-    discounted_price = models.DecimalField(
-        max_digits=6, decimal_places=2, default=0.00)
+    discount = models.DecimalField(max_digits=2, decimal_places=0, default=0, null=True, blank=True)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
 
     def __str__(self):
         return self.title
+    
+    def get_discounted_price(self, price, discount):
+        if discount:
+            reduction = self.price * (self.discount/100)
+            discounted_price = self.price - reduction
+
+        return discounted_price
+
+    # discounted_price = models.DecimalField(max_digits=6, decimal_places=2, default=get_discounted_price, null=True, blank=True)
+
     
  
   

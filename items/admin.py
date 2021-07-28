@@ -28,10 +28,6 @@ class AuthorAdmin(admin.ModelAdmin):
     ordering = ('surname',)
 
 
-# class AuthorInline(admin.TabularInline):
-#     model = Item.author.through
-#     extra = 1
-
 
 class ItemAdmin(admin.ModelAdmin):
 
@@ -75,7 +71,6 @@ class ItemAdmin(admin.ModelAdmin):
         'age_range_display',
         'price',
         'discount',
-        'discounted_price',
     )
 
     ordering = ('title',)

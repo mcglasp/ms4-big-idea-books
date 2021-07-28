@@ -21,6 +21,8 @@
             <option href="{% url 'items' %}" value="price_high_low">Price: high-low</option>
             <option href="{% url 'items' %}" value="price_low_high">Price: low-high</option>
             <option href="{% url 'items' %}" value="title_az">Title (A-Z)</option>
+            <option href="{% url 'items' %}" value="most_discounted">Most Discounted</option>
+            <option href="{% url 'items' %}" value="quantity_sold">Most Popular</option>
           </select>
 </div>
 
@@ -28,7 +30,7 @@
 $('#sort-select').change(function() {
   let selector = $(this);
   let currentUrl = new URL(window.location);
-  const queryString = new URLSearchParams(currentUrl.search)
+  let queryString = new URLSearchParams(currentUrl.search)
   let selectedVal = selector.val();
 
   let qtoString = queryString.toString()
@@ -38,7 +40,6 @@ $('#sort-select').change(function() {
   let newString = `?${alteredString}&sort=${selectedVal}`
   let alteredNewString = newString.replace("%3D", "=")
   let string = alteredNewString
-console.log(string)
   document.location = string;
 })
 </script>

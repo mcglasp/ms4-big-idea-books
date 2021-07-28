@@ -1,7 +1,11 @@
-from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
-from .models import Genre, Item, Author, Age_range
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.db.models import F, Q, ExpressionWrapper, DecimalField
 from django.db.models.functions import Lower
+
+from .models import Genre, Item, Author, Age_range
+# from .utils import get_discounted_price
+from .forms import ItemForm
+
 
 
 # Create your views here.
@@ -18,6 +22,27 @@ def all_items(request):
     sort_by = None
 
     if request.GET:
+        if 'sort' in request.GET:
+            sort_by = request.GET['sort']
+            if sort_by == 'price_low_high':
+                sort_by = 'price'
+
+            if sort_by == 'price_high_low':
+                sort_by = '-price'
+
+            if sort_by == 'title_az':
+                items = items.annotate(lower_title=Lower('title'))
+                sort_by = 'lower_title'
+
+            if sort_by == 'most_discounted':
+                items = items.annotate(price_difference=F('price') * F('discount'))
+                sort_by = '-price_difference'
+            
+            if sort_by == 'quantity_sold':
+                sort_by = 'quantity_sold'
+
+            items = items.order_by(sort_by)
+
         if 'genres' in request.GET and 'ages' not in request.GET:
             genres = request.GET['genres'].split(',')
             items = items.filter(genre__name__in=genres)
@@ -43,27 +68,11 @@ def all_items(request):
         if 'q' in request.GET:
             user_query = request.GET['q']
             
-            user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query)| Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query)
+            user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query)
             items = items.filter(user_queries).distinct()
 
-        if 'sort' in request.GET:
-            sort_by = request.GET['sort']
-            if sort_by == 'price_low_high':
-                sort_by = '-price'
-                # items = items.order_by(sort_by)
 
-            if sort_by == 'price_high_low':
-                sort_by = 'price'
-                # items = items.order_by(sort_by)
-
-            if sort_by == 'title_az':
-                items = items.annotate(lower_title=Lower('title'))
-                sort_by = 'lower_title'
-            
-            items = items.order_by(sort_by)
-
-    
-
+        
     context = {
         'items': items,
         'genres': genres,
@@ -89,4 +98,26 @@ def item_detail(request, item_id):
     }
 
     return render(request, 'items/item_detail.html', context)
+
+
+def add_item(request):
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.data['discount']:
+                discount_amount = form.data['discount']
+                discount_amount.float() / 100
+                form.save()
+            print('hoorah!')
     
+    else:
+        form = ItemForm()
+
+            
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'items/add_item.html', context)

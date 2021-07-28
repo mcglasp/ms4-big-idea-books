@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load price_tools %}
 
 {% block content %}
 <div class="container">
@@ -23,7 +24,12 @@
                     {% for age in item.age_range.all %}
                     <p><em>{{ age }}</em></p>
                     {% endfor %}
-                    <p>{{ item.price }}</p>
+                    {% if item.discount > 0 %}
+                    <p><strike>£{{ item.price }}</strike></p>
+                    <p>Sale Price! £{{ item.price | calc_discount:item.discount }}</p>
+                    {% else %}
+                    <p>£{{ item.price }}</p>
+                    {% endif %}
                     <p class="text-truncate">{{ item.description }}</p>
                     <a href="{% url 'item_detail' item.id %}"><img src="/media/{{ item.image }}"></a>
                 </div>
