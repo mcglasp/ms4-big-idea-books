@@ -88,6 +88,9 @@ def item_detail(request, item_id):
     """ View the selected item """
     
     item = get_object_or_404(Item, pk=item_id)
+    for age in item.age_range.all():
+        if age == 'preschool':
+            print('hi', age)
     related_lookup = item.genre.all()[0]
     related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id)
 
@@ -117,6 +120,42 @@ def add_item(request):
     }
 
     return render(request, 'items/add_item.html', context)
+
+
+def update_item(request, item_id):
+
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('item_detail', args=[item.id]))
+        else:
+            messages.error(request, 'Failed to update product. Please check form fields.')
+    else:
+        form = ItemForm(instance=item)
+
+    form = ItemForm(instance=item)
+
+    template = 'items/update_item.html'
+    context = {
+        'form': form,
+        'item': item,
+    }
+
+    return render(request, template, context)
+
+
+def delete_item(request, item_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only superusers can do that.')
+        return redirect(reverse('home'))
+        
+    item = get_object_or_404(Item, pk=item_id)
+    item.delete()
+    messages.success(request, 'Product successfully deleted!')
+
+    return redirect(reverse('items'))
 
 
 def add_author(request):

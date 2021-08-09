@@ -20,13 +20,27 @@
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.id %}">
                         <p><strong>{{ item.title }}</strong></p>
+                        <!-- ADD USER CHECK HERE -->
+                        <a href="{% url 'update_item' item.id %}">Edit</a> | <a href="{% url 'delete_item' item.id %}">Delete</a>
                     </a>
                     {% for author in item.author.all %}
                     <p><em>{{ author }}</em></p>
                     {% endfor %}
+                    <p>
+                        Ages: 
                     {% for age in item.age_range.all %}
-                    <p><em>{{ age }}</em></p>
+                    
+                    {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
+                    {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
+                    {% elif age.age_range == "6-8" %} <span class="badge bg-info">{{ age }}</span>
+                    {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
+                    {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
+                    {% endif %}
+                    
+                    
+                    
                     {% endfor %}
+                </p>
                     {% if item.set_sale_price != 0.00 %}
                     <p><strike>£{{ item.price }}</strike></p>
                     <p>Sale Price! £{{ item.set_sale_price }}</p>
@@ -41,7 +55,8 @@
                 </div>
                 <div class="card-footer">
                     {% for genre in item.genre.all %}
-                    <small class="text-muted">{{ genre }}</small>
+                    <small class="text-muted">{{ genre.screen_name }}</small>
+                    {% if forloop|length > 1 and not forloop.last %} | {% endif %}
                     {% endfor %}
                 </div>
 

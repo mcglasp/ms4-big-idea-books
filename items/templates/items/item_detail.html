@@ -12,12 +12,14 @@
 
         </div>
         <div class="col-sm-12 col-md-6 col-lg-8">
-            <p>{{ item.title }}</p>
+                        <a href="{% url 'update_item' item.id %}">Edit</a> | <a href="{% url 'delete_item' item.id %}">Delete</a>
+                        <p>{{ item.title }}</p>
             {% for author in item.author.all %}
             <p>{{ author }}</p>
             {% endfor %}
             {% for age_range in item.age_range.all %}
             <p>{{ age_range }}</p>
+            {% if age_range == preschool %}hi{% endif %}
             {% endfor %}
             <p>{{ item.description }}</p>
             {% if item.set_sale_price != 0.00 %}
