@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.http import HttpResponse
 from django.db.models import F, Q, ExpressionWrapper, DecimalField
 from django.db.models.functions import Lower
+from django.contrib import messages
 
 from .models import Genre, Item, Author, Age_range
-# from .utils import get_discounted_price
-from .forms import ItemForm
+from .forms import ItemForm, AuthorDataForm
 
 
 
@@ -71,8 +72,6 @@ def all_items(request):
             user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query)
             items = items.filter(user_queries).distinct()
 
-
-        
     context = {
         'items': items,
         'genres': genres,
@@ -109,15 +108,29 @@ def add_item(request):
                 discount_amount = form.data['discount']
                 discount_amount.float() / 100
                 form.save()
-            print('hoorah!')
     
     else:
         form = ItemForm()
-
-            
 
     context = {
         'form': form,
     }
 
     return render(request, 'items/add_item.html', context)
+
+
+def add_author(request):
+
+    if request.method == 'POST':
+        author_form = AuthorDataForm(request.POST, request.FILES)
+        if author_form.is_valid():
+            author_form.save()
+
+    else:
+        author_form = AuthorDataForm(request.POST, request.FILES)
+
+    context = {
+        'author_form': author_form,
+    }
+
+    return render(request, 'items/add_author.html', context)

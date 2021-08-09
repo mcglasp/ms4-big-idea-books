@@ -11,6 +11,9 @@
 </div>
 {% include 'includes/narrow_search_nav.html' %}
     <div class="row">
+        {% if items.count is 0 %}
+        <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
+        {% else %}
         {% for item in items %}
         <div class="col-4 item">
             <div class="card">
@@ -24,9 +27,12 @@
                     {% for age in item.age_range.all %}
                     <p><em>{{ age }}</em></p>
                     {% endfor %}
-                    {% if item.discount > 0 %}
+                    {% if item.set_sale_price != 0.00 %}
                     <p><strike>£{{ item.price }}</strike></p>
-                    <p>Sale Price! £{{ item.price | calc_discount:item.discount }}</p>
+                    <p>Sale Price! £{{ item.set_sale_price }}</p>
+                    {% elif item.discount > 0 %}
+                    <p><strike>£{{ item.price }}</strike></p>
+                    <p>{{ item.discount }}% off! £{{ item.price | calc_discount:item.discount }}</p>
                     {% else %}
                     <p>£{{ item.price }}</p>
                     {% endif %}
@@ -41,7 +47,9 @@
 
             </div>
         </div>
+   
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 

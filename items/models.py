@@ -28,6 +28,9 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.surname}'
+    
+    def surname_first(self):
+        return f'{self.surname}, {self.first_name}'
 
 
 class Item(models.Model):
@@ -43,26 +46,9 @@ class Item(models.Model):
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     discount = models.DecimalField(max_digits=2, decimal_places=0, default=0, null=True, blank=True)
+    set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00, null=True, blank=True)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
 
     def __str__(self):
         return self.title
-    
-    def get_discounted_price(self, price, discount):
-        if discount:
-            reduction = self.price * (self.discount/100)
-            discounted_price = self.price - reduction
-
-        return discounted_price
-
-    # discounted_price = models.DecimalField(max_digits=6, decimal_places=2, default=get_discounted_price, null=True, blank=True)
-
-    
- 
-  
-
-
-
-
-    

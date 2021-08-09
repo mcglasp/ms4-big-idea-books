@@ -38,6 +38,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
+
+  
   {% endblock %}
 
   {% block extra_js %}
@@ -48,12 +50,15 @@
 </head>
 
 <body>
+  {% block header %}
   <header>
     <h1 id=logo-header>Big Idea Books</h1>
     <h3>curated non-fiction for kids</h3>
   </header>
 
+
   {% include 'includes/nav.html' %}
+  {% endblock %}
   
 
 

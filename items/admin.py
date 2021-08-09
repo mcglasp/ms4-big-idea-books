@@ -71,6 +71,8 @@ class ItemAdmin(admin.ModelAdmin):
         'age_range_display',
         'price',
         'discount',
+        'set_sale_price',
+        'quantity_sold',
     )
 
     ordering = ('title',)
