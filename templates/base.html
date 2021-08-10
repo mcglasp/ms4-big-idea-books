@@ -54,6 +54,20 @@
   <header>
     <h1 id=logo-header>Big Idea Books</h1>
     <h3>curated non-fiction for kids</h3>
+<p>Welcome back, {{ user }}</p>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'profile' %}">My account</a>
+    <a href="{% url 'account_logout' %}">Log out</a>
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'add_item' %}">Add items</a>
+    {% endif %}
+    {% else %}
+
+    <a href="{% url 'account_login' %}">Log in</a>
+    <a href="{% url 'account_signup' %}">Register</a>
+
+{% endif %}
   </header>
 
 
@@ -64,7 +78,9 @@
 
 
   {% if messages %}
-  <!-- MESSAGE DIV HERE -->
+  {% for message in messages %}
+  {{ message }}
+  {% endfor %}
   {% endif %}
 
   {% block subhead %}

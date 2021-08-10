@@ -107,9 +107,11 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            if form.data['discount']:
+            if form.data['discount'] is not '0':
                 discount_amount = form.data['discount']
-                discount_amount.float() / 100
+                float(discount_amount) / 100
+                form.save()
+            else:
                 form.save()
     
     else:
@@ -129,6 +131,8 @@ def update_item(request, item_id):
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Failed to update product. Please check form fields.')
+
             return redirect(reverse('item_detail', args=[item.id]))
         else:
             messages.error(request, 'Failed to update product. Please check form fields.')
