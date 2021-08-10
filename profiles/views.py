@@ -11,16 +11,17 @@ def profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=profile)
-        if form.is_valid():
-            form.save()
+        info_form = UserProfileForm(request.POST, instance=profile)
+        if info_form.is_valid():
+            info_form.save()
 
     else:
-        form = UserProfileForm(instance=profile)
+        info_form = UserProfileForm(instance=profile)
 
     template = 'profiles/profile.html'
+
     context = {
-        'form': form,
+        'info_form': info_form,
     }
 
     return render(request, template, context)
