@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'home',
     'items',
     'profiles',
+    'basket',
     'crispy_forms',
 ]
 
@@ -77,6 +78,9 @@ TEMPLATES = [
                 'django.template.context_processors.request', # allauth requirement
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'basket.contexts.basket_contents',
+                'basket.contexts.basket_contents',
+
             ],
                 'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',

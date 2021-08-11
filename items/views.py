@@ -88,9 +88,6 @@ def item_detail(request, item_id):
     """ View the selected item """
     
     item = get_object_or_404(Item, pk=item_id)
-    for age in item.age_range.all():
-        if age == 'preschool':
-            print('hi', age)
     related_lookup = item.genre.all()[0]
     related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id)
 
