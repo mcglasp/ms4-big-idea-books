@@ -35,7 +35,7 @@ class Author(models.Model):
 
 class Item(models.Model):
     sku = models.CharField(
-        max_length=254, null=True, blank=True, 
+        max_length=10, null=True, blank=True, 
         default=create_new_sku)
     title = models.CharField(max_length=254)
     genre = models.ManyToManyField('Genre')

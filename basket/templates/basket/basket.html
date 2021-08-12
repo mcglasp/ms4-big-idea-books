@@ -3,7 +3,7 @@
 {% block content %}
 {% if basket_items|length > 0 %}
 {% for item in basket_items %}
-<p>{{ item.item.title }}: {{ item.price }} by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}, quantity: {{ item.quantity }}</p>
+<p><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</a>: {{ item.price }} by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}, quantity: {{ item.quantity }}</p>
 <a href="{% url 'remove_from_basket' item.item.id %}">Delete</a>
 <form action="{% url 'update_quantity' item.item.id %}" method="POST">
     {% csrf_token %}

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'items',
     'profiles',
     'basket',
+    'checkout',
     'crispy_forms',
 ]
 
@@ -109,6 +110,7 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+STANDARD_DELIVERY_COST = 2.99
 
 WSGI_APPLICATION = 'ms4.wsgi.application'
 

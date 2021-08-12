@@ -54,8 +54,10 @@
   <header>
     <h1 id=logo-header>Big Idea Books</h1>
     <h3>curated non-fiction for kids</h3>
-<p>Welcome back, {{ user }}</p>
+
     {% if request.user.is_authenticated %}
+    <div class="container">
+    <p>Welcome back, {{ user }}</p>
     <a href="{% url 'profile' %}">My account</a>
     <a href="{% url 'account_logout' %}">Log out</a>
 
@@ -66,8 +68,9 @@
 
     <a href="{% url 'account_login' %}">Log in</a>
     <a href="{% url 'account_signup' %}">Register</a>
-
 {% endif %}
+<a href="{% url 'view_basket' %}">View basket</a>
+</div>
   </header>
 
 
