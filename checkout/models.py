@@ -14,19 +14,20 @@ class Order(models.Model):
         max_length=15, null=True, blank=True, 
         default=create_order_number) 
     customer_name = models.CharField(max_length=60, null=False, blank=False)
+    email_address = models.EmailField(max_length=254, null=False, blank=False, default='not_given')
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     street_address1 = models.CharField(max_length=80, null=True, blank=True)
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     order_date = models.DateTimeField(auto_now_add=True)
-    delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=0)
+    delivery_cost = models.DecimalField(max_digits=3, decimal_places=2, null=False, default=settings.STANDARD_DELIVERY_COST, editable=False)
     basket_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
 
     def calculate_total(self):
 
-        self.basket_total = self.lineitems.aggregate(Sum('line_total'))['line_total__sum']
+        self.basket_total = float(self.lineitems.aggregate(Sum('line_total'))['line_total__sum'])
         self.grand_total = self.basket_total + settings.STANDARD_DELIVERY_COST
         self.save()
 
@@ -48,4 +49,4 @@ class LineItem(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.product.sku} on order {self.order.order_number}'
+        return f'{self.item.sku} on order {self.related_order.order_number}'

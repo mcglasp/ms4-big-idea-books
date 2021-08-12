@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'checkout' %}" method="POST" id="payment-form">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    <fieldset class="px-3">
+        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+        <!-- A Stripe card element will go here -->
+        <div class="mb-3" id="card-element"></div>
+    
+        <!-- Used to display form errors -->
+        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+    </fieldset>
+    <button id="submit-button" type="submit">create order</button>
+</form>
+
+{% if basket_items|length > 0 %}
+{% for item in basket_items %}
+<p><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</a>: {{ item.price }} by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}, quantity: {{ item.quantity }}</p>
+{% endfor %}
+{% else %}
+<p>There are no items in your basket.</p>
+{% endif %}
+{% endblock %}
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}

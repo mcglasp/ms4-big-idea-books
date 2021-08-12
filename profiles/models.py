@@ -12,6 +12,8 @@ class UserProfile(models.Model):
     default_street_address2 = models.CharField(max_length=80, null=True, blank=True)
     default_town_or_city = models.CharField(max_length=40, null=True, blank=True)
     default_postcode = models.CharField(max_length=20, null=True, blank=True)
+    default_email_address = models.EmailField(max_length=254, null=False, blank=False, default='not_given')
+
 
     def __str__(self):
         return self.user.username
