@@ -156,3 +156,13 @@ h3 {
     bottom: 185px;
     left: 130px;
 } */
+
+.home-card {
+  height: 250px;
+  width: 250px;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 480px)  {
+  
+}

@@ -1,8 +1,34 @@
 {% extends "base.html" %}
 {% load static %}
-{% block subhead %}
-<h2>And hello from me</h2>
-{% endblock %}
 {% block content %}
-<p>Hello again</p>
+<div class="container">
+    <div class="row" id="category">
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">dinos</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">space</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">history</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">tech</div>
+        </div>
+    </div>
+    <div class="row" id="age">
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">preschool</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">5-7</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">8-10</div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card home-card">teen</div>
+        </div>
+    </div>
+</div>
 {% endblock %}
