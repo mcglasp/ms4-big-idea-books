@@ -1,5 +1,7 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
+    /* background: url('/media/space.jpeg') no-repeat center center/cover; */
+
 }
 
 /* Header - logo and subhead */
@@ -7,16 +9,19 @@ body {
 header {
     text-align: center;
     padding: 30px;
-    background: transparent;
+    /* background: transparent; */
+    /* background: black; */
 }
 
 h3 {
     font-weight: 300;
+
 }
 
 #logo-header {
     font-family: 'Henny Penny', cursive;
     font-size: 5rem;
+
 }
 
 /* Nav bar */
@@ -161,8 +166,21 @@ h3 {
   height: 250px;
   width: 250px;
   margin-top: 20px;
+  /* background-image: url("/media/test_bg_1.jpg"); */
+  background-size: 100% auto;
+  background-position: center 100%;
+  background-repeat: no-repeat;
 }
 
-@media screen and (min-width: 480px)  {
-  
+@media screen and (max-width: 480px)  {
+  .home-card {
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 1200px)  {
+  .home-card {
+
+    width: 100%;
+  }
 }

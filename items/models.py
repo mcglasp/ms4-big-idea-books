@@ -5,14 +5,10 @@ from .utils import create_new_sku
 # Create your models here.
 
 class Genre(models.Model):
-    name = models.CharField(max_length=254)
-    screen_name = models.CharField(max_length=254, null=True, blank=True)
-
+    name = models.CharField(max_length=50)
+    
     def __str__(self):
         return self.name
-    
-    def get_screen_name(self):
-        return self.screen_name
     
 
 class Age_range(models.Model):
@@ -45,8 +41,8 @@ class Item(models.Model):
         'Age_range')
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    discount = models.DecimalField(max_digits=2, decimal_places=0, default=0, null=True, blank=True)
-    set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00, null=True, blank=True)
+    discount = models.DecimalField(max_digits=2, decimal_places=0, default=0)
+    set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
 

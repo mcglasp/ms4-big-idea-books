@@ -6,11 +6,8 @@ from .models import Genre, Author, Age_range, Item
 
 class GenreAdmin(admin.ModelAdmin):
     list_display = (
-        'screen_name',
         'name',
     )
-
-    ordering = ('screen_name',)
 
 
 class AgeRangeAdmin(admin.ModelAdmin):
@@ -26,7 +23,6 @@ class AuthorAdmin(admin.ModelAdmin):
     )
 
     ordering = ('surname',)
-
 
 
 class ItemAdmin(admin.ModelAdmin):
@@ -59,7 +55,7 @@ class ItemAdmin(admin.ModelAdmin):
         
         return age_range_list
 
-    age_range_display.short_description = 'age_range/s'
+    age_range_display.short_description = 'age range/s'
         
     list_display = (
         'sku',
