@@ -7,74 +7,93 @@
     <div class="row">
         <div class="col-12 d-flex justify-content-end">
 
+        </div>
     </div>
-</div>
-{% include 'includes/narrow_search_nav.html' %}
+    {% include 'includes/narrow_search_nav.html' %}
     <div class="row">
         {% if items.count is 0 %}
         <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
         {% else %}
         {% for item in items %}
-        <div class="col-4 item">
-            <div class="card">
-                <div class="card-body">
-                    <a href="{% url 'item_detail' item.id %}">
-                        <p><strong>{{ item.title }}</strong></p>
-                        <!-- ADD USER CHECK HERE -->
-                        <a href="{% url 'update_item' item.id %}">Edit</a> | <a href="{% url 'delete_item' item.id %}">Delete</a>
-                    </a>
-                    {% for author in item.author.all %}
-                    <p><em>{{ author }}</em></p>
-                    {% endfor %}
-                    <p>
-                        Ages: 
-                    {% for age in item.age_range.all %}
-                    
-                    {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
-                    {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
-                    {% elif age.age_range == "6-8" %} <span class="badge bg-info">{{ age }}</span>
-                    {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
-                    {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
+        <div class="col-3 item">
+            <div class="item-card card">
+                {% if request.user.is_superuser %}
+                <div class="user-controls card-footer">
+                    <small class="text-muted"> <a class="" href="{% url 'update_item' item.id %}">Edit</a>
+                        | <a class="user-controls" href="{% url 'delete_item' item.id %}">Delete</a>
+                    </small>
+                    </div>
                     {% endif %}
-                    
-                    
-                    
-                    {% endfor %}
-                </p>
-                    {% if item.set_sale_price != 0.00 %}
-                    <p><strike>£{{ item.price }}</strike></p>
-                    <p>Sale Price! £{{ item.set_sale_price }}</p>
-                    {% elif item.discount > 0 %}
-                    <p><strike>£{{ item.price }}</strike></p>
-                    <p>{{ item.discount }}% off! £{{ item.price | calc_discount:item.discount }}</p>
-                    {% else %}
-                    <p>£{{ item.price }}</p>
-                    {% endif %}
-                    <p class="text-truncate">{{ item.description }}</p>
-                    <a href="{% url 'item_detail' item.id %}"><img src="/media/{{ item.image }}"></a>
-                </div>
-                <div class="card-footer">
-                    {% for genre in item.genre.all %}
-                    <small class="text-muted">{{ genre.screen_name }}</small>
-                    {% if forloop|length > 1 and not forloop.last %} | {% endif %}
-                    {% endfor %}
-                </div>
+                    <img src="/media/{{ item.image }}" class="card-img-top zig-zag" alt="...">
+                    <div class="card-body">
+                        <a href="{% url 'item_detail' item.id %}">
+                            <p><strong class="item-card-title">{{ item.title }}</strong>
+                                {% for author in item.author.all %}
+                                {% if forloop.first %}
+                                by
+                                {% endif %}
+                                <span class="item-card-author">{{ author }}
+                                    {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
+                                    {% endif %}{% endif %}
+                                </span>
+                                {% endfor %}</p>
+                            <!-- ADD USER CHECK HERE -->
+                        </a>
 
+
+                        <p>
+                            Ages:
+                            {% for age in item.age_range.all %}
+                            {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
+                            {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
+                            {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
+                            {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </p>
+                        <div class="mt-3 price-add-col">
+                            <div class="">
+                                {% if item.set_sale_price != 0.00 %}
+                                <p class="item-card-price"><strike>£{{ item.price }}</strike></p>
+                                <p class="item-card-price sale">Sale Price! £{{ item.set_sale_price }}</p>
+                                {% elif item.discount != 0 %}
+                                <p class="item-card-price sale"><strike>£{{ item.price }}</strike></p>
+                                <p class="item-card-price sale">{{ item.discount }}% off!
+                                    £{{ item.price | calc_discount:item.discount }}</p>
+                                {% else %}
+                                <p class="item-card-price">£{{ item.price }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                <form class="items-add-form" action="{% url 'add_to_basket' item.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <span><input class="qty_input w-50" type="number" name="quantity" value="1" min="1"
+                                            max="99" data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
+                                        <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-cart-plus"></i></button></span>
+                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                            </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        {% for genre in item.genre.all %}
+                        <small class="text-muted">{{ genre.name }}</small>
+                        {% if forloop|length > 1 and not forloop.last %} | {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
+            {% endfor %}
+            {% endif %}
         </div>
-   
-        {% endfor %}
-        {% endif %}
     </div>
 </div>
-
 </script>
 
 {% endblock %}
 
 {% block postloadjs %}
-
-<!-- Code below is based on Code Institue Boutique Ado project -->
 
 
 

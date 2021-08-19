@@ -1,0 +1,32 @@
+<div class="navbar navbar-light bg-light">
+{% include 'includes/search_bar.html' %}
+  <div class="btn-group" id="user-admin-box">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fas fa-user-alt"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      {% if request.user.is_authenticated %}
+      <li><a class="dropdown-item" href="{% url 'profile' %}">Account</a></li>
+      <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
+      {% if request.user.is_superuser %}
+      <li>
+        <a class="dropdown-item" href="{% url 'add_item' %}">Add items</a>
+      </li>
+      {% endif %}
+
+      {% else %}
+      <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
+      <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+
+      {% endif %}
+    </ul>
+  <a class="btn btn-primary position-relative" href="{% url 'view_basket' %}">
+    <i class="fas fa-shopping-basket"></i>
+    {% if basket_items %}
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+      {{ total_items }} <span class="visually-hidden">total items in basket</span>
+    </span>
+    {% endif %}
+  </a>
+  </div>
+</div>

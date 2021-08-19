@@ -61,6 +61,7 @@ class ItemAdmin(admin.ModelAdmin):
         'sku',
         'title',
         'image',
+        'image_url',
         'description',
         'author_display',
         'genre_display',

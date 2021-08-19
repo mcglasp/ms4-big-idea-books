@@ -7,6 +7,7 @@ def basket_contents(request):
 
     basket = request.session.get('basket', {})
     basket_items = []
+    total_items = 0
     total = 0
 
     if basket:
@@ -15,6 +16,7 @@ def basket_contents(request):
             if isinstance(value, int):  
                 item = get_object_or_404(Item, pk=item_id)
                 total += value * item.price
+                total_items += value
                 basket_items.append({
                     'item_id': int(item_id),
                     'item': item,
@@ -31,6 +33,7 @@ def basket_contents(request):
 
     context = {
         'basket_items': basket_items,
+        'total_items': total_items,
         'grand_total': grand_total,
 
     }

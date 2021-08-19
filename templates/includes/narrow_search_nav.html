@@ -16,30 +16,4 @@
           <a class="btn btn-outline-primary" aria-labelledby="" href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=history">History</a>
         </div>
       {% endif %}
-                <select id='sort-select' class="form-select form-select-sm" aria-label="">
-            <option selected>sort by</option>
-            <option href="{% url 'items' %}" value="price_high_low">Price: high-low</option>
-            <option href="{% url 'items' %}" value="price_low_high">Price: low-high</option>
-            <option href="{% url 'items' %}" value="title_az">Title (A-Z)</option>
-            <option href="{% url 'items' %}" value="most_discounted">Most Discounted</option>
-            <option href="{% url 'items' %}" value="quantity_sold">Most Popular</option>
-          </select>
 </div>
-
-<script>
-$('#sort-select').change(function() {
-  let selector = $(this);
-  let currentUrl = new URL(window.location);
-  let queryString = new URLSearchParams(currentUrl.search)
-  let selectedVal = selector.val();
-
-  let qtoString = queryString.toString()
-  let alteredString = qtoString.replace("%2C",",")
-
-
-  let newString = `?${alteredString}&sort=${selectedVal}`
-  let alteredNewString = newString.replace("%3D", "=")
-  let string = alteredNewString
-  document.location = string;
-})
-</script>

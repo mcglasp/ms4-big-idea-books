@@ -12,6 +12,7 @@
 <button type="submit">Update quantity</button>
 </form>
 {% endfor %}
+<p><a href="{% url 'checkout' %}">Go to checkout</a></p>
 {% else %}
 <p>There are no items in your basket.</p>
 {% endif %}

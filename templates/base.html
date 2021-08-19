@@ -15,6 +15,7 @@
   {% block core_css %}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,14 +33,11 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
-    <script src="https://js.stripe.com/v3/"></script>
-  
+      <script src="https://js.stripe.com/v3/"></script>
+      <script src="https://kit.fontawesome.com/28c549be5f.js" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
   {% endblock %}
 
   {% block extra_js %}
@@ -51,35 +49,15 @@
 
 <body>
   {% block header %}
+  {% include 'includes/user_account.html' %}
   <header>
-    <h1 id=logo-header>Big Idea Books</h1>
+    <h1 id=logo-header><a href="/">Big Idea Books</a> </h1>
     <h3>curated non-fiction for kids</h3>
-
-    {% if request.user.is_authenticated %}
-    <div class="container">
-    <p>Welcome back, {{ user }}</p>
-    <a href="{% url 'profile' %}">My account</a>
-    <a href="{% url 'account_logout' %}">Log out</a>
-
-    {% if request.user.is_superuser %}
-    <a href="{% url 'add_item' %}">Add items</a>
-    {% endif %}
-    {% else %}
-
-    <a href="{% url 'account_login' %}">Log in</a>
-    <a href="{% url 'account_signup' %}">Register</a>
-{% endif %}
-<a href="{% url 'view_basket' %}">View basket</a>
-</div>
   </header>
-
 
   {% include 'includes/nav.html' %}
   {% endblock %}
   
-
-
-
   {% if messages %}
   {% for message in messages %}
   {{ message }}
@@ -89,8 +67,6 @@
   {% block subhead %}
   {% endblock %}
  
-
-
   {% block content %}
   {% endblock %}
 

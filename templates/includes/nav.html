@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -20,19 +19,28 @@
             <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=history">History</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=preschool">Little learners</a>
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=prehistory">Prehistory</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7,6-8">Little Readers</a>
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=nature">Nature</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=8-10,teen">Big readers</a>
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=science">Science</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=ages">Preschool</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7">5-7</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=8-10">8-10</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen">Teen</a>
           </li>
         </ul>
-        <form class="d-flex" id="search-field">
-          <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
+    {% include 'includes/sort_field.html' %}
   </nav>
