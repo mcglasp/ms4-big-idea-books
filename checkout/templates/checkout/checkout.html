@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
     {% csrf_token %}
     {{ order_form.as_p }}
@@ -22,6 +23,7 @@
 {% endfor %}
 {% else %}
 <p>There are no items in your basket.</p>
+</div>
 {% endif %}
 {% endblock %}
 {% block postloadjs %}

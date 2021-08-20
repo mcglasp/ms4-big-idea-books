@@ -204,6 +204,36 @@ margin-top: auto;
   opacity: 0.7;
 }
 
+.line-item {
+  border-top:rgb(39, 37, 37) solid 1px;
+ 
+}
+
+.line-detail {
+  max-width: 400px;
+  word-wrap: break-word;
+
+}
+
+.line-item-img {
+  height: 100px;
+  padding: 20px!important;
+}
+
+table form {
+  display: inline;
+}
+
+.quantity-input.form-control {
+  width: 20%;
+  display: inline;
+}
+
+table form button.btn.btn-outline-secondary {
+  display: inline;
+  width: 30%;
+}
+
 /* The Modal (background) */
 .modal {
   display: none;

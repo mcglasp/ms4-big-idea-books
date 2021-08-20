@@ -1,20 +1,44 @@
 {% extends "base.html" %}
+{% load basket_tools %}
 
 {% block content %}
+<div class="container">
+    <div id="delivery">Standard UK delivery: £{{ delivery_cost }}</div>
+    <div id="grand_total">£{{ grand_total }}</div>
 {% if basket_items|length > 0 %}
-{% for item in basket_items %}
-<p><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</a>: {{ item.price }} by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}, quantity: {{ item.quantity }}</p>
-<a href="{% url 'remove_from_basket' item.item.id %}">Delete</a>
-<form action="{% url 'update_quantity' item.item.id %}" method="POST">
-    {% csrf_token %}
-    <input class="" type="number"
-    name="quantity" value="{{ item.quantity }}">
-<button type="submit">Update quantity</button>
-</form>
-{% endfor %}
+
+<table>
+    <tr>
+    <th>Item</th>
+    <th>Details</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+    <th>Update item/s</th>
+</tr>
+    {% for item in basket_items %}
+    <tr class="line-item">
+        <td><img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></td>
+        <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}</a></td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>£{{ item.price | line_total:item.quantity }}</td>
+        <td>
+            <form action="{% url 'update_quantity' item.item.id %}" method="POST">
+                {% csrf_token %}
+                <input class="quantity-input form-control" type="number"
+                name="quantity" value="{{ item.quantity }}">
+            <button class="btn" type="submit"><i class="fas fa-sync"></i></button>
+            </form>
+            <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
 <p><a href="{% url 'checkout' %}">Go to checkout</a></p>
 {% else %}
 <p>There are no items in your basket.</p>
 {% endif %}
-
+</div>
 {% endblock %}

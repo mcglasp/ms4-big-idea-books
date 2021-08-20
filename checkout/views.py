@@ -83,9 +83,6 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        print(intent)       
-        print(total)
-
         order_form = OrderForm()
 
     template = 'checkout/checkout.html'

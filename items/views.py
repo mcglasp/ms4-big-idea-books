@@ -104,12 +104,12 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            if form.data['discount'] is not '0':
-                discount_amount = form.data['discount']
-                float(discount_amount) / 100
-                form.save()
-            else:
-                form.save()
+            # if form.data['discount'] is not '0':
+            #     discount_amount = form.data['discount']
+            #     float(discount_amount) / 100
+            #     form.save()
+            # else:
+            form.save()
     
     else:
         form = ItemForm()

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 
 from items.models import Item
+from checkout.models import LineItem
 # Create your views here.
 
 
