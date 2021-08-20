@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.views.decorators.http import require_POST
 from django.conf import settings
 
 from .forms import OrderForm
@@ -14,21 +15,40 @@ import json
 # Create your views here.
 
 
+@require_POST
+def cache_checkout_data(request):
+    print('hello cache')
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'basket': json.dumps(request.session.get('basket', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be \
+            processed right now. Please try again later.')
+        return HttpResponse(content=e, status=400)
+
+
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+
     if request.method == "POST":
 
         basket = request.session.get('basket', {})
 
         form_values = {
             'customer_name': request.POST['customer_name'],
-            'email_address': request.POST['email_address'],
             'phone_number': request.POST['phone_number'],
-            'postcode': request.POST['postcode'],
-            'town_or_city': request.POST['town_or_city'],
+            'email_address': request.POST['email_address'],
             'street_address1': request.POST['street_address1'],
             'street_address2': request.POST['street_address2'],
+            'town_or_city': request.POST['town_or_city'],
+            'postcode': request.POST['postcode'],
         }
 
         order_form = OrderForm(form_values)
@@ -66,12 +86,12 @@ def checkout(request):
             profile = UserProfile.objects.get(user=request.user)
             order_form = OrderForm(initial={
                 'customer_name': profile.user,
-                'email_address': profile.default_email_address,
                 'phone_number': profile.default_phone_number,
-                'postcode': profile.default_postcode,
-                'town_or_city': profile.default_town_or_city,
+                'email_address': profile.default_email_address,
                 'street_address1': profile.default_street_address1,
                 'street_address2': profile.default_street_address2,
+                'town_or_city': profile.default_town_or_city,
+                'postcode': profile.default_postcode,
             })
 
         current_basket = basket_contents(request)

@@ -5,9 +5,24 @@
 <div class="container">
 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
     {% csrf_token %}
-    {{ order_form.as_p }}
+    <p>{{ order_form.customer_name }}</p>
+    <p>{{ order_form.phone_number }}</p>
+    <p>{{ order_form.email_address }}</p>
+    <p>{{ order_form.street_address1 }}</p>
+    <p>{{ order_form.street_address2 }}</p>
+    <p>{{ order_form.town_or_city }}</p>
+    <p>{{ order_form.postcode }}</p>
     <fieldset class="px-3">
         <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+        {% if user.is_authenticated %}
+								<label class="form-check-label" for="id-save-info">Save this delivery information to my profile</label>
+                                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info" checked>
+							{% else %}
+								<label class="form-check-label" for="id-save-info">
+                                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 
+                                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                                </label>
+							{% endif %}
         <!-- A Stripe card element will go here -->
         <div class="mb-3" id="card-element"></div>
     

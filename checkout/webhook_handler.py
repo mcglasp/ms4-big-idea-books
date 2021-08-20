@@ -11,16 +11,19 @@ class StripeWH_Handler:
         """
         Handle a generic/unknown/unexpected webhook event
         """
+        print('created')
         return HttpResponse(
-            content=f'Unhandled webhook received: {event["type"]}',
+            content=f'1 Unhandled webhook received: {event["type"]}',
             status=200)
 
     def handle_payment_intent_succeeded(self, event):
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
+        intent = event.data.object
+        print('success!', intent)
         return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
+            content=f'2 Webhook received: {event["type"]}',
             status=200)
 
     def handle_payment_intent_payment_failed(self, event):
@@ -28,5 +31,5 @@ class StripeWH_Handler:
         Handle the payment_intent.payment_failed webhook from Stripe
         """
         return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
+            content=f'3 Webhook received: {event["type"]}',
             status=200)
