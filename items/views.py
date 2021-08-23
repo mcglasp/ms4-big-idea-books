@@ -165,6 +165,7 @@ def add_author(request):
         author_form = AuthorDataForm(request.POST, request.FILES)
         if author_form.is_valid():
             author_form.save()
+            return HttpResponse(status=200)
 
     else:
         author_form = AuthorDataForm(request.POST, request.FILES)

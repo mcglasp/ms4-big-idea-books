@@ -13,7 +13,7 @@
   <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-4">
 
-<form method="POST" action="{% url 'add_author' %}" class="form mb-2" enctype="multipart/form-data">
+<form method="POST" id="author-form" action="{% url 'add_author' %}" class="form mb-2" enctype="multipart/form-data">
     {% csrf_token %}
     
    {% for field in author_form %}
@@ -22,9 +22,11 @@
 
     <div class="text-right">
         <a href="#" onclick="closeWindow()" class="btn btn-outline-black rounded-0">Cancel</a>
-        <button class="btn btn-black rounded 0" type="submit">Add Author</button>
+        <button id="add-new" onclick="closeSubmit()" class="btn btn-black rounded 0" type="submit">Add Author</button>
+
     </div>
 </form>
+<p id="add_another"></p>
 
     {% endblock %}
 
@@ -35,10 +37,9 @@
 {% block postloadjs %}
 <script>
 
-function closeWindow() {
-    window.close();
-  }
+
 </script>
+<script src="{% static 'items/js/add_author.js' %}"></script>
 {% endblock %}
 
 
