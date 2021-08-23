@@ -17,11 +17,14 @@ def profile(request):
 
     else:
         info_form = UserProfileForm(instance=profile)
+    
+    orders = profile.orders.all()
 
     template = 'profiles/profile.html'
 
     context = {
         'info_form': info_form,
+        'orders': orders,
     }
 
     return render(request, template, context)

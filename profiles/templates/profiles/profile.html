@@ -2,12 +2,15 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
+<div class="container">
+    {% for order in orders %}
+    <p>{{ order.order_number }}</p>
+    {% endfor %}
 <form class="" action="{% url 'profile' %}" method="POST">
     {% csrf_token %}
     {{ info_form|crispy }}
     <button class="">Save Information</button>
 </form>
-
+</div>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.conf import settings
 
@@ -70,7 +70,7 @@ def checkout(request):
                 line_item.save()
 
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('items'))
+            return redirect(reverse('order_confirmation', args=[order.order_number]))
 
         else:
             print('There was an error with your form.')
@@ -111,6 +111,27 @@ def checkout(request):
         'total': total,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+    }
+
+    return render(request, template, context)
+
+
+
+def order_confirmation(request, order_number):
+   
+    order = get_object_or_404(Order, order_number=order_number)
+
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+        order.user_profile = profile
+        order.save()
+
+    if 'basket' in request.session:
+        del request.session['basket']
+
+    template = 'checkout/order_confirmation.html'
+    context = {
+        'order': order,
     }
 
     return render(request, template, context)
