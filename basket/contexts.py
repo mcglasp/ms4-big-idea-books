@@ -52,9 +52,10 @@ def basket_contents(request):
     context = {
         'basket_items': basket_items,
         'total_items': total_items,
-        'grand_total': grand_total,
         'price': price,
         'delivery_cost': delivery_cost,
+        'grand_total': grand_total,
+        'basket_total': total,
     }
 
     return context

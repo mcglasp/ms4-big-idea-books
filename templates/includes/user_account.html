@@ -1,10 +1,30 @@
-<div class="navbar navbar-light bg-light">
-{% include 'includes/search_bar.html' %}
-  <div class="btn-group" id="user-admin-box">
+<div class="navbar navbar-light bg-light pt-3">
+  {% include 'includes/search_bar.html' %}
+  <div id="user-admin-box">
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
+    {% if basket_items %}
+    <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+      {{ total_items }}
+    </span>
+    {% endif %}
+    <ul class="dropdown-menu p-4 text-muted dropdown-menu-end">
+      <p class="dropdown-header">Your basket:</p>
+      <div class="dropdown-divider"></div>
+      {% for item in basket_items %}
+      <p class="text-truncate">{{ item.item.title }}</p>
+      {% endfor %}
+      <p>£{{ basket_total }}</p>
+      <li><a class="dropdown-item" href="{% url 'view_basket' %}">View basket</a></li>
+      <li><a class="dropdown-item" href="{% url 'checkout' %}">Go to checkout</a></li>
+    </ul>
+  </div>
+
+<div class="btn-group">
     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="fas fa-user-alt"></i>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
       {% if request.user.is_authenticated %}
       <li><a class="dropdown-item" href="{% url 'profile' %}">Account</a></li>
       <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
@@ -20,13 +40,6 @@
 
       {% endif %}
     </ul>
-  <a class="btn btn-primary position-relative" href="{% url 'view_basket' %}">
-    <i class="fas fa-shopping-basket"></i>
-    {% if basket_items %}
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-      {{ total_items }} <span class="visually-hidden">total items in basket</span>
-    </span>
-    {% endif %}
-  </a>
+  </div>
   </div>
 </div>

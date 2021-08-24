@@ -15,27 +15,34 @@
   {% block core_css %}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    
+
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap"
     rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Manrope:wght@200&family=Milonga&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">  
-    {% endblock %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Manrope:wght@200&family=Milonga&family=Source+Sans+Pro:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  {% endblock %}
 
   {% block extra_css %}
   {% endblock %}
 
   {% block core_js %}
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://kit.fontawesome.com/28c549be5f.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
   </script>
-      <script src="https://js.stripe.com/v3/"></script>
-      <script src="https://kit.fontawesome.com/28c549be5f.js" crossorigin="anonymous"></script>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
   {% endblock %}
 
@@ -52,26 +59,39 @@
   <header>
     <h1 id=logo-header><a href="/">Big Idea Books</a> </h1>
     <h3>curated non-fiction for kids</h3>
+    <div class="btn" id="trigger_success_toast">toast</div>
+   
   </header>
 
-  {% include 'includes/nav.html' %}
-  {% endblock %}
-  
-  {% if messages %}
-  {% for message in messages %}
-  {{ message }}
-  {% endfor %}
-  {% endif %}
 
+  {% include 'includes/nav.html' %}
+  
+
+  {% endblock %}
   {% block subhead %}
   {% endblock %}
- 
+  {% block messages %}
+  {% if messages %}
+  <div class="message-container">
+    {% for message in messages %}
+    {% include 'includes/messages/success_message.html' %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endblock %}
   {% block content %}
   {% endblock %}
 
+
+
   {% block postloadjs %}
+  <script>
+    $(document).ready(function(){
+    $('.toast').toast('show');
+  });
+  </script>
+  
   {% endblock %}
-  <!-- <footer>  <img src="static/css/planet.svg" alt=""></footer> -->
 
 </body>
 

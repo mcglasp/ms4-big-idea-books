@@ -1,6 +1,3 @@
-// Calculate discount on reduced-price books, 
-// for use in sorting on items page.
-
 
 
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.conf import settings
+from django.contrib import messages
 
 from .forms import OrderForm
 from .models import Order, LineItem
@@ -17,7 +18,6 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
-    print('hello cache')
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -28,7 +28,7 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be \
+        messages.error(request, content='Sorry, your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
-
+from django.contrib import messages
 from items.models import Item
 from checkout.models import LineItem
 # Create your views here.
@@ -12,6 +12,7 @@ def view_basket(request):
 
 def add_to_basket(request, item_id):
 
+    item = Item.objects.get(pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
     basket = request.session.get('basket', {})
@@ -20,9 +21,11 @@ def add_to_basket(request, item_id):
         basket[item_id] += quantity
     else:
         basket[item_id] = quantity
+    
+    messages.success(request, f'{item.title} has been added to you basket.')
 
     request.session['basket'] = basket
-    print(basket)
+    
     return redirect(redirect_url)
 
 
@@ -32,10 +35,15 @@ def update_quantity(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     basket = request.session.get('basket', {})
 
+    
+
     if quantity > 0:
         basket[item_id] = quantity
+
     else:
         basket.pop(item_id)
+        messages.success(request, content)
+    messages.success(request, content)
 
     request.session['basket'] = basket
 
