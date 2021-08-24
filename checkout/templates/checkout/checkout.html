@@ -1,49 +1,83 @@
 {% extends "base.html" %}
 {% load static %}
+{% load basket_tools %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container">
-<form action="{% url 'checkout' %}" method="POST" id="payment-form">
-    {% csrf_token %}
-    <p>{{ order_form.customer_name }}</p>
-    <p>{{ order_form.phone_number }}</p>
-    <p>{{ order_form.email_address }}</p>
-    <p>{{ order_form.street_address1 }}</p>
-    <p>{{ order_form.street_address2 }}</p>
-    <p>{{ order_form.town_or_city }}</p>
-    <p>{{ order_form.postcode }}</p>
-    <fieldset class="px-3">
-        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-        {% if user.is_authenticated %}
-								<label class="form-check-label" for="id-save-info">Save this delivery information to my profile</label>
-                                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info" checked>
-							{% else %}
-								<label class="form-check-label" for="id-save-info">
-                                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 
-                                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
-                                </label>
-							{% endif %}
-        <!-- A Stripe card element will go here -->
-        <div class="mb-3" id="card-element"></div>
-    
-        <!-- Used to display form errors -->
-        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-    </fieldset>
-    <button id="submit-button" type="submit">create order</button>
-</form>
+    <div class="row">
+        <div class="col-6">
+            <p>{{ profile.default_phone_number }}</p>
+            <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                {% csrf_token %}
+                <p>{{ order_form.customer_name }}</p>
+                <p>{{ order_form.phone_number }}</p>
+                <p>{{ order_form.email_address }}</p>
+                <p>{{ order_form.street_address1 }}</p>
+                <p>{{ order_form.street_address2 }}</p>
+                <p>{{ order_form.town_or_city }}</p>
+                <p>{{ order_form.postcode }}</p>
+                <fieldset class="px-3">
+                    <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+                    {% if user.is_authenticated %}
+                    <label class="form-check-label" for="id-save-info">Save this delivery information to my
+                        profile</label>
+                    <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info"
+                        checked>
+                    {% else %}
+                    <label class="form-check-label" for="id-save-info">
+                        <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                        <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                    </label>
+                    {% endif %}
+                    <!-- A Stripe card element will go here -->
+                    <div class="mb-3" id="card-element"></div>
 
-{% if basket_items|length > 0 %}
-{% for item in basket_items %}
-<p><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</a>: {{ item.price }} by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}, quantity: {{ item.quantity }}</p>
-{% endfor %}
-{% else %}
-<p>There are no items in your basket.</p>
+                    <!-- Used to display form errors -->
+                    <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                </fieldset>
+                <button id="submit-button" type="submit">create order</button>
+            </form>
+        </div>
+        {% if basket_items|length > 0 %}
+        <div class="col-6">
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+                {% for item in basket_items %}
+                <tr class="line-item">
+                    <td class="line-detail">{{ item.item.title }}
+                    </td>
+                    <td>{{ item.quantity }}</td>
+                    <td>£{{ item.price | line_total:item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>There are no items in your basket.</p>
+        </div>
+        {% endif %}
+    </div>
+    <div id="loading-overlay">
+        <h1 class="text-light logo-font loading-spinner">
+            <span class="icon">
+                <!-- <i class="fas fa-3x fa-atom fa-spin"></i> -->
+                <img src="/media/book_loader.gif" alt="Loading icon">
+            </span>
+        </h1>
+    </div>
 </div>
-{% endif %}
+
 {% endblock %}
 {% block postloadjs %}
-    {{ block.super }}
-    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
-    {{ client_secret|json_script:"id_client_secret" }}
-    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+{{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}

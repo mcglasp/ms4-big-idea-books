@@ -234,6 +234,17 @@ table form button.btn.btn-outline-secondary {
   width: 30%;
 }
 
+#basket-table tr:nth-child(4), #basket-table tr:nth-child(5) {
+  border: 1px grey solid;
+  height: 50px;
+}
+
+#delivery, #grand_total {
+  margin-left: 20px!important;
+  margin-bottom: 0px;
+  float: right;
+}
+
 /* The Modal (background) */
 .modal {
   display: none;
@@ -387,3 +398,4 @@ table form button.btn.btn-outline-secondary {
 select#id_author {
   visibility:visible;
 }
+

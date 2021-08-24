@@ -3,42 +3,48 @@
 
 {% block content %}
 <div class="container">
-    <div id="delivery">Standard UK delivery: £{{ delivery_cost }}</div>
-    <div id="grand_total">£{{ grand_total }}</div>
-{% if basket_items|length > 0 %}
 
-<table>
-    <tr>
-    <th>Item</th>
-    <th>Details</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Subtotal</th>
-    <th>Update item/s</th>
-</tr>
-    {% for item in basket_items %}
-    <tr class="line-item">
-        <td><img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></td>
-        <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}by {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}</a></td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>£{{ item.price | line_total:item.quantity }}</td>
-        <td>
-            <form action="{% url 'update_quantity' item.item.id %}" method="POST">
-                {% csrf_token %}
-                <input class="quantity-input form-control" type="number"
-                name="quantity" value="{{ item.quantity }}">
-            <button class="btn" type="submit"><i class="fas fa-sync"></i></button>
-            </form>
-            <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a></td>
-    </tr>
-    {% endfor %}
-</table>
+    {% if basket_items|length > 0 %}
+
+    <table id="basket-table">
+        <tr>
+            <th>Item</th>
+            <th>Details</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Update item/s</th>
+        </tr>
+        {% for item in basket_items %}
+        <tr class="line-item">
+            <td><img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></td>
+            <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}by
+                    {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and
+                    {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}</a></td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>£{{ item.price | line_total:item.quantity }}</td>
+            <td>
+                <form action="{% url 'update_quantity' item.item.id %}" method="POST">
+                    {% csrf_token %}
+                    <input class="quantity-input form-control" type="number" name="quantity"
+                        value="{{ item.quantity }}">
+                    <button class="btn" type="submit"><i class="fas fa-sync"></i></button>
+                </form>
+                <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+     
+        <th colspan="6"><p id="delivery">Standard UK delivery: £{{ delivery_cost }}</p></tr>
+        <th colspan="6"><p id="grand_total">Total: £{{ grand_total }}</p></tr>
+ 
+    </table>
 
 
-<p><a href="{% url 'checkout' %}">Go to checkout</a></p>
-{% else %}
-<p>There are no items in your basket.</p>
-{% endif %}
+    <p><a href="{% url 'checkout' %}">Go to checkout</a></p>
+    {% else %}
+    <p>There are no items in your basket.</p>
+    {% endif %}
 </div>
 {% endblock %}

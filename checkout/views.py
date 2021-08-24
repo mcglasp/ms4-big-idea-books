@@ -93,6 +93,9 @@ def checkout(request):
                 'town_or_city': profile.default_town_or_city,
                 'postcode': profile.default_postcode,
             })
+        
+        else:
+            order_form = OrderForm()
 
         current_basket = basket_contents(request)
         total = current_basket['grand_total']
@@ -103,10 +106,11 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        order_form = OrderForm()
+
 
     template = 'checkout/checkout.html'
     context = {
+        'profile': profile,
         'order_form': order_form,
         'total': total,
         'stripe_public_key': stripe_public_key,
@@ -114,7 +118,6 @@ def checkout(request):
     }
 
     return render(request, template, context)
-
 
 
 def order_confirmation(request, order_number):
