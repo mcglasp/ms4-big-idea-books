@@ -35,8 +35,6 @@ def update_quantity(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     basket = request.session.get('basket', {})
 
-    
-
     if quantity > 0:
         basket[item_id] = quantity
 

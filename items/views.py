@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
-from django.db.models import F, Q, ExpressionWrapper, DecimalField
+from django.db.models import F, Q
 from django.db.models.functions import Lower
 from django.contrib import messages
 
@@ -78,6 +78,7 @@ def all_items(request):
         'ages': ages,
         'narrow_age': narrow_age,
         'narrow_genre': narrow_genre,
+        'search_term': user_query,
         'sort_by': sort_by,
     }
 
@@ -104,11 +105,6 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            # if form.data['discount'] is not '0':
-            #     discount_amount = form.data['discount']
-            #     float(discount_amount) / 100
-            #     form.save()
-            # else:
             form.save()
     
     else:

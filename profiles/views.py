@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 
 from .models import UserProfile
 from .forms import UserProfileForm
@@ -19,6 +20,12 @@ def profile(request):
         info_form = UserProfileForm(instance=profile)
     
     orders = profile.orders.all()
+
+
+    if 'q' in request.GET:
+        order_query = request.GET['q']
+        order_queries = Q(lineitems__item__title__icontains=order_query)
+        orders = orders.filter(order_queries).distinct()
 
     template = 'profiles/profile.html'
 

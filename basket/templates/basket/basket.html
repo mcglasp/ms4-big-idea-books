@@ -18,7 +18,7 @@
         {% for item in basket_items %}
         <tr class="line-item">
             <td><img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></td>
-            <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}by
+            <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }} by
                     {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and
                     {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}</a></td>
             <td>{{ item.price }}</td>

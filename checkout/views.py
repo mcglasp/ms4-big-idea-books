@@ -106,8 +106,6 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-
-
     template = 'checkout/checkout.html'
     context = {
         'profile': profile,

@@ -43,7 +43,7 @@ def basket_contents(request):
                     'quantity': value,
                 })
         
-        # delivery_cost = settings.STANDARD_DELIVERY_COST
+        total = round(total, 2)
         grand_total = round(delivery_cost + float(total), 2)
     
     else:

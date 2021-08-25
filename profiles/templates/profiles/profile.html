@@ -3,14 +3,46 @@
 {% block content %}
 
 <div class="container">
-    {% for order in orders %}
-    <p>{{ order.order_number }}</p>
-    {% endfor %}
-<form class="" action="{% url 'profile' %}" method="POST">
-    {% csrf_token %}
-    {{ info_form|crispy }}
-    <button class="">Save Information</button>
-</form>
+    <div class="row">
+        <div class="col-6">
+            <a href="{% url 'account_change_password' %}">change password</a>
+            <div id="search-field">
+                <form class="d-flex" method="GET" action="{% url 'profile' %}">
+                    <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            {% for order in orders %}
+            <table class="table">
+                <thead>
+                    <th scope="col">Order Number:</th>
+                    <th scope="col"> {{ order.order_number }}</th>
+                    <th scope="col">Order Date:</th>
+                    <th scope="col">{{ order.order_date|date:'d-m-Y' }}</th>
+                </thead>
+                {% for o in order.lineitems.all %}
+                <tr>
+                    <td colspan="3">{{ o.item.title }}</td>
+                    <td colspan="2">{{ o.item.price }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="3">Total basket cost:</th>
+                    <th colspan="2">{{ order.basket_total }}</th>
+                </tr>
+            </table>
+            {% endfor %}
+        </div>
+        <div class="col-6">
+            <form class="" action="{% url 'profile' %}" method="POST">
+                {% csrf_token %}
+                {{ info_form|crispy }}
+                <button class="">Save Information</button>
+            </form>
+        </div>
+    </div>
+
+
 </div>
 
 {% endblock %}
