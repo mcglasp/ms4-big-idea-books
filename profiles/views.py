@@ -16,8 +16,7 @@ def profile(request):
         if info_form.is_valid():
             info_form.save()
 
-    else:
-        info_form = UserProfileForm(instance=profile)
+    info_form = UserProfileForm(instance=profile)
     
     orders = profile.orders.all()
 

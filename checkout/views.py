@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from .forms import OrderForm
+from profiles.forms import UserProfileForm
 from .models import Order, LineItem
 from items.models import Item
 from profiles.models import UserProfile
@@ -28,7 +29,7 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, content='Sorry, your payment cannot be \
+        messages.error(request, 'Sorry, your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
 
@@ -55,7 +56,6 @@ def checkout(request):
 
         if order_form.is_valid():
             order = order_form.save()
-
             order.save()
 
             for item_id, item_data in basket.items():
@@ -79,7 +79,6 @@ def checkout(request):
         basket = request.session.get('basket', {})
 
         if not basket:
-            print("there's nothing there")
             return redirect(reverse('items'))
 
         if request.user.is_authenticated:
@@ -108,7 +107,7 @@ def checkout(request):
 
     template = 'checkout/checkout.html'
     context = {
-        'profile': profile,
+        
         'order_form': order_form,
         'total': total,
         'stripe_public_key': stripe_public_key,
@@ -121,11 +120,27 @@ def checkout(request):
 def order_confirmation(request, order_number):
    
     order = get_object_or_404(Order, order_number=order_number)
+    save_info = request.session.get('save_info')
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         order.user_profile = profile
         order.save()
+
+        if save_info:
+            default_data = {
+                'default_phone_number': order.phone_number,
+                'default_email_address': order.email_address,
+                'default_street_address1': order.street_address1,
+                'default_street_address2': order.street_address2,
+                'default_town_or_city': order.town_or_city,
+                'default_postcode': order.postcode,
+            }
+
+            user_profile_form = UserProfileForm(default_data, instance=profile)
+
+            if user_profile_form.is_valid():
+                user_profile_form.save()
 
     if 'basket' in request.session:
         del request.session['basket']
