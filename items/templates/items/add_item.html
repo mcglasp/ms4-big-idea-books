@@ -4,20 +4,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
-
             <form method="POST" action="{% url 'add_item' %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
-
                 {{ form.title | as_crispy_field }}
                 {{ form.author }}
                 <a href='#' class='btn btn-small' id="add-author" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Add new author</a>
-
                 {{ form.genre | as_crispy_field }}
                 {{ form.age_range | as_crispy_field }}
                 {{ form.description | as_crispy_field }}
@@ -25,24 +20,13 @@
                 {{ form.discount | as_crispy_field }}
                 {{ form.set_sale_price | as_crispy_field }}
                 {{ form.image | as_crispy_field }}
-
-
                 <div class="text-right">
                     <a href="{% url 'items' %}" class="btn btn-outline-black rounded-0">Cancel</a>
                     <button class="btn btn-black rounded 0" type="submit">Add Book To Shop</button>
                 </div>
             </form>
-
-
-
             {% endblock %}
-
             {% block postloadjs %}
             <!-- CREDIT W3Schools for Cover Image Modal display -->
-            <script>
-
-                // Add new author into list HTML
-            </script>
-<script src="{% static 'items/js/add_author.js' %}"></script>
-
+            <script src="{% static 'items/js/add_author.js' %}"></script>
             {% endblock %}

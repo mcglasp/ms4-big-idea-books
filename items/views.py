@@ -105,8 +105,14 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
+            title = form.cleaned_data['title']
             form.save()
-    
+            messages.success(request, f'{title} has been added to the store.')
+            return redirect(reverse('add_item'))
+        
+        else:
+            messages.error(request, f"There's something wrong with your form, please check for errors.")
+
     else:
         form = ItemForm()
 
@@ -131,8 +137,6 @@ def update_item(request, item_id):
             messages.error(request, 'Failed to update product. Please check form fields.')
     else:
         form = ItemForm(instance=item)
-
-    form = ItemForm(instance=item)
 
     template = 'items/update_item.html'
     context = {
@@ -161,7 +165,7 @@ def add_author(request):
         author_form = AuthorDataForm(request.POST, request.FILES)
         if author_form.is_valid():
             author_form.save()
-            return HttpResponse(status=200)
+            messages.success(request, 'Author added.')
 
     else:
         author_form = AuthorDataForm(request.POST, request.FILES)

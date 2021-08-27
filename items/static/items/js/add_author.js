@@ -1,49 +1,40 @@
+function closeSubmit() {
+    setTimeout(() => {
+        window.close()
+    }, 100);
+}
+
 $('#add-author').click(function () {
     window.open('/items/add_author/', '_blank', 'height=400,width=500,left=300,top=200', true);
-})    
+    window.sessionStorage.setItem('saveValues', 'true');
+})
 
-
-
-parent.addEventListener("focus", function () {
-    // CREDIT jcubic stackoverflow
-    window.onbeforeunload = function () {
-        window.sessionStorage.setItem("title", $('#id_title').val());
-        window.sessionStorage.setItem("description", $('#id_description').val());
-        window.sessionStorage.setItem("price", $('#id_price').val());
-        window.sessionStorage.setItem("set_sale_price", $('#id_set_sale_price').val());
-        window.sessionStorage.setItem("discount", $('#id_discount').val());
-        // let selectedGenres = $('#id_genre').val()
-        // window.sessionStorage.setItem("genres", JSON.stringify(selectedGenres));
-        // console.log(selectedGenres)
-        // end credit
-    };
+parent.addEventListener('focus', function () {
+    let saveValues = sessionStorage.getItem('saveValues')
+    if (saveValues === 'true') {
+        // CREDIT jcubic stackoverflow
+        window.onbeforeunload = function () {
+            window.sessionStorage.setItem("title", $('#id_title').val());
+            window.sessionStorage.setItem("description", $('#id_description').val());
+            window.sessionStorage.setItem("price", $('#id_price').val());
+            window.sessionStorage.setItem("set_sale_price", $('#id_set_sale_price').val());
+            window.sessionStorage.setItem("discount", $('#id_discount').val());
+            // end credit
+        }
+    }
     location.reload();
 });
 
 parent.onload = function () {
-    // let fillGenre = JSON.parse(window.sessionStorage.getItem("genres"));
-    // var i;
-    // if (fillGenre !== null){
-    // for (i = 0; i < fillGenre.length; i++) {
-    //      $('#id_genre').val(fillGenre[i]);
-    // }}
-
     let fillTitle = sessionStorage.getItem("title");
     let fillDescription = sessionStorage.getItem("description");
     let fillPrice = sessionStorage.getItem("price");
     let fillSetSalePrice = sessionStorage.getItem("set_sale_price");
     let fillDiscount = sessionStorage.getItem("discount");
-    
     if (fillTitle !== null) $('#id_title').val(fillTitle);
     if (fillDescription !== null) $('#id_description').val(fillTitle);
     if (fillPrice !== null) $('#id_price').val(fillTitle);
     if (fillSetSalePrice !== null) $('#id_set_sale_price').val(fillTitle);
     if (fillDiscount !== null) $('#id_discount').val(fillTitle);
-    
-}
-
-function closeSubmit() {
-    setTimeout(() => {
-        window.close()
-    }, 100);
+    window.sessionStorage.clear();
 }

@@ -5,6 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
+            <div class="card m-3">
+                <h5 class="card-header">Your basket</h5>
+                <div class="card-body">
             <div id="search-field">
                 <form class="d-flex" method="GET" action="{% url 'profile' %}">
                     <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
@@ -12,8 +15,9 @@
                 </form>
             </div>
             {% for order in orders %}
+            <hr>
             <table class="table">
-                <thead>
+                <thead class="table-light p-1">
                     <th scope="col">Order Number:</th>
                     <th scope="col"> {{ order.order_number }}</th>
                     <th scope="col">Order Date:</th>
@@ -26,13 +30,19 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <th colspan="3">Total basket cost:</th>
-                    <th colspan="2">{{ order.basket_total }}</th>
+                    <td colspan="3">Total basket cost:</th>
+                    <td colspan="2">{{ order.basket_total }}</th>
                 </tr>
             </table>
             {% endfor %}
         </div>
+        </div>
+    </div>
+
         <div class="col-6">
+            <div class="card m-3">
+                <h5 class="card-header">Your basket</h5>
+                <div class="card-body">
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
             <form class="" action="{% url 'profile' %}" method="POST">
                 {% csrf_token %}
@@ -43,6 +53,8 @@
     </div>
 
 
+</div>
+</div>
 </div>
 
 {% endblock %}

@@ -10,6 +10,10 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
+            <div class="card m-3">
+                <h5 class="card-header">Your details</h5>
+                <div class="card-body">
+                    <p>{{ payment_process_info }}</p>
             <p>{{ profile.default_phone_number }}</p>
             <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                 {% csrf_token %}
@@ -42,8 +46,13 @@
                 <button id="submit-button" type="submit">create order</button>
             </form>
         </div>
+    </div>
+</div>
         {% if basket_items|length > 0 %}
         <div class="col-6">
+            <div class="card m-3">
+                <h5 class="card-header">Your basket</h5>
+                <div class="card-body">
             <table>
                 <tr>
                     <th>Item</th>
@@ -64,6 +73,8 @@
         </div>
         {% endif %}
     </div>
+    </div>
+</div>
     <div id="loading-overlay">
         <h1 class="text-light logo-font loading-spinner">
             <span class="icon">

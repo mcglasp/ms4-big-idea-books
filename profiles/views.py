@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
+from django.contrib import messages
 
 from .models import UserProfile
 from .forms import UserProfileForm
@@ -15,11 +16,10 @@ def profile(request):
         info_form = UserProfileForm(request.POST, instance=profile)
         if info_form.is_valid():
             info_form.save()
+            messages.success(request, 'Your profile has been updated.')
 
     info_form = UserProfileForm(instance=profile)
-    
-    orders = profile.orders.all()
-
+    orders = profile.orders.all().order_by('-order_date')
 
     if 'q' in request.GET:
         order_query = request.GET['q']

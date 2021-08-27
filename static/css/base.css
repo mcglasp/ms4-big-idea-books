@@ -409,3 +409,21 @@ select#id_author {
   position: absolute;
   left: -150px;
 } */
+
+.table tbody, .table td, .table tfoot, .table th, .table thead th, .table tr {
+  border-color: transparent;
+  border-width: 0px;
+  border-bottom-width: 0px;
+  border-bottom-color: transparent;
+  border-bottom: none;
+  border-top: none;
+}
+
+.table td {
+  padding: 3px 3px 3px 8px!important;
+}
+
+.table thead th {
+  vertical-align: middle;
+}
+

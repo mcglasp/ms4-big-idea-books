@@ -29,14 +29,15 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be \
-            processed right now. Please try again later.')
+        messages.error(request, 'Sorry, we cannot process your payment right now.')
         return HttpResponse(content=e, status=400)
 
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+
+    payment_process_info = ""
 
     if request.method == "POST":
 
@@ -66,19 +67,22 @@ def checkout(request):
                     item=item,
                     quantity=item_data,
                 )
-
                 line_item.save()
+                item.quantity_sold += line_item.quantity
+                print(item.quantity_sold)
+
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('order_confirmation', args=[order.order_number]))
 
         else:
-            print('There was an error with your form.')
+            payment_process_info = "Something isn't quite right. Please check your form and try again"
 
     else:
         basket = request.session.get('basket', {})
 
         if not basket:
+            messages.error(request, 'Sorry, there is nothing in your basket.')
             return redirect(reverse('items'))
 
         if request.user.is_authenticated:
@@ -107,13 +111,12 @@ def checkout(request):
 
     template = 'checkout/checkout.html'
     context = {
-        
         'order_form': order_form,
         'total': total,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'payment_process_info': payment_process_info,
     }
-
     return render(request, template, context)
 
 

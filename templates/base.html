@@ -73,7 +73,13 @@
   {% if messages %}
   <div class="message-container">
     {% for message in messages %}
-    {% include 'includes/messages/success_message.html' %}
+      {% with message.level as level %}
+        {% if level == 40 %}
+            {% include 'includes/messages/error_message.html' %}
+          {% else %}
+            {% include 'includes/messages/success_message.html' %}
+          {% endif %}
+        {% endwith %}
     {% endfor %}
   </div>
   {% endif %}

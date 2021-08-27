@@ -3,6 +3,8 @@
 
 {% block content %}
 <div class="container">
-    {{ order }}
+    <div class="card">
+    <p>Thank you for your order! A confirmation has been sent to {{ request.user.email_address }}</p>
+</div>
 </div>
 {% endblock %}
