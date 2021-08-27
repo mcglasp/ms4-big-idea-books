@@ -10,16 +10,19 @@ from .forms import UserProfileForm
 
 def profile(request):
 
+    orders = None
     profile = get_object_or_404(UserProfile, user=request.user)
+    info_form = UserProfileForm(instance=profile)
+
+    if 'show-all' in request.GET:
+        orders = profile.orders.all().order_by('-order_date')
+        print(orders)
 
     if request.method == 'POST':
         info_form = UserProfileForm(request.POST, instance=profile)
         if info_form.is_valid():
             info_form.save()
             messages.success(request, 'Your profile has been updated.')
-
-    info_form = UserProfileForm(instance=profile)
-    orders = profile.orders.all().order_by('-order_date')
 
     if 'q' in request.GET:
         order_query = request.GET['q']

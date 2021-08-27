@@ -13,7 +13,9 @@
                     <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <a id="show-all" href="{% url 'profile' %}?show-all" class="btn btn-secondary">Show all orders</a>
             </div>
+            {% if orders %}
             {% for order in orders %}
             <hr>
             <table class="table">
@@ -35,6 +37,7 @@
                 </tr>
             </table>
             {% endfor %}
+            {% endif %}
         </div>
         </div>
     </div>
