@@ -1,15 +1,21 @@
+* {
+  background: #fefefa;
+
+}
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
- background-color: #f4f4f4;
 }
 
 a {
-  text-decoration: none!important;
-  color: inherit!important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
-.container {
-  /* background: transparent; */
+
+hr {
+  background: #fefefa;
+
 }
 
 /* Header - logo and subhead */
@@ -18,27 +24,64 @@ header {
   text-align: center;
   padding: 30px;
   color: rgb(51, 51, 51);
+  border-bottom: 1px solid rgb(173, 173, 173);
+  border-top: 1px solid rgb(173, 173, 173);
 }
 
 h3 {
-  font-weight: 300;;
+  font-weight: 300;
+  
 }
 
-.navbar {
+.navbar-light {
   display: flex;
   justify-content: space-between;
+  background:#fefefa;
 }
 
 #sort-select {
   width: 20%;
 }
 
-/* #user-admin-box .btn:not(.badge) {
-  height: 38px;
-  width:38px;
-margin: 0 5px;
-border-radius: 0.2rem;
-} */
+.carousel-item {
+  width: 100%;
+}
+
+.carousel-item h1 {
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  background:rgba(51, 51, 51, 0.192);
+  padding: 20px;
+  text-transform: uppercase;
+  font-family: 'Henny Penny', cursive;
+
+}
+
+#image-1 {
+  background-image: url('/media/animals.jpeg');
+}
+
+#image-2 {
+  background-image: url('/media/construction.jpeg');
+}
+
+#image-3 {
+  background-image: url('/media/space-young.jpeg');
+  color: white;
+}
+
+#image-1, #image-2, #image-3 {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: 0px 0;
+  height: 350px;
+}
+
+#logged-in-msg {
+  display: inline;
+  margin-right: 20px;
+}
 
 .badge.start-100 {
   margin-top: 4px;
@@ -58,11 +101,11 @@ border-radius: 0.2rem;
   color: white;
 } */
 
-
-
-/*  {
-
-} */
+button.btn {
+  /* background-color: white;
+  color: rgb(180, 226, 240); */
+  border: none;
+}
 
 .btn.btn-secondary.dropdown-toggle::after {
   display: none;
@@ -70,10 +113,10 @@ border-radius: 0.2rem;
 
 
 
-h1#logo-header  {
+h1#logo-header {
   font-family: 'Henny Penny', cursive;
   font-size: 5rem;
-  color: rgb(39, 37, 37)!important;
+  color: rgb(39, 37, 37) !important;
 }
 
 /* Nav bar */
@@ -82,15 +125,19 @@ h1#logo-header  {
 }
 
 .item {
-  height: 400px;
+  height: 580px;
+}
+
+#title-author {
+  /* height: 40%; */
 }
 
 .zig-zag {
-  background: 
-  linear-gradient(135deg, #eee 25%, transparent 25%) -10px 0,
-  linear-gradient(225deg, #eee 25%, transparent 25%) -10px 0,
-  linear-gradient(315deg, #eee 25%, transparent 25%),
-  linear-gradient(45deg, #eee 25%, transparent 25%);	
+  background:
+    linear-gradient(135deg, #eee 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, #eee 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, #eee 25%, transparent 25%),
+    linear-gradient(45deg, #eee 25%, transparent 25%);
   background-size: 20px 20px;
   background-color: #fff;
 }
@@ -99,12 +146,13 @@ h1#logo-header  {
 
   max-height: 250px;
   overflow: hidden;
-    margin: 0;
+  margin: 0;
 }
 
 .card-body {
-  height: fit-content;
+  height: 250px;
   padding-top: 5px;
+  position: relative;
 }
 
 .item img {
@@ -119,27 +167,39 @@ h1#logo-header  {
 }
 
 .item-card-title {
-text-transform: uppercase;
-margin-bottom: 0;
-margin-top: 0;
-padding: 0;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
 }
 
 
 
 
-  .price-add-col {
-    display: flex;
-    align-items:flex-end;
-    justify-content: space-between;
-  }
+/* .price-add-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+} */
 
 .item-card-price {
   font-size: 1.2rem;
   align-self: flex-end;
 }
 
-
+.price-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  position: absolute;
+  left: 12px;
+  bottom: 0px;
+  padding: 0.5rem;
+}
 
 .item-card-price strike {
   font-size: 0.9rem;
@@ -160,35 +220,48 @@ margin-bottom: auto;
 } */
 
 
-.item-card-descriptions {
-  
-}
+.item-card-descriptions {}
 
 .item-card-author {
   font-size: 00.8rem;
 }
 
 .user-controls {
-  color:rgb(46, 46, 46);
+  color: rgb(46, 46, 46);
   font-size: 0.8rem;
 }
 
 .user-controls.card-footer {
-padding: 0.1rem 0.3rem;
+  padding: 0.1rem 0.3rem;
 }
-/*  */
+
+.items-add-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.items-add-form button {
+  border-radius: 2px;
+  margin: 0 0 0 1px;
+  padding: 1%;
+}
+
+.items-add-form button i {
+  margin: auto;
+}
 
 /* .btn-outline-primary {
   margin: 10px;
 } */
 
 button.btn.btn-outline-secondary {
-height: 30px;
-width: fit-content;
-padding: 0.5rem;
-display: flex;
-align-content: center;
-margin-top: auto;
+  height: 30px;
+  width: fit-content;
+  padding: 0.5rem;
+  display: flex;
+  align-content: center;
+  margin-top: auto;
 }
 
 /* CREDIT W3Schools for Cover Image Modal display */
@@ -204,8 +277,8 @@ margin-top: auto;
 }
 
 .line-item {
-  border-top:rgb(39, 37, 37) solid 1px;
- 
+  border-top: rgb(39, 37, 37) solid 1px;
+
 }
 
 .line-detail {
@@ -216,7 +289,7 @@ margin-top: auto;
 
 .line-item-img {
   height: 100px;
-  padding: 20px!important;
+  padding: 20px !important;
 }
 
 table form {
@@ -233,13 +306,15 @@ table form button.btn.btn-outline-secondary {
   width: 30%;
 }
 
-#basket-table tr:nth-child(4), #basket-table tr:nth-child(5) {
+#basket-table tr:nth-child(4),
+#basket-table tr:nth-child(5) {
   border: 1px grey solid;
   height: 50px;
 }
 
-#delivery, #grand_total {
-  margin-left: 20px!important;
+#delivery,
+#grand_total {
+  margin-left: 20px !important;
   margin-bottom: 0px;
   float: right;
 }
@@ -395,7 +470,7 @@ table form button.btn.btn-outline-secondary {
 }
 
 select#id_author {
-  visibility:visible;
+  visibility: visible;
 }
 
 .message-container {
@@ -404,13 +479,19 @@ select#id_author {
   right: 15px;
   z-index: 999999999;
 }
+
 /* 
 .dropdown-menu.show.dropdown-menu[data-bs-popper] {
   position: absolute;
   left: -150px;
 } */
 
-.table tbody, .table td, .table tfoot, .table th, .table thead th, .table tr {
+.table tbody,
+.table td,
+.table tfoot,
+.table th,
+.table thead th,
+.table tr {
   border-color: transparent;
   border-width: 0px;
   border-bottom-width: 0px;
@@ -420,10 +501,13 @@ select#id_author {
 }
 
 .table td {
-  padding: 3px 3px 3px 8px!important;
+  padding: 3px 3px 3px 8px !important;
 }
 
 .table thead th {
   vertical-align: middle;
 }
 
+.items-row {
+  height: 500px;
+}

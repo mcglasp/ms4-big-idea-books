@@ -1,6 +1,7 @@
-<div class="navbar navbar-light bg-light pt-3">
+<div class="navbar navbar-light">
   {% include 'includes/search_bar.html' %}
   <div id="user-admin-box">
+    <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
   <div class="btn-group">
     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
     {% if basket_items %}

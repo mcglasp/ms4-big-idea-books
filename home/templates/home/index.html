@@ -1,34 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row" id="category">
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">animals</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">prehistory</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">history</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">science & machines</div>
-        </div>
-    </div>
-    <div class="row" id="age">
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">preschool</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">5-7</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">8-10</div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <div class="card home-card">teen</div>
+<div class="container-fluid m-auto">
+        <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div id="image-1" class="d-block w-100"><h1 class="display-5">Our World</h1></div>
+                </div>
+                <div id="image-2" class="carousel-item">
+                    <div class="d-block w-100"><h1 class="display-5">Things that move</h1></div>
+                </div>
+                <div id="image-3" class="carousel-item">
+                    <div class="d-block w-100"><h1 class="display-5">Little Astronomers</h1></div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+{% endblock %}
+
+{% block postloadjs %}
+<script>
+$(document).ready(function()
+{
+    $('.carousel').carousel({
+      interval: 4000
+    });
+
+    $('.carousel').carousel('next');
+});
+</script>
 {% endblock %}
