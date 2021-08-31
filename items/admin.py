@@ -69,6 +69,7 @@ class ItemAdmin(admin.ModelAdmin):
         'price',
         'discount',
         'set_sale_price',
+        'final_price',
         'quantity_sold',
     )
 

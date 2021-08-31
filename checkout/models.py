@@ -28,11 +28,11 @@ class Order(models.Model):
     original_basket = models.TextField(null=False, blank=False, default='')
     stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
 
-    def calculate_total(self):
+    # def calculate_total(self):
 
-        self.basket_total = float(self.lineitems.aggregate(Sum('line_total'))['line_total__sum'])
-        self.grand_total = self.basket_total + settings.STANDARD_DELIVERY_COST
-        self.save()
+    #     self.basket_total = self.lineitems.aggregate(Sum('line_total'))['line_total__sum']
+    #     self.grand_total = float(self.basket_total) + settings.STANDARD_DELIVERY_COST
+    #     self.save()
 
     def __str__(self):
 

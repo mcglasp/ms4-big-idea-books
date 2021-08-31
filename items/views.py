@@ -27,18 +27,18 @@ def all_items(request):
         if 'sort' in request.GET:
             sort_by = request.GET['sort']
             if sort_by == 'price_low_high':
-                sort_by = 'price'
+                sort_by = 'final_price'
 
             if sort_by == 'price_high_low':
-                sort_by = '-price'
+                sort_by = '-final_price'
 
             if sort_by == 'title_az':
                 items = items.annotate(lower_title=Lower('title'))
                 sort_by = 'lower_title'
 
-            # if sort_by == 'most_discounted':
-            #     items = items.annotate(discount_amount=float('price') - float('final_price'))
-            #     sort_by = '-discount_amount'
+            if sort_by == 'most_discounted':
+                items = items.annotate(discount_amount=F('price') - F('final_price'))
+                sort_by = '-discount_amount'
 
             if sort_by == 'quantity_sold':
                 sort_by = 'quantity_sold'

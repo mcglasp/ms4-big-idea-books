@@ -30,7 +30,7 @@ class Author(models.Model):
 
 
 class Item(models.Model):
-    
+
     sku = models.CharField(
         max_length=10, null=True, blank=True, 
         default=create_new_sku)
@@ -44,20 +44,23 @@ class Item(models.Model):
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     discount = models.DecimalField(max_digits=2, decimal_places=0, default=0)
-    set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    final_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=False, editable=False)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
 
-    @property
-    def final_price(self):
-        if self.set_sale_price != '0':
-            return self.price - self.set_sale_price
-        elif self.discount != '0':
-            formatted_discount = format_discount(self.discount)
-            discount_amount = self.price * formatted_discount
-            return self.price - discount_amount
+    def save(self, *args, **kwargs):
+        if self.set_sale_price != 0.00:
+            self.final_price = self.set_sale_price
         else:
-            return self.price
+            if self.discount != 0:
+                formatted_discount = format_discount(self.discount)
+                discount_amount = self.price * formatted_discount
+                self.final_price = self.price - discount_amount
+            else:
+                self.final_price = self.price
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
