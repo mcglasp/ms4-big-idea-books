@@ -1,5 +1,5 @@
 from django.db import models
-from .utils import create_new_sku
+from .utils import create_new_sku, format_discount
 
 
 # Create your models here.
@@ -30,6 +30,7 @@ class Author(models.Model):
 
 
 class Item(models.Model):
+    
     sku = models.CharField(
         max_length=10, null=True, blank=True, 
         default=create_new_sku)
@@ -47,5 +48,18 @@ class Item(models.Model):
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
 
+    @property
+    def final_price(self):
+        if self.set_sale_price != '0':
+            return self.price - self.set_sale_price
+        elif self.discount != '0':
+            formatted_discount = format_discount(self.discount)
+            discount_amount = self.price * formatted_discount
+            return self.price - discount_amount
+        else:
+            return self.price
+
     def __str__(self):
         return self.title
+    
+

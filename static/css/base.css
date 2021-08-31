@@ -1,10 +1,14 @@
 * {
-  background: #fefefa;
+  /* background: #f2f0e6; */
+
+
 
 }
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
+  background: rgb(255,253,245);
+  background: linear-gradient(266deg, rgba(255,253,245,1) 25%, rgba(255,254,249,1) 39%, rgba(254,255,255,1) 92%);
 }
 
 a {
@@ -28,9 +32,18 @@ header {
   border-top: 1px solid rgb(173, 173, 173);
 }
 
+nav {
+  border-bottom: 1px solid rgb(173, 173, 173);
+  background: #fff;
+}
+
+.navbar-light {
+  background: #fff;
+}
+
 h3 {
   font-weight: 300;
-  
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .navbar-light {
@@ -45,17 +58,33 @@ h3 {
 
 .carousel-item {
   width: 100%;
+  position: relative;
 }
 
-.carousel-item h1 {
-  position: absolute;
-  left: 30%;
-  top: 20%;
-  background:rgba(51, 51, 51, 0.192);
-  padding: 20px;
-  text-transform: uppercase;
-  font-family: 'Henny Penny', cursive;
 
+
+#overlay {
+  position: absolute; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 40%; /* Full height (cover the whole page) */
+  top: 10%;
+  left: 0;
+  background: rgba(0,0,0,0.3); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+#overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  font-size: 40px;
+  font-family: 'Henny Penny', cursive;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  background: rgba(0,0,0,0.0);
 }
 
 #image-1 {
@@ -63,7 +92,7 @@ h3 {
 }
 
 #image-2 {
-  background-image: url('/media/construction.jpeg');
+  background-image: url('/media/cogs.jpeg');
 }
 
 #image-3 {
@@ -139,7 +168,7 @@ h1#logo-header {
     linear-gradient(315deg, #eee 25%, transparent 25%),
     linear-gradient(45deg, #eee 25%, transparent 25%);
   background-size: 20px 20px;
-  background-color: #fff;
+  background: #fff;
 }
 
 .card-img-top {
@@ -337,9 +366,9 @@ table form button.btn.btn-outline-secondary {
   /* Full height */
   overflow: auto;
   /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
+  background: rgb(0, 0, 0);
   /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.9);
   /* Black w/ opacity */
 }
 

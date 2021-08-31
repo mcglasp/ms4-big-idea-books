@@ -7,3 +7,5 @@ def create_new_sku():
 
 def format_discount(discount):
     return discount / 100
+
+    

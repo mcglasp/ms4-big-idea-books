@@ -4,15 +4,20 @@
 <div class="container-fluid m-auto">
         <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
+                
                 <div class="carousel-item active">
-                    <div id="image-1" class="d-block w-100"><h1 class="display-5">Our World</h1></div>
+                    <div id="overlay"><div id="overlay-text">Our World</div></div>
+                    <div id="image-1" class="d-block w-100"></div>
                 </div>
                 <div id="image-2" class="carousel-item">
-                    <div class="d-block w-100"><h1 class="display-5">Things that move</h1></div>
+                    <div id="overlay"><div id="overlay-text">Things that move</div></div>
+                    <div class="d-block w-100"></div>
                 </div>
                 <div id="image-3" class="carousel-item">
-                    <div class="d-block w-100"><h1 class="display-5">Little Astronomers</h1></div>
+                    <div id="overlay"><div id="overlay-text">Little Astronomers</div></div>
+                    <div class="d-block w-100"></div>
                 </div>
+            
             </div>
         </div>
     </div>
@@ -28,6 +33,11 @@ $(document).ready(function()
     });
 
     $('.carousel').carousel('next');
+
+   
+
 });
+
+
 </script>
 {% endblock %}

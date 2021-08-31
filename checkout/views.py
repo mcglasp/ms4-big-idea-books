@@ -67,10 +67,9 @@ def checkout(request):
                     item=item,
                     quantity=item_data,
                 )
+                item.quantity_sold = line_item.quantity + item.quantity_sold
+                item.save(update_fields=['quantity_sold'])
                 line_item.save()
-                item.quantity_sold += line_item.quantity
-                print(item.quantity_sold)
-
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('order_confirmation', args=[order.order_number]))
@@ -123,6 +122,7 @@ def checkout(request):
 def order_confirmation(request, order_number):
    
     order = get_object_or_404(Order, order_number=order_number)
+    
     save_info = request.session.get('save_info')
 
     if request.user.is_authenticated:

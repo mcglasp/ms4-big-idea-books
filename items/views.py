@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
-from django.db.models import F, Q
+from django.db.models import F, Q, Func
 from django.db.models.functions import Lower
 from django.contrib import messages
 
 from .models import Genre, Item, Author, Age_range
 from .forms import ItemForm, AuthorDataForm
+from .templatetags.price_tools import calc_discounted_price
 
 
 
@@ -35,10 +36,10 @@ def all_items(request):
                 items = items.annotate(lower_title=Lower('title'))
                 sort_by = 'lower_title'
 
-            if sort_by == 'most_discounted':
-                items = items.annotate(price_difference=F('price') * F('discount'))
-                sort_by = '-price_difference'
-            
+            # if sort_by == 'most_discounted':
+            #     items = items.annotate(discount_amount=float('price') - float('final_price'))
+            #     sort_by = '-discount_amount'
+
             if sort_by == 'quantity_sold':
                 sort_by = 'quantity_sold'
 
