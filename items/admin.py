@@ -71,6 +71,7 @@ class ItemAdmin(admin.ModelAdmin):
         'set_sale_price',
         'final_price',
         'quantity_sold',
+        'featured',
     )
 
     ordering = ('title',)

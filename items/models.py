@@ -48,6 +48,7 @@ class Item(models.Model):
     final_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=False, editable=False)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
+    featured = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.set_sale_price != 0.00:

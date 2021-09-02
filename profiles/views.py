@@ -25,8 +25,9 @@ def profile(request):
             messages.success(request, 'Your profile has been updated.')
 
     if 'q' in request.GET:
+        orders = profile.orders.all()
         order_query = request.GET['q']
-        order_queries = Q(lineitems__item__title__icontains=order_query)
+        order_queries = Q(lineitems__item__title__icontains=order_query) | Q(order_number__icontains=order_query)
         orders = orders.filter(order_queries).distinct()
 
     template = 'profiles/profile.html'

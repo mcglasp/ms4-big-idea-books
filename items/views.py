@@ -14,8 +14,8 @@ from .templatetags.price_tools import calc_discounted_price
 
 
 def all_items(request):
-    items = Item.objects.all()
 
+    items = Item.objects.all().order_by('-featured', 'quantity_sold')
     genres = None
     ages = None
     narrow_age = None
@@ -41,7 +41,7 @@ def all_items(request):
                 sort_by = '-discount_amount'
 
             if sort_by == 'quantity_sold':
-                sort_by = 'quantity_sold'
+                sort_by = '-quantity_sold'
 
             items = items.order_by(sort_by)
 
@@ -103,12 +103,25 @@ def item_detail(request, item_id):
 
 def add_item(request):
 
+    # if request.method == 'POST':
+        # if 'add_author' in request.POST:
+        #     if author_form.is_valid():
+        #         author_form = AuthorDataForm(request.POST, request.FILES)
+        #         return redirect(reverse('add_item'))
+
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            title = form.cleaned_data['title']
+        author_form = AuthorDataForm(request.POST, request.FILES)
+        # author_first_name = request.POST.get['new_author_first']
+        # author_surname = request.POST.get['new_author_surname']
+        # Author.objects.update_or_create(Author, author_first_name, author_surname)
+
+        if author_form.is_valid() or form.is_valid():
+            # title = form.cleaned_data['title']
             form.save()
-            messages.success(request, f'{title} has been added to the store.')
+            author_form.save()
+            # messages.success(request, f'{title} has been added to the store.')
+            # print(author_first_name, author_surname, 'added')
             return redirect(reverse('add_item'))
         
         else:
@@ -116,9 +129,11 @@ def add_item(request):
 
     else:
         form = ItemForm()
+        author_form = AuthorDataForm()
 
     context = {
         'form': form,
+        'author_form': author_form,
     }
 
     return render(request, 'items/add_item.html', context)

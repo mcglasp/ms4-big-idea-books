@@ -14,6 +14,8 @@ class StripeWH_Handler:
         self.request = request
 
     def handle_event(self, event):
+        print('handle_event')
+
         """
         Handle a generic/unknown/unexpected webhook event
         """
@@ -21,11 +23,13 @@ class StripeWH_Handler:
             status=200)
 
     def handle_payment_intent_succeeded(self, event):
+        print('handle_payment_intent_succeeded')
+
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
         intent = event.data.object
-        pid = intent.id 
+        pid = intent.id
         basket = intent.metadata.basket
         save_info = intent.metadata.save_info
 
@@ -88,12 +92,13 @@ class StripeWH_Handler:
                     order_line_item.save()
 
             except Exception as e:
+                print('exception 1')
                 if order:
                     order.delete()
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-
+        print('exception 2')
         return HttpResponse(
             content=f'2 Webhook received: {event["type"]}',
             status=200)
@@ -102,6 +107,7 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.payment_failed webhook from Stripe
         """
+        print('handle_payment_intent_payment_failed')
         return HttpResponse(
             content=f'3 Webhook received: {event["type"]}',
             status=200)

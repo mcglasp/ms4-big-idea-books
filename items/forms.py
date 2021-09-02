@@ -3,12 +3,14 @@ from .models import Item, Genre, Age_range, Author
 
 
 class ItemForm(forms.ModelForm):
+    # authors = forms.ModelChoiceField(queryset=Author.objects.all().order_by('surname'))
 
     class Meta:
         model = Item
         fields = '__all__'
         exclude = ('sku', 'quantity_sold',)
     
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         genres = Genre.objects.all()
@@ -18,7 +20,7 @@ class ItemForm(forms.ModelForm):
         authors_surnames = [(a.id, a.surname_first()) for a in authors]
         age_ranges = [(a.id, a.age_range) for a in age_ranges]
         self.fields['genre'].choices = genre_names
-        self.fields['author'].choices = authors_surnames
+        self.fields['author'].select = authors_surnames
         self.fields['age_range'].choices = age_ranges
 
 
