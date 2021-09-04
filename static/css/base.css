@@ -46,11 +46,13 @@ hr {
 
 .narrow-search .btn {
   border-color: #268080;
-margin: 5px;
+/* margin: 5px; */
 }
 
 nav {
   display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .nav-link {
@@ -105,12 +107,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #search-field {
-margin: 3px 0px 3px 3px;
+margin: 3px;
 }
 
-#search-field button.btn {
-  color: #005050;
-}
+
 
 button.btn:hover {
   background-color: #005050;
@@ -202,9 +202,12 @@ button.btn:hover {
 } */
 
 button.btn {
-  /* background-color: white;
-  color: rgb(180, 226, 240); */
   border: none;
+}
+
+.profile-buttons {
+  margin-top: 5px;
+  height: 36px;
 }
 
 .btn.btn-secondary.dropdown-toggle::after {
@@ -342,16 +345,21 @@ margin-bottom: auto;
 /* #user-admin-box {
 float: right;} */
 
-.navbar {
-  flex-direction: row-reverse;
+#special-offers {
+  color: red;
+  font-weight: 400;
 }
 
-#user-admin-box .btn.btn-secondary {
-    background-color: #005050;
-}
-
-#user-admin-box .btn.btn-secondary:hover {
+.btn.btn-secondary {
   background-color: #268080;
+  color: #fff!important;
+  border-color: transparent;
+}
+
+.btn.btn-secondary:hover {
+  background-color: #005050;
+  border-color: transparent;
+
 }
 
 .user-controls {

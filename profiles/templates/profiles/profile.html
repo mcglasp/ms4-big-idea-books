@@ -6,14 +6,14 @@
     <div class="row">
         <div class="col-6">
             <div class="card m-3">
-                <h5 class="card-header">Your basket</h5>
+                <h5 class="card-header">Your orders</h5>
                 <div class="card-body">
             <div id="search-field">
-                <form class="d-flex" method="GET" action="{% url 'profile' %}">
+                <form class="" method="GET" action="{% url 'profile' %}">
                     <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-secondary profile-buttons" type="submit">Search</button>
+                    <a id="show-all" href="{% url 'profile' %}?show-all" class="btn btn-secondary profile-buttons">Show all orders</a>
                 </form>
-                <a id="show-all" href="{% url 'profile' %}?show-all" class="btn btn-secondary">Show all orders</a>
             </div>
             {% if orders %}
             {% for order in orders %}
@@ -37,8 +37,10 @@
                 </tr>
             </table>
             {% endfor %}
+            {% elif orders is None %}
+            <p class="p-1">Search by order number, product name or author, or select 'Show all'.</p>
             {% else %}
-            <p>We can't find that order. Why not try a different search term, or select 'Show All Orders'?</p>
+            <p class="p-1">We can't find that order. Why not try a different search term, or select 'Show All Orders'?</p>
             {% endif %}
         </div>
         </div>
@@ -52,7 +54,7 @@
             <form class="" action="{% url 'profile' %}" method="POST">
                 {% csrf_token %}
                 {{ info_form|crispy }}
-                <button class="">Save Information</button>
+                <button class="btn btn-secondary mt-2">Save information</button>
             </form>
         </div>
     </div>

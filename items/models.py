@@ -35,8 +35,8 @@ class Item(models.Model):
         max_length=10, null=True, blank=True, 
         default=create_new_sku)
     title = models.CharField(max_length=254)
-    genre = models.ManyToManyField('Genre')
-    author = models.ManyToManyField('Author')
+    genre = models.ManyToManyField('Genre', blank=True)
+    author = models.ManyToManyField('Author', blank=True)
     description = models.TextField()
     age_range = models.ManyToManyField(
         'Age_range')

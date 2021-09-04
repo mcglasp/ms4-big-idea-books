@@ -8,6 +8,8 @@ from .models import Genre, Item, Author, Age_range
 from .forms import ItemForm, AuthorDataForm
 from .templatetags.price_tools import calc_discounted_price
 
+import json
+
 
 
 # Create your views here.
@@ -102,38 +104,54 @@ def item_detail(request, item_id):
 
 
 def add_item(request):
-
-    # if request.method == 'POST':
-        # if 'add_author' in request.POST:
-        #     if author_form.is_valid():
-        #         author_form = AuthorDataForm(request.POST, request.FILES)
-        #         return redirect(reverse('add_item'))
+    authors_select = Author.objects.all()
 
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
-        author_form = AuthorDataForm(request.POST, request.FILES)
-        # author_first_name = request.POST.get['new_author_first']
-        # author_surname = request.POST.get['new_author_surname']
-        # Author.objects.update_or_create(Author, author_first_name, author_surname)
-
-        if author_form.is_valid() or form.is_valid():
-            # title = form.cleaned_data['title']
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        genre = request.POST.get("genre")
+        if form.is_valid():
             form.save()
-            author_form.save()
-            # messages.success(request, f'{title} has been added to the store.')
-            # print(author_first_name, author_surname, 'added')
-            return redirect(reverse('add_item'))
-        
-        else:
-            messages.error(request, f"There's something wrong with your form, please check for errors.")
+            saved_item = Item.objects.get(title=title, description=description)
+            item_id = saved_item.id
+            instance = get_object_or_404(Item, pk=item_id)
+            # print(instance.id)
+            
+            author_array = request.POST.get("authors")
+            authors = author_array.split(';')
+          
+            for author in authors:
+                if author != "":
+                    if author != " ":
+                        first = author.split(" ")[0]
+                        last = author.split(" ")[1]                       
+                        this_author = Author.objects.get_or_create(first_name=first, surname=last)
+                        (name, disregard) = this_author
+                        this_author = name
+                        print(this_author)
+                        
+                        # print(get_author)
+                        instance.author.add(this_author)
+                        # print(instance.author)
+                # print(instance.author)
+            
+            # print(form)
 
+        
+
+        
+
+        
+        # else:
+        #     messages.error(request, f"There's something wrong with your form, please check for errors.")
+        #     print('not valid')
     else:
         form = ItemForm()
-        author_form = AuthorDataForm()
 
     context = {
         'form': form,
-        'author_form': author_form,
+        'authors_select': authors_select,
     }
 
     return render(request, 'items/add_item.html', context)
@@ -159,7 +177,7 @@ def update_item(request, item_id):
         'form': form,
         'item': item,
     }
-
+    
     return render(request, template, context)
 
 
