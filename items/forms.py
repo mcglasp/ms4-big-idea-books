@@ -9,9 +9,9 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = '__all__'
-        exclude = ('sku', 'quantity_sold', 'image_url')
+        exclude = ('sku', 'quantity_sold', 'image_url', 'final_price', 'date_added',)
     
-    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)    
+    image = forms.ImageField(required=True, widget=CustomClearableFileInput)    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,6 +21,18 @@ class ItemForm(forms.ModelForm):
         age_ranges = [(a.id, a.age_range) for a in age_ranges]
         self.fields['genre'].choices = genre_names
         self.fields['age_range'].choices = age_ranges
+        self.fields['featured'].widget.attrs.update({'class': 'custom-tickbox'})
+        self.fields['featured'].label = "<span class='bold'>Featured?</span> <span class='italic'> Tick this box to feature this product on the home page  </span>"
+        self.fields['genre'].label = "<span class='bold'>Genre</span> <span class='italic'> Hold down Cmd to select more than one  </span>"
+        self.fields['genre'].required = True
+        self.fields['age_range'].label = "<span class='bold'>Target age</span> <span class='italic'> Hold down Cmd to select more than one  </span>"
+        self.fields['discount'].label = "<span class='bold'>Discount in %</span> <span class='italic'> Enter a percentage. </span>"
+        self.fields['set_sale_price'].label = "<span class='bold'>Fixed sale price</span> <span class='italic'> Enter a fixed sale amount to override any discount applied  </span>"
+        self.fields['title'].label = "<span class='bold'>Title. </span>"
+        self.fields['description'].label = "<span class='bold'>Description  </span>"
+        self.fields['price'].label = "<span class='bold'>Price  </span>"
+        self.fields['image'].label = "<span class='bold'>Select an image  </span>"
+
 
 
 class AuthorDataForm(forms.ModelForm):

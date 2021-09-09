@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from .utils import create_new_sku, format_discount
 
 
@@ -49,6 +50,7 @@ class Item(models.Model):
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
     featured = models.BooleanField(default=False)
+    date_added = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now)
 
     def save(self, *args, **kwargs):
         if self.set_sale_price != 0.00:

@@ -33,10 +33,11 @@
 
   {% block core_js %}
 
-  
+
   <script src="https://js.stripe.com/v3/"></script>
   <script src="https://kit.fontawesome.com/28c549be5f.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -49,7 +50,7 @@
   {% block extra_js %}
   {% endblock %}
 
-  <title>Hello, world! {% block extra_title %}{% endblock %}</title>
+  <title>Big Idea Books | Curated non-fiction for kids {% block extra_title %}{% endblock %}</title>
 
 </head>
 
@@ -60,8 +61,8 @@
     <h1 id=logo-header><a href="/">Big Idea Books</a> </h1>
     <h3>curated non-fiction for kids</h3>
   </header>
-{% include 'includes/nav.html' %}
-  
+  {% include 'includes/nav.html' %}
+
 
   {% endblock %}
   {% block subhead %}
@@ -70,13 +71,13 @@
   {% if messages %}
   <div class="message-container">
     {% for message in messages %}
-      {% with message.level as level %}
-        {% if level == 40 %}
-            {% include 'includes/messages/error_message.html' %}
-          {% else %}
-            {% include 'includes/messages/success_message.html' %}
-          {% endif %}
-        {% endwith %}
+    {% with message.level as level %}
+    {% if level == 40 %}
+    {% include 'includes/messages/error_message.html' %}
+    {% else %}
+    {% include 'includes/messages/success_message.html' %}
+    {% endif %}
+    {% endwith %}
     {% endfor %}
   </div>
   {% endif %}
@@ -88,11 +89,11 @@
 
   {% block postloadjs %}
   <script>
-    $(document).ready(function(){
-    $('.toast').toast('show');
-  });
+    $(document).ready(function () {
+      $('.toast').toast('show');
+    });
   </script>
-  
+
   {% endblock %}
 
 </body>

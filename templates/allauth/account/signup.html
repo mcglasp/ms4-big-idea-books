@@ -4,18 +4,29 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
-{% block content %}
-<h1>{% trans "Sign Up" %}</h1>
+{% block inner_content %}
+<div class="container">
+  <div class="row justify-content-center ">
+      <div class="col-md-12 col-lg-8">
+<div class="manage-cards card">
+<div class="card-header zig-zag">
+  <div class="white-fade"></div>
+<h5 id="top-layer">Register</h5>
+<span>{% blocktrans %}Already have an account? Then please <a id="signin" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</span>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+</div>
+<div class="card-body">
+<form class="" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form | crispy }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <button class="btn btn-secondary standard-button" type="submit">{% trans "Sign Up" %}</button>
 </form>
-
+</div>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}

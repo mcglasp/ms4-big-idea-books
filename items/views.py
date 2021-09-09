@@ -16,8 +16,10 @@ import json
 
 
 def all_items(request):
-
-    items = Item.objects.all().order_by('-featured', 'quantity_sold')
+    try:
+        items = Item.objects.all().order_by('-featured', 'quantity_sold')
+    except:
+        items = Item.objects.all()
     genres = None
     ages = None
     narrow_age = None
@@ -110,42 +112,30 @@ def add_item(request):
         form = ItemForm(request.POST, request.FILES)
         title = request.POST.get("title")
         description = request.POST.get("description")
-        genre = request.POST.get("genre")
+        
         if form.is_valid():
-            form.save()
-            saved_item = Item.objects.get(title=title, description=description)
-            item_id = saved_item.id
-            instance = get_object_or_404(Item, pk=item_id)
-            # print(instance.id)
-            
-            author_array = request.POST.get("authors")
-            authors = author_array.split(';')
-          
-            for author in authors:
-                if author != "":
-                    if author != " ":
+            check_item = Item.objects.filter(title=title, description=description)
+            if check_item.exists() is True:
+                messages.error(request, "There's a book in the shop with this title and description. Please check your existing items and make this listing unique.")
+            else:
+                form.save()
+                saved_item = Item.objects.get(title=title, description=description)
+                item_id = saved_item.id
+                instance = get_object_or_404(Item, pk=item_id)
+                author_array = request.POST.get("authors")
+                authors = author_array.split(';')
+                for author in authors:
+                    if len(author) > 0:
                         first = author.split(" ")[0]
-                        last = author.split(" ")[1]                       
+                        last = author.split(" ")[1]
                         this_author = Author.objects.get_or_create(first_name=first, surname=last)
                         (name, disregard) = this_author
-                        this_author = name
-                        print(this_author)
-                        
-                        # print(get_author)
-                        instance.author.add(this_author)
-                        # print(instance.author)
-                # print(instance.author)
-            
-            # print(form)
-
-        
-
-        
-
-        
-        # else:
-        #     messages.error(request, f"There's something wrong with your form, please check for errors.")
-        #     print('not valid')
+                        author_to_attach = name
+                        instance.author.add(author_to_attach)
+                        messages.success(request, f"{title} has been added to the shop")
+        else:
+            messages.error(request, "There's something wrong with your form, please check for errors.")
+            return redirect(reverse('add_item'))
     else:
         form = ItemForm()
 
@@ -159,14 +149,28 @@ def add_item(request):
 
 def update_item(request, item_id):
 
+    authors_select = Author.objects.all()
+
     item = get_object_or_404(Item, pk=item_id)
+
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Failed to update product. Please check form fields.')
-
+            author_array = request.POST.get("authors")
+            authors = author_array.split(';')
+            for author in authors:
+                if len(author) > 0:
+                    first = author.split(" ")[0]
+                    last = author.split(" ")[1]
+                    this_author = Author.objects.get_or_create(first_name=first, surname=last)
+                    (name, disregard) = this_author
+                    author_to_attach = name
+                    item.author.add(author_to_attach)
+        
+            messages.success(request, 'This item has been successfully updated.')
             return redirect(reverse('item_detail', args=[item.id]))
+
         else:
             messages.error(request, 'Failed to update product. Please check form fields.')
     else:
@@ -176,6 +180,7 @@ def update_item(request, item_id):
     context = {
         'form': form,
         'item': item,
+        'authors_select': authors_select,
     }
     
     return render(request, template, context)

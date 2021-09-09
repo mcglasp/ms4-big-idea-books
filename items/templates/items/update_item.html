@@ -1,43 +1,152 @@
-{% extends "base.html" %}
-{% load static %}
-{% load price_tools %}
-{% load crispy_forms_tags %}
-{% block subhead %}
-<h2>Update item: {{ item.title }} by {% for author in item.author.all %}
-    {% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}
-    {{ author }}
-    {% endfor %}</h2>
-{% endblock %}
-{% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <form method="POST" action="{% url 'update_item' item.id %}" class="form mb-2"
-                enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.title | as_crispy_field }}
-                {{ form.author | as_crispy_field }}
-                <a href='#' class='btn btn-small' id="add-author" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">Add new author</a>
-                {{ form.genre | as_crispy_field }}
-                {{ form.age_range | as_crispy_field }}
-                {{ form.description | as_crispy_field }}
-                {{ form.price | as_crispy_field }}
-                {{ form.discount | as_crispy_field }}
-                {{ form.set_sale_price | as_crispy_field }}
 
-                {{ form.image | as_crispy_field }}
-                <div class="text-right">
-                    <a href="{% url 'items' %}" class="btn btn-outline-black rounded-0">Cancel</a>
-                    <button class="btn btn-black rounded 0" type="submit">Update book listing</button>
+
+
+
+
+            {% extends "base.html" %}
+            {% load static %}
+            {% load price_tools %}
+
+            {% block content %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <form method="POST" action="{% url 'update_item' item.id %}" class="form mb-2"
+                enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="manage-cards card">
+                                <h5 class="card-header">
+                                    Update item: {{ item.title }} by {% for author in item.author.all %}
+                                    {% if not forloop.first %}{% if forloop.last %} and {% else %},
+                                    {% endif %}{% endif %}
+                                    {{ author }}
+                                    {% endfor %}
+                                </h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            {{ form.title | as_crispy_field }}
+                                            <p class="bold">Author/s</p>
+                                            <div class="inline-author-input">
+                                                <select id="id_authors" class="form-select">
+                                                    <option disabled selected></option>
+                                                    {% for author in authors_select %}
+                                                    <option value="{{ author }}">{{ author }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button type="button" id="add_author_1"
+                                                    class="btn btn-secondary standard-button">Select
+                                                    author</button>
+                                            </div>
+                                            <div class="inline-author-input">
+                                                <div id="id_new_authors" class="input-group">
+                                                    <input type="text" aria-label="First name" class="form-control"
+                                                        id="id_first_name" placeholder="First name">
+                                                    <input type="text" aria-label="Last name" class="form-control"
+                                                        id="id_surname" placeholder="Last name">
+                                                </div>
+                                                <button id="add_author_2" class="btn btn-secondary standard-button"
+                                                    type="button">Add new
+                                                    author</button>
+                                            </div>
+                                            <p class="bold">Selected Authors</p>
+
+                                            <div id="store-authors" class="form-control" readonly>
+                                                {% for a in item.author.all %}
+                                                <span class="badge rounded-pill bg-light text-dark ml-1">{{ a }}<a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a></span></p>
+                                                
+
+                                                {% endfor %}
+                           
+                                            </div>
+                                            <textarea class="visually-hidden" id="hidden-authors" type="textarea"
+                                                name="authors" required></textarea>
+
+                                            {{ form.genre | as_crispy_field }}
+                                            {{ form.age_range | as_crispy_field }}
+                                            {{ form.image | as_crispy_field }}
+                                        </div>
+                                        <div class="col-6">
+                                            {{ form.description | as_crispy_field }}
+                                            {{ form.price | as_crispy_field }}
+                                            {{ form.discount | as_crispy_field }}
+                                            {{ form.set_sale_price | as_crispy_field }}
+
+                                            {{ form.featured | as_crispy_field }}
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="d-grid gap-2 col-6 mx-auto">
+                                                <button type="submit" class="btn btn-secondary standard-button"
+                                                    id="add-item-btn">Update book listing</button>
+                                                <a href="{% url 'items' %}" id="add-cancel-btn"
+                                                    class="btn btn-secondary standard-button">Cancel</a>
+                                            </div>
+                                        </div>
+                        </form>
+
+                    </div>
                 </div>
-            </form>
+            </div>
             {% endblock %}
             {% block postloadjs %}
-            <!-- CREDIT W3Schools for Cover Image Modal display -->
+            {{ block.super }}
             <script>
-                $('#add-author').click(function () {
-                    window.open('/items/add_author/', '_blank', 'height=400,width=500,left=300,top=200', true);
-                })
+
+                
+
+                let alreadyInput = []
+
+                $("#add_author_1").click(function (e) {
+                    e.preventDefault;
+                    let newValue = $("#id_authors").val()
+                    let node = document.createElement("span");
+                    let alreadyHiddenText = document.getElementById("hidden-authors");
+                    let hiddenTextToAdd = document.createTextNode(`${newValue};`)
+                    if (alreadyInput.includes(newValue)) {
+                        alert('You have already selected this author')
+                    } else {
+                        node.innerHTML =
+                            `${newValue} <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`
+                        alreadyHiddenText.appendChild(hiddenTextToAdd)
+                        $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1')
+                        $('#store-authors').append(node)
+                        alreadyInput.push(newValue)
+                    }
+                });
+                $("#add_author_2").click(function (e) {
+                    e.preventDefault;
+                    let valueFirstname = $("#id_first_name").val()
+                    let valueSurname = $("#id_surname").val()
+                    let newValue = `${valueFirstname} ${valueSurname}`
+                    let node = document.createElement("span");
+                    let alreadyHiddenText = document.getElementById("hidden-authors");
+                    let hiddenTextToAdd = document.createTextNode(`${newValue};`)
+                    if (newValue != " ") {
+                        if (alreadyInput.includes(newValue)) {
+                            alert('You have already selected this author')
+                        } else {
+                            node.innerHTML =
+                                `${newValue} <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`
+                            alreadyHiddenText.appendChild(hiddenTextToAdd)
+                            $(node).attr('class', 'badge rounded-pill bg-light text-dark')
+                            $('#store-authors').append(node)
+                            alreadyInput.push(newValue)
+                        }
+                    } else {
+                        alert('Please select or enter an author name')
+                    }
+                });
+
+                function deleteThis(elem) {
+                    $(elem).parent('span').remove();
+                    let string = document.getElementById('hidden-authors').innerHTML
+                    console.log(string)
+                    let term = elem.parentElement.textContent.trim()
+                    console.log(term)
+                    let replaced = string.replace(term, '')
+                    document.getElementById('hidden-authors').innerHTML = replaced
+                }
             </script>
             {% endblock %}

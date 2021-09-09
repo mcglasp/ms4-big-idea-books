@@ -72,9 +72,10 @@ class ItemAdmin(admin.ModelAdmin):
         'final_price',
         'quantity_sold',
         'featured',
+        'date_added',
     )
 
-    ordering = ('title',)
+    ordering = ('title', 'date_added',)
 
 
 admin.site.register(Genre, GenreAdmin)

@@ -11,10 +11,16 @@ a {
   color: inherit !important;
 }
 
-
-hr {
-
+p {
+  color: #313639;
 }
+
+.translate-alert {
+  transform: translate(-50%, -18%) !important;
+}
+
+
+hr {}
 
 .narrow-search {
   margin: 10px auto;
@@ -33,6 +39,7 @@ hr {
 .sort-field {
   margin: 44px 0;
 }
+
 .sort-field select#sort-select.form-select {
   height: 38px;
   float: right;
@@ -41,13 +48,14 @@ hr {
 }
 
 .narrow-search p {
-  margin: 15px 0 5px 0;
+  margin: 15px 0 5px 6px;
 }
 
 .narrow-search .btn {
-  border-color: #268080;
-/* margin: 5px; */
+  margin-left: 6px;
 }
+
+
 
 nav {
   display: flex;
@@ -60,7 +68,7 @@ nav {
 }
 
 .nav-link:hover {
-    background-color: #268080;
+  background-color: #268080;
 }
 
 /* Header - logo and subhead */
@@ -74,7 +82,8 @@ header {
   height: 200px;
 }
 
-nav, .navbar {
+nav,
+.navbar {
   border-bottom: 1px solid rgb(173, 173, 173);
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
@@ -92,10 +101,14 @@ header h3 {
   color: #005050;
 
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+58,ffffff+100&1+43,0+96 */
-background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(255,255,255,1) 43%, rgba(255,255,255,0.72) 58%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 43%,rgba(255,255,255,0.72) 58%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 43%,rgba(255,255,255,0.72) 58%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
 
   /* background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 27%, rgba(255,255,255,0.80015756302521) 40%, rgba(255,255,255,0) 55%); */
@@ -107,21 +120,89 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #search-field {
-margin: 3px;
+  margin: 3px;
 }
 
+#search-field .form-control {
+  margin-right: 3px;
+}
+
+.manage-cards {
+  margin-top: 20px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#signin {
+  color: #268080 !important;
+}
+
+.inline-author-input {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  width: 100%;
+  margin: 3px 5px 16px 0;
+}
+
+#id_authors,
+#id_new_authors {
+  height: 40px;
+  margin: 0;
+  flex-basis: 70%;
+}
+
+.form-group,
+.form-group>button.standard-button,
+#id_authors,
+#add_author_1,
+#add_author_2,
+#add-item-btn,
+#add-cancel-btn,
+p.bold {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#id_authors input,
+#id_new_authors input {
+  height: 40px;
+}
+
+.inline-author-input button#add_author_2,
+.inline-author-input button#add_author_1 {
+  flex-basis: 25%;
+}
+
+.italic {
+  font-style: italic !important;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.card-body>form input.form-control:focus,
+#search-field input:focus,
+#sort-select:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 0.25rem rgba(38, 128, 128, 0.2)
+}
+
+.authors-display {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: .25rem;
+}
 
 
 button.btn:hover {
   background-color: #005050;
 }
-/* .navbar-light {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
-  text-transform: uppercase;
-} */
 
 #sort-select {
   width: 20%;
@@ -132,18 +213,47 @@ button.btn:hover {
   position: relative;
 }
 
+.card-header.zig-zag {
+  background-color: #fff !important;
+  position: relative;
+  z-index: 0;
+}
+
+.card-header.zig-zag h5,
+.card-header.zig-zag span {
+  position: relative;
+  color: black;
+  z-index: 9999999 !important;
+}
+
+.white-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 0.7637429971988796) 47%, rgba(255, 255, 255, 0) 100%) !important;
+  height: 100%;
+  width: 100%;
+}
+
 
 
 #overlay {
-  position: absolute; /* Sit on top of the page content */
-  display: block; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 40%; /* Full height (cover the whole page) */
+  position: absolute;
+  /* Sit on top of the page content */
+  display: block;
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 40%;
+  /* Full height (cover the whole page) */
   top: 10%;
   left: 0;
-  background: rgba(0,0,0,0.3); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+  background: rgba(0, 0, 0, 0.3);
+  /* Black background with opacity */
+  z-index: 2;
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
 }
 
 #overlay-text {
@@ -153,9 +263,9 @@ button.btn:hover {
   font-size: 40px;
   font-family: 'Henny Penny', cursive;
   color: white;
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  background: rgba(0,0,0,0.0);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.0);
 }
 
 #image-1 {
@@ -171,7 +281,9 @@ button.btn:hover {
   color: white;
 }
 
-#image-1, #image-2, #image-3 {
+#image-1,
+#image-2,
+#image-3 {
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: 0px 0;
@@ -188,18 +300,30 @@ button.btn:hover {
   left: 105%;
 }
 
-/* .fas.fa-user-alt, .btn .fa-shopping-basket{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  vertical-align: center;
+.form-control:readonly {
+  background-color: pink !important;
 }
 
-.btn .fa-shopping-basket {
-  position: relative;
-  top: 4px;
-  color: white;
-} */
+#store-authors {
+  min-height: 40px;
+  height: fit-content;
+  margin-bottom: 1rem;
+}
+
+#store-authors .badge.rounded-pill {
+  background: #fff !important;
+  padding: 8px;
+
+}
+
+#store-authors .badge.rounded-pill i:hover {
+  cursor: pointer;
+}
+
+
+
+
+
 
 button.btn {
   border: none;
@@ -220,22 +344,26 @@ h1#logo-header {
   font-family: 'Henny Penny', cursive;
   font-size: 5rem;
   color: #005050 !important;
-background: transparent;
+  background: transparent;
   padding-top: 20px;
   padding-bottom: 10px;
   position: relative;
   top: -20px;
   /* z-index: 999; */
-  }
+}
 
-  h1#logo-header a {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+58,ffffff+100&1+43,0+96 */
-background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(255,255,255,1) 43%, rgba(255,255,255,0.72) 58%, rgba(255,255,255,0) 96%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 43%,rgba(255,255,255,0.72) 58%,rgba(255,255,255,0) 96%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 43%,rgba(255,255,255,0.72) 58%,rgba(255,255,255,0) 96%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+h1#logo-header a {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+58,ffffff+100&1+43,0+96 */
+  background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 96%, rgba(255, 255, 255, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 96%, rgba(255, 255, 255, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 96%, rgba(255, 255, 255, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
 
-  }
+}
 
 /* Nav bar */
 /* #search-field:last-child {
@@ -352,9 +480,45 @@ float: right;} */
 
 .btn.btn-secondary {
   background-color: #268080;
-  color: #fff!important;
+  color: #fff !important;
   border-color: transparent;
 }
+
+.standard-button {
+  background-color: #268080;
+  color: #fff !important;
+  border-color: transparent;
+  height: 38px;
+}
+
+#search-field .standard-button {
+  color: #268080;
+  background-color: #fff;
+  border-color: transparent;
+  height: 38px;
+  margin-left: 2px;
+}
+
+#search-field .standard-button:hover {
+  background-color: #268080;
+  border-color: transparent;
+  height: 38px;
+}
+
+i.fa-search {
+  color: #268080;
+}
+
+#id_featured.custom-tickbox:active {
+  background: #268080;
+}
+
+#id_featured.custom-tickbox:checked {
+  background-color: #268080;
+  color: #fff;
+}
+
+
 
 .btn.btn-secondary:hover {
   background-color: #005050;
@@ -654,6 +818,7 @@ select#id_author {
 .table thead th {
   vertical-align: middle;
 }
+
 /* 
 .line-item {
   display: flex;
@@ -665,5 +830,104 @@ select#id_author {
 .items-row {
   height: 500px;
   margin: 10px auto;
-    padding: 40px
+  padding: 40px
+}
+
+/* Allauth form formatting */
+
+.allauth-form-inner-content p {
+  margin-top: 1.5rem;
+  /* mt-4 */
+  color: #6c757d;
+  /* text-secondary */
+}
+
+.allauth-form-inner-content input {
+  border-color: #000;
+  border-radius: 0;
+}
+
+.allauth-form-inner-content label:not([for='id_remember']) {
+  display: none;
+}
+
+.allauth-form-inner-content input::placeholder {
+  color: #aab7c4;
+}
+
+.allauth-form-inner-content button,
+.allauth-form-inner-content input[type='submit'] {
+  /* btn */
+  display: inline-block;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #000;
+  border: 1px solid #000;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0;
+
+  /* standard bootstrap btn transitions */
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.allauth-form-inner-content button:hover,
+.allauth-form-inner-content input[type='submit']:hover {
+  color: #fff;
+  background-color: #222;
+  border-color: #222;
+}
+
+.allauth-form-inner-content a {
+  color: #17a2b8;
+  /* text-info */
+}
+
+.square-button {
+  height: 78px;
+  width: fit-content;
+  margin: 5px;
+  font-family: 'Source Sans Pro', sans-serif;
+  border: 1px dashed #cc5500;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+}
+
+.icon-row {
+  /* height: 20px; */
+  margin-top: 7px;
+}
+
+.square-button i {
+  color: #cc5500;
+
+font-size: 1.5rem;
+}
+
+#dino-icon {
+  height: 35px;
+  position: relative;
+  bottom: 5px;
+}
+
+.text-orange {
+  color: #cc5500;
 }
