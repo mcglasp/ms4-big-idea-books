@@ -53,7 +53,7 @@
 
                                             <div id="store-authors" class="form-control" readonly>
                                                 {% for a in item.author.all %}
-                                                <span class="badge rounded-pill bg-light text-dark ml-1">{{ a }}<a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a></span></p>
+                                                <span class="badge rounded-pill bg-light text-dark ml-1"><span class="just-text">{{ a }}</span><a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a></span></p>
                                                 
 
                                                 {% endfor %}
@@ -94,9 +94,28 @@
             {{ block.super }}
             <script>
 
-                
+            let storedAuthors = $('.just-text').map(function() { 
+                return $(this).text(); 
+            }).toArray();
+        console.log(storedAuthors)
 
                 let alreadyInput = []
+                console.log(alreadyInput)
+                let hiddenAuthorField = document.getElementById("hidden-authors");
+
+                function retainExistingAuthors(value) {
+
+                    let existingToAdd = document.createTextNode(`${value};`)
+                    if (existingToAdd != "" && existingToAdd != " ") {
+                    hiddenAuthorField.appendChild(existingToAdd)
+                    
+                    alreadyInput.push(value)
+                    print = hiddenAuthorField.innerHTML
+                    console.log(value)
+                    }
+                }
+                storedAuthors.forEach(retainExistingAuthors)
+                    
 
                 $("#add_author_1").click(function (e) {
                     e.preventDefault;
@@ -108,7 +127,7 @@
                         alert('You have already selected this author')
                     } else {
                         node.innerHTML =
-                            `${newValue} <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`
+                            `<span class="just-text">${newValue}</span> <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`
                         alreadyHiddenText.appendChild(hiddenTextToAdd)
                         $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1')
                         $('#store-authors').append(node)
@@ -128,7 +147,7 @@
                             alert('You have already selected this author')
                         } else {
                             node.innerHTML =
-                                `${newValue} <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`
+                                `<span class="just-text">${newValue}</span> <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`
                             alreadyHiddenText.appendChild(hiddenTextToAdd)
                             $(node).attr('class', 'badge rounded-pill bg-light text-dark')
                             $('#store-authors').append(node)
