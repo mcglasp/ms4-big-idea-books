@@ -15,7 +15,7 @@ class Order(models.Model):
         default=create_order_number) 
     user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     customer_name = models.CharField(max_length=60, null=False, blank=False)
-    email_address = models.EmailField(max_length=254, null=False, blank=False, default='not_given')
+    email_address = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     street_address1 = models.CharField(max_length=80, null=True, blank=True)
     street_address2 = models.CharField(max_length=80, null=True, blank=True)

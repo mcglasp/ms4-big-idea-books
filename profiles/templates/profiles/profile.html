@@ -6,51 +6,78 @@
     <div class="row">
         <div class="col-6">
             <div class="card m-3">
-                <h5 class="card-header">Your orders</h5>
+                <div class="card-header zig-zag">
+                    <div class="white-fade"></div>
+                    <h5 id="top-layer-orders">Your orders</h5>
+                </div>
                 <div class="card-body">
-            <div id="search-field">
-                <form class="" method="GET" action="{% url 'profile' %}">
-                    <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="q">
-                    <button class="btn btn-secondary profile-buttons" type="submit">Search</button>
-                    <a id="show-all" href="{% url 'profile' %}?show-all" class="btn btn-secondary profile-buttons">Show all orders</a>
-                </form>
-            </div>
-            {% if orders %}
-            {% for order in orders %}
-            <hr>
-            <table class="table">
-                <thead class="table-light p-1">
-                    <th scope="col">Order Number:</th>
-                    <th scope="col"> {{ order.order_number }}</th>
-                    <th scope="col">Order Date:</th>
-                    <th scope="col">{{ order.order_date|date:'d-m-Y' }}</th>
-                </thead>
-                {% for o in order.lineitems.all %}
-                <tr>
-                    <td colspan="3">{{ o.item.title }}</td>
-                    <td colspan="2">{{ o.item.price }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="3">Total basket cost:</th>
-                    <td colspan="2">{{ order.basket_total }}</th>
-                </tr>
-            </table>
-            {% endfor %}
-            {% elif orders is None %}
-            <p class="p-1">Search by order number, product name or author, or select 'Show all'.</p>
-            {% else %}
-            <p class="p-1">We can't find that order. Why not try a different search term, or select 'Show All Orders'?</p>
-            {% endif %}
-        </div>
+                    <div id="search-field">
+                        <form class="" method="GET" action="{% url 'profile' %}">
+                            <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"
+                                name="q">
+                            <button class="btn btn-secondary profile-buttons" type="submit">Search</button>
+                            <a id="show-all" href="{% url 'profile' %}?show-all"
+                                class="btn btn-secondary profile-buttons">Show all orders</a>
+                        </form>
+                    </div>
+                    {% if previous_orders %}
+                    {% if orders %}
+                    {% for order in orders %}
+                    <hr>
+                    <table class="table">
+                        <thead class="table-light p-1">
+                            <th scope="col">Order Number:</th>
+                            <th scope="col"> {{ order.order_number }}</th>
+                            <th scope="col">Order Date:</th>
+                            <th scope="col">{{ order.order_date|date:'d-m-Y' }}</th>
+                        </thead>
+                        {% for o in order.lineitems.all %}
+                        <tr>
+                            <td colspan="3">{{ o.item.title }}</td>
+                            <td colspan="2">{{ o.item.price }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3">Total basket cost:</th>
+                            <td colspan="2">{{ order.basket_total }}</th>
+                        </tr>
+                    </table>
+                    {% endfor %}
+                    {% elif orders is None %}
+                    <p class="p-1">Search by order number, product name or author, or select 'Show all'.</p>
+                    {% else %}
+                    <p class="p-1">We can't find that order. Why not try a different search term, or select 'Show All
+                        Orders'?</p>
+                    {% endif %}
+                    {% else %}
+                    <p class="p-1">You don't yet have any orders to display. 
+                        {% if featured_items %}
+                        Why not take a look at our featured books?
+                    </p>
+                    <div class="row zig-zag pt-3 pb-3">
+                        {% for featured in featured_items|slice:":3" %}
+                        <div class="col-4">
+                            <a class="related-item" href="{% url 'item_detail' featured.id %}"><img
+                                    src="/media/{{ featured.image }}" alt=""></a>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
         </div>
     </div>
+</div>
 
-        <div class="col-6">
-            <div class="card m-3">
-                <h5 class="card-header">Your basket</h5>
-                <div class="card-body">
-            <p><a href="{% url 'account_change_password' %}">change password</a></p>
+<div class="col-6">
+    <div class="card m-3">
+        <div class="card-header zig-zag">
+            <div class="white-fade"></div>
+            <h5 id="top-layer-orders">Your details</h5>
+        </div>
+        <div class="card-body">
+            <p><a class="btn btn-secondary standard-button" href="{% url 'account_change_password' %}">Change
+                    password</a></p>
             <form class="" action="{% url 'profile' %}" method="POST">
                 {% csrf_token %}
                 {{ info_form|crispy }}
@@ -58,8 +85,6 @@
             </form>
         </div>
     </div>
-
-
 </div>
 </div>
 </div>

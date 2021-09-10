@@ -4,18 +4,28 @@
 
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
-{% block content %}
-<h1>{% trans "Sign Out" %}</h1>
-
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
-
+{% block inner_content %}
+<div class="container">
+  <div class="row justify-content-center ">
+      <div class="col-md-8 col-lg-6">
+<div class="manage-cards card">
+<div class="card-header zig-zag">
+  <div class="white-fade"></div>
+<h5 id="top-layer-signin">Sign into your account</h5>
+<span>{% trans 'Are you sure you want to sign out?' %}</span>
+</div>
+<div class="card-body">
 <form method="post" action="{% url 'account_logout' %}">
   {% csrf_token %}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
   {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
+  <button class="btn btn-secondary standard-button" type="submit">{% trans 'Sign Out' %}</button>
 </form>
-
+</div>
+</div>
+</div>
+</div>
+</div>
 
 {% endblock %}

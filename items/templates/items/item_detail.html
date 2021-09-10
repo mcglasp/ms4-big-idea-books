@@ -5,71 +5,95 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-3">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
             <img id="header-cover" class="card-img-top img-fluid" src="/media/{{ item.image }}" alt="{{ item.name }}">
-
         </div>
         <div class="col-sm-12 col-md-6 col-lg-8">
-                        <a href="{% url 'update_item' item.id %}">Edit</a> | <a href="{% url 'delete_item' item.id %}">Delete</a>
-                        <p>{{ item.title }}</p>
-            {% for author in item.author.all %}
-            <p>{{ author }}</p>
-            {% endfor %}
-            {% for age_range in item.age_range.all %}
-            <p>{{ age_range }}</p>
-            {% if age_range == preschool %}hi{% endif %}
-            {% endfor %}
-            <p>{{ item.description }}</p>
-            {% if item.set_sale_price != 0.00 %}
-                    <p><strike>£{{ item.price }}</strike></p>
-                    <p>Sale Price! £{{ item.set_sale_price }}</p>
+            <div class="card">
+                <div class="card-header">
+                    <a href="{% url 'update_item' item.id %}">Edit</a> | 
+                    <a href="{% url 'delete_item' item.id %}">Delete</a>
+                </div>
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    <p class="title">{{ item.title }}</p>
+                    <p class="authors">
+                        {% for author in item.author.all %}
+                        {% if forloop.first %}
+                        by
+                        {% endif %}
+                        {{ author }}
+                        {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
+                        {% endif %}{% endif %}
+                        {% endfor %}
+                    </p>
+  
+                    <p class="age">                        
+                        {% for age in item.age_range.all %}
+                        {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
+                        {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
+                        {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
+                        {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                   </li>
+                   <li class="list-group-item">
+                    <p class="description">{{ item.description }}</p>
+                </li>
+                    <li class="list-group-item">
+                    {% if item.set_sale_price != 0.00 %}
+                    <strike>£{{ item.price }}</strike>
+                    <p class="price">Sale Price! £{{ item.set_sale_price }}</p>
                     {% elif item.discount > 0 %}
-                    <p><strike>£{{ item.price }}</strike></p>
-                    <p>{{ item.discount }}% off! £{{ item.price | calc_discount:item.discount }}</p>
+                    <strike>£{{ item.price }}</strike>
+                    <p class="discount">{{ item.discount }}% off! <span class="price">£{{ item.price | calc_discount:item.discount }}</span></p>
                     {% else %}
-                    <p>£{{ item.price }}</p>
+                    <p class="price">£{{ item.price }}</p>
                     {% endif %}
-                    <form class="form" action="{% url 'add_to_basket' item.id %}" method="POST">
+                </li>
+                <li class="list-group-item">
+                
+                    <form class="quantity-form form" action="{% url 'add_to_basket' item.id %}" method="POST">
                         {% csrf_token %}
-                        <div class="form-row">
-                            <div class="col-12">
-                                <p class="mt-3"><strong>Quantity:</strong></p>
-                                <div class="form-group w-50">                         
-                                        <input class="form-control qty_input" type="number"
-                                            name="quantity" value="1" min="1" max="99"
-                                            data-item_id="{{ item.id }}"
-                                            id="id_qty_{{ item.id }}">  
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <input type="submit" class="" value="Add to Basket">
-                            </div>
-                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        </div>
-                    </form>
+                                <span class="form-group quantity mt-3"><strong>Quantity:</strong>
+                                    <input class="form-control qty_input" type="number" name="quantity" value="1"
+                                        min="1" max="99" data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
+                                
+                                <input class="btn btn-secondary standard-button" type="submit" class="" value="Add to Basket">
+                                <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                            </span>                            
+                </form>
+                </li>
+            </ul>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <h4>Items related to your search...</h4>
-    </div>
-    <div class="row">
-        {% for related in related_items %}
-        <div class="col-sm-12 col-md-2">
-            <a href="{% url 'item_detail' related.id %}"><img src="/media/{{ related.image }}" alt="" width="100px"></a>
-        </div>
-        {% endfor %}
-    </div>
+</div>
+
+<div class="related-items row mt-3">
+    
+    <h4>Items related to your search...</h4>
+
+<div class="row zig-zag pt-3 pb-3">
+    {% for related in related_items|slice:":6" %}
+    <div class="col-sm-12 col-md-2">
+    
+        <a class="related-item" href="{% url 'item_detail' related.id %}"><img src="/media/{{ related.image }}" alt=""></a>
+    
+</div>
+    {% endfor %}
+</div>
 </div>
 </div>
 
 <!-- CREDIT W3Schools for Cover Image Modal display -->
 <div id="cover-img-modal" class="modal">
-<span class="close">&times;</span>
-<img class="modal-content" id="cover">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="cover">
 </div>
 
 {% endblock %}
@@ -91,9 +115,6 @@
     span.onclick = function () {
         modal.style.display = "none";
     }
-
-
-
 </script>
 
 {% endblock %}

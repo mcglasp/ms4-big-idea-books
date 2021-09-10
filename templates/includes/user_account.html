@@ -1,7 +1,9 @@
 <div class="navbar pt-1 pb-1">
   <div id="special-offers">Special offers go here!</div>
   <div id="user-admin-box">
+    {% if request.user.is_authenticated %}
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
+    {% endif %}
   <div class="btn-group">
     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
     {% if basket_items %}

@@ -1,5 +1,11 @@
-<nav>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   {% include 'includes/search_bar.html' %}     
+  <div class="collapse navbar-collapse" id="navbarToggler">
+
         <ul class="nav justify-content-center">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'items' %}">Show all</a>
@@ -35,4 +41,6 @@
             <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen">Teen</a>
           </li>
         </ul>
-  </nav>
+    </div>
+  </div>
+</nav>

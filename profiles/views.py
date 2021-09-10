@@ -5,13 +5,23 @@ from django.contrib import messages
 from .models import UserProfile
 from .forms import UserProfileForm
 
-# Create your views here.
+from items.models import Item
 
 
 def profile(request):
 
-    orders = None
+    # check for any previous orders
     profile = get_object_or_404(UserProfile, user=request.user)
+    orders = None
+    previous_orders = profile.orders.all()
+    featured_items = Item.objects.filter(featured=True)
+    print(featured_items)
+
+    if previous_orders:
+        previous_orders = True
+    else:
+        previous_orders = False
+
     info_form = UserProfileForm(instance=profile)
 
     if 'show-all' in request.GET:
@@ -35,6 +45,8 @@ def profile(request):
     context = {
         'info_form': info_form,
         'orders': orders,
+        'previous_orders': previous_orders,
+        'featured_items': featured_items,
     }
 
     return render(request, template, context)

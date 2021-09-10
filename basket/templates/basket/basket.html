@@ -4,58 +4,59 @@
 {% block content %}
 <div class="container">
     <div class="card m-3">
-        <div class="card-header">Your basket</div>
+        <div class="card-header zig-zag">
+            <div class="white-fade"></div>
+            <h5 id="top-layer-signin">Your basket</h5>
+        </div>
         <div class="card-body">
-            {% if basket_items|length > 0 %}
 
-            <table id="basket-table">
-                <tr>
-                    <th scope="col">Item</th>
-                    <th scope="col">Details</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Subtotal</th>
-                    <th scope="col">Update item/s</th>
-                </tr>
-                {% for item in basket_items %}
-                <tr class="line-item" scope="row">
-                    <td ><img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></td>
-                    <td class="line-detail"><a href="{% url 'item_detail' item.item.id %}">{{ item.item.title }} by
-                            {% for author in item.item.author.all %}{% if not forloop.first %}{% if forloop.last %} and
-                            {% else %}, {% endif %}{% endif %} {{ author }}{% endfor %}</a></td>
-                    <td class="td-right">{{ item.price }}</td>
-                    <td class="td-right">{{ item.quantity }}</td>
-                    <td class="td-right">£{{ item.price | line_total:item.quantity }}</td>
-                    <td class="td-right">
+            {% if basket_items|length > 0 %}
+            {% for item in basket_items %}
+            <div class="row line-item">
+                <div class="col-2">
+                    <img class="line-item-img" src="/media/{{ item.item.image }}" alt="">
+                </div>
+                <div class="col-7">
+                    <p class="line-title"><strong><a
+                                href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</strong></a>
+                        {% for author in item.item.author.all %}
+                        {% if forloop.first %}
+                        by
+                        {% endif %}
+                        {{ author }}
+                        {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
+                        {% endif %}{% endif %}
+                        {% endfor %}</p>
+                    <p class="truncate">{{ item.item.description }}</p>
+                    <p>£{{ item.price|floatformat:2 }}</p>
+                    <div class="update-controls">
                         <form action="{% url 'update_quantity' item.item.id %}" method="POST">
                             {% csrf_token %}
+                            <p class="mb-1">Update quantity:</p>
                             <input class="quantity-input form-control" type="number" name="quantity"
                                 value="{{ item.quantity }}">
                             <button class="btn" type="submit"><i class="fas fa-sync"></i></button>
+                            <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a>
                         </form>
-                        <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr>
-                   
-                <td colspan="6" id="delivery" class="td-right">Standard UK delivery: £{{ delivery_cost }}</td>
-           
-            </tr>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="subtotal">Subtotal:</div>
+                    <div class="price">£{{ item.price | line_total:item.quantity | floatformat:2}}</div>
+                </div>
+            </div>
 
-            <tr scope="row">
-                <td colspan="6" id="grand_total" class="td-right">Total: £{{ grand_total }}</td>
-            </tr>
-            </table>
-            <div>
-            <p id="grand_total" class="td-right">Standard UK delivery: £{{ delivery_cost }}</p>
-
-
-            <p><a href="{% url 'checkout' %}">Go to checkout</a></p>
-            {% else %}
-            <p>There are no items in your basket.</p>
+            {% if not forloop.last %}
+            <hr>
             {% endif %}
-        </div>
-    </div>
-</div>
-{% endblock %}
+
+            {% endfor %}
+            <div id="totals">
+                <p class="">Standard UK delivery: £{{ delivery_cost }}</p>
+                <p class="price">Total: £{{ grand_total }}</p>
+                <a class="btn btn-secondary standard-button mt-3" href="{% url 'checkout' %}">Go to checkout</a>
+                {% else %}
+                <p>There are no items in your basket.</p>
+                {% endif %}
+            </div>
+            {% endblock %}
