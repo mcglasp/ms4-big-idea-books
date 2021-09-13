@@ -88,9 +88,26 @@
 
 
   {% block postloadjs %}
+  {{ block.super }}
   <script>
     $(document).ready(function () {
+      console.log('loaded')
+    });
+    $(document).ready(function () {
       $('.toast').toast('show');
+    });
+
+    $(window).scroll(function () {
+      var scrollPos = $(document).scrollTop();
+      // console.log(scrollPos)
+      if (scrollPos > 208 ) {
+        $('#user-admin-box-top').addClass('visually-hidden')
+        $('#user-admin-box-lower').removeClass('visually-hidden')
+      }
+      if (scrollPos < 208 ) {
+        $('#user-admin-box-top').removeClass('visually-hidden')
+        $('#user-admin-box-lower').addClass('visually-hidden')
+      }
     });
   </script>
 

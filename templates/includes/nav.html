@@ -1,12 +1,16 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-light">
-  <div class="container-fluid">
+<nav class="nav sticky-top justify-between align-middle">
+  <div class="display-xl-block">
+  {% include 'includes/search_bar.html' %}
+</div>
+  <div class="navbar no-border navbar-light navbar-expand-xl pt-0 pb-0">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  {% include 'includes/search_bar.html' %}     
-  <div class="collapse navbar-collapse" id="navbarToggler">
-
-        <ul class="nav justify-content-center">
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="nav">
+          <li class="nav-item d-lg-none">
+            {% include 'includes/search_bar.html' %}
+          </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'items' %}">Show all</a>
           </li>
@@ -41,7 +45,7 @@
             <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen">Teen</a>
           </li>
         </ul>
-        <div id="user-admin-box" class="visually-hidden">
+        <div id="user-admin-box-lower" class="visually-hidden">
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
           {% if basket_items %}

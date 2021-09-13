@@ -56,17 +56,16 @@ hr {}
   margin-left: 6px;
 }
 
-
-
 nav {
-  display: flex;
-  align-content: center;
+  /* display: flex;
+  align-content: center; */
   justify-content: center;
-  position: sticky;
+  /* position: sticky; */
 }
 
-.nav-link {
+.nav-item a.nav-link {
   height: 100%;
+  padding: 0rem 0.6rem;
 }
 
 .nav-link:hover {
@@ -81,8 +80,10 @@ header {
   color: rgb(51, 51, 51);
   border-bottom: 1px solid rgb(173, 173, 173);
   border-top: 1px solid rgb(173, 173, 173);
-  height: 200px;
+  height: 150px;
 }
+
+
 
 nav,
 .navbar {
@@ -92,6 +93,10 @@ nav,
   text-transform: uppercase;
   color: #005050;
   background: #fff;
+}
+
+.navbar-collapse {
+  /* justify-content: center; */
 }
 
 header h3 {
@@ -112,17 +117,16 @@ header h3 {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=1);
   /* IE6-9 fallback on horizontal gradient */
 
-  /* background: rgb(255,255,255);
-  background: radial-gradient(circle, rgba(255,255,255,1) 27%, rgba(255,255,255,0.80015756302521) 40%, rgba(255,255,255,0) 55%); */
-  padding: 10px;
   position: relative;
-  top: -40px;
-  font-size: 1.5rem;
+  top: -20px;
+  font-size: 1.3rem;
   margin: auto;
 }
 
 #search-field {
   margin: 3px;
+  left: 5px;
+
 }
 
 #search-field .form-control {
@@ -397,15 +401,17 @@ button.btn {
   display: none;
 }
 
-
+.navbar-toggler {
+  justify-content: end;
+}
 
 h1#logo-header {
   font-family: 'Henny Penny', cursive;
-  font-size: 5rem;
+  font-size: 4rem;
   color: #005050 !important;
   background: transparent;
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   position: relative;
   top: -20px;
   /* z-index: 999; */
@@ -561,8 +567,7 @@ margin-bottom: auto;
   font-size: 00.8rem;
 }
 
-/* #user-admin-box {
-float: right;} */
+
 
 #special-offers {
   color: red;
@@ -1034,6 +1039,7 @@ font-size: 1.5rem;
 
 
 
+
 }
 
 @media screen and (max-width: 1200px) {
@@ -1042,10 +1048,16 @@ font-size: 1.5rem;
   }
 
   .navbar.navbar-expand-lg>.container-fluid {
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
   padding-right: 0.3rem!important;
+}
 
-  }
+
+
+.justify-between {
+  justify-content: space-between;
+}
+
 }
 
 .navbar.navbar-expand-lg {
@@ -1059,4 +1071,8 @@ font-size: 1.5rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.no-border {
+  border: none;
 }

@@ -3,8 +3,19 @@
 
 {% block content %}
 <div class="container">
-    <div class="card">
-    <p>Thank you for your order! A confirmation has been sent to {{ request.user.email_address }}</p>
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-8">
+    <div class="card m-3">
+        <div class="card-header zig-zag">
+            <div class="white-fade"></div>
+            <h5 id="top-layer">Your details</h5>
+        </div>
+        <div class="card-body">
+            <p>Thank you for your order! A confirmation has been sent to <strong>{{ order.email_address }}</strong></p>
+        </div>
+    </div>
 </div>
 </div>
+</div>
+
 {% endblock %}

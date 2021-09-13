@@ -1,6 +1,6 @@
 <div class="navbar sticky-top pt-1 pb-1">
   <div id="special-offers">Special offers go here!</div>
-  <div id="user-admin-box">
+  <div id="user-admin-box-top" class="">
     {% if request.user.is_authenticated %}
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
     {% endif %}
