@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -41,6 +41,48 @@
             <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen">Teen</a>
           </li>
         </ul>
+        <div id="user-admin-box" class="visually-hidden">
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
+          {% if basket_items %}
+          <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger">
+            {{ total_items }}
+          </span>
+          {% endif %}
+          <ul class="dropdown-menu p-4 text-muted dropdown-menu-end">
+            <p class="dropdown-header">Your basket:</p>
+            <div class="dropdown-divider"></div>
+            {% for item in basket_items %}
+            <p class="text-truncate">{{ item.item.title }}</p>
+            {% endfor %}
+            <p>£{{ basket_total }}</p>
+            <li><a class="dropdown-item" href="{% url 'view_basket' %}">View basket</a></li>
+            <li><a class="dropdown-item" href="{% url 'checkout' %}">Go to checkout</a></li>
+          </ul>
+        </div>
+      
+      <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-alt"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+            {% if request.user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'profile' %}">Account</a></li>
+            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
+            {% if request.user.is_superuser %}
+            <li>
+              <a class="dropdown-item" href="{% url 'add_item' %}">Add items</a>
+            </li>
+            {% endif %}
+      
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
+            <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+      
+            {% endif %}
+          </ul>
+        </div>
+        </div>
     </div>
   </div>
 </nav>

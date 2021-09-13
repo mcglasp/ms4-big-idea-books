@@ -38,8 +38,9 @@
                                 {% if forloop.first %}
                                 by
                                 {% endif %}
-                                {{ author }}
-                                {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
+                                <!-- {% if forloop.last %} -->
+                                & {{ author }}
+                                {% if forloop.last %}{% if not forloop.first %} & {{ author }}{% endif %}{% else %} ,
                                 {% endif %}{% endif %}
                             </span>
                             {% endfor %}

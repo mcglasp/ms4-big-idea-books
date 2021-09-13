@@ -25,9 +25,12 @@
                         {% if forloop.first %}
                         by
                         {% endif %}
-                        {{ author }}
+                        {% if forloop.length > 1 %}
                         {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
                         {% endif %}{% endif %}
+                        {% else %}
+                        {{ author }}
+                        {% endif %}
                         {% endfor %}
                     </p>
   
