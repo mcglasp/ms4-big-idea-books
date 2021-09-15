@@ -11,8 +11,7 @@ def update_on_save(sender, instance, created, **kwargs):
     print('instance', instance)
     print('order', instance.related_order)
     instance.related_order.calculate_total()
-
-
+    
 @receiver(post_delete, sender=LineItem)
 def update_on_save(sender, instance, **kwargs):
     """

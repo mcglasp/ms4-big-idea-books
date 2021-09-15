@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db import models
 from .models import Genre, Author, Age_range, Item
 
 # Register your models here.
@@ -72,7 +73,7 @@ class ItemAdmin(admin.ModelAdmin):
         'final_price',
         'quantity_sold',
         'featured',
-        'date_added',
+        'date_added',  
     )
 
     ordering = ('title', 'date_added',)

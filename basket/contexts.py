@@ -1,16 +1,33 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from items.models import Item
+from django.contrib import messages
 
 
 def basket_contents(request):
 
     basket = request.session.get('basket', {})
+    dict_to_compare = basket
+
+    d_keys = dict_to_compare.keys()
+
+    for key in list(d_keys):
+        is_in_db = Item.objects.filter(id=key).exists()
+        if is_in_db:
+            continue
+        else:
+            dict_to_compare.pop(key)
+            messages.error(request, "An item in your basket has been deleted as it is not currently available.")
+  
+    print(dict_to_compare)
+    dict_to_compare = basket
+
     basket_items = []
     total_items = 0
     total = 0
     price = 0
     delivery_cost = settings.STANDARD_DELIVERY_COST
+    basket = request.session.get('basket', {})
 
     def update_item_price(price, discount, set_sale_price):
         set_sale_price = float(item.set_sale_price)
@@ -27,12 +44,10 @@ def basket_contents(request):
         return price
         
     if basket:
-
         for item_id, value in basket.items():
-            if isinstance(value, int):  
+            if isinstance(value, int):
                 item = get_object_or_404(Item, pk=item_id)
-                price = update_item_price(item.price, item.discount, 
-                        item.set_sale_price)
+                price = update_item_price(item.price, item.discount, item.set_sale_price)
                 val_float = float(value)
                 total += val_float * float(price)
                 total_items += value
@@ -42,7 +57,7 @@ def basket_contents(request):
                     'price': price,
                     'quantity': value,
                 })
-        
+                
         total = round(total, 2)
         grand_total = round(delivery_cost + float(total), 2)
     

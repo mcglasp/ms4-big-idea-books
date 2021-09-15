@@ -1,8 +1,3 @@
-
-
-
-
-
 // EXPERIMENTAL
 $(window).scroll(function () {
     setTimeout(() => {

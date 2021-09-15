@@ -1,25 +1,25 @@
-<div class="navbar sticky-top pt-1 pb-1">
+<div id="specials-and-admin" class="navbar pt-1 pb-1">
   <div id="special-offers">Special offers go here!</div>
-  <div id="user-admin-box-top" class="">
+  <div id="user-admin-box-top">
     {% if request.user.is_authenticated %}
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
     {% endif %}
   <div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
+    <button type="button" class="btn btn-secondary dropdown-toggle basket-quantity" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
     {% if basket_items %}
     <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger">
       {{ total_items }}
     </span>
     {% endif %}
-    <ul class="dropdown-menu p-4 text-muted dropdown-menu-end">
+    <ul class="dropdown-menu p-3 text-muted dropdown-menu-end">
       <p class="dropdown-header">Your basket:</p>
       <div class="dropdown-divider"></div>
       {% for item in basket_items %}
       <p class="text-truncate">{{ item.item.title }}</p>
       {% endfor %}
       <p>£{{ basket_total }}</p>
-      <li><a class="dropdown-item" href="{% url 'view_basket' %}">View basket</a></li>
-      <li><a class="dropdown-item" href="{% url 'checkout' %}">Go to checkout</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'view_basket' %}">View basket</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'checkout' %}">Go to checkout</a></li>
     </ul>
   </div>
 
@@ -27,19 +27,19 @@
     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="fas fa-user-alt"></i>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+    <ul class="dropdown-menu p-3 text-muted dropdown-menu-end" aria-labelledby="dropdownMenuLink">
       {% if request.user.is_authenticated %}
-      <li><a class="dropdown-item" href="{% url 'profile' %}">Account</a></li>
-      <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'profile' %}">Account</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'account_logout' %}">Log out</a></li>
       {% if request.user.is_superuser %}
       <li>
-        <a class="dropdown-item" href="{% url 'add_item' %}">Add items</a>
+        <a class="dropdown-item text-center" href="{% url 'add_item' %}">Add items</a>
       </li>
       {% endif %}
 
       {% else %}
-      <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
-      <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'account_login' %}">Log in</a></li>
+      <li><a class="dropdown-item text-center" href="{% url 'account_signup' %}">Register</a></li>
 
       {% endif %}
     </ul>

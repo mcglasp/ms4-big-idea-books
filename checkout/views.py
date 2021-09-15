@@ -54,7 +54,7 @@ def checkout(request):
         }
 
         order_form = OrderForm(form_values)
-
+        print(form_values)
         if order_form.is_valid():
             order = order_form.save()
             order.save()
@@ -122,6 +122,7 @@ def checkout(request):
 def order_confirmation(request, order_number):
    
     order = get_object_or_404(Order, order_number=order_number)
+    print(order)
     
     save_info = request.session.get('save_info')
 
@@ -144,7 +145,9 @@ def order_confirmation(request, order_number):
 
             if user_profile_form.is_valid():
                 user_profile_form.save()
-
+    messages.success(request, f'Order successfully processed! \
+        Your order number is {order_number}. A confirmation \
+        email will be sent to {order.email_address}.')
     if 'basket' in request.session:
         del request.session['basket']
 

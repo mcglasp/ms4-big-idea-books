@@ -55,16 +55,17 @@
 </head>
 
 <body>
-  {% block header %}
   {% include 'includes/user_account.html' %}
+  {% block header %}
   <header class="zig-zag">
     <h1 id=logo-header><a href="/">Big Idea Books</a> </h1>
     <h3>curated non-fiction for kids</h3>
   </header>
+  {% endblock %}
+  <main>
   {% include 'includes/nav.html' %}
 
 
-  {% endblock %}
   {% block subhead %}
   {% endblock %}
   {% block messages %}
@@ -85,7 +86,7 @@
   {% block content %}
   {% endblock %}
 
-
+</main>
 
   {% block postloadjs %}
   {{ block.super }}
@@ -100,13 +101,17 @@
     $(window).scroll(function () {
       var scrollPos = $(document).scrollTop();
       // console.log(scrollPos)
-      if (scrollPos > 208 ) {
+      if (scrollPos > 185 ) {
         $('#user-admin-box-top').addClass('visually-hidden')
         $('#user-admin-box-lower').removeClass('visually-hidden')
+        $('#lower-nav').css('z-index', '9999')
+
       }
-      if (scrollPos < 208 ) {
+      if (scrollPos < 185 ) {
         $('#user-admin-box-top').removeClass('visually-hidden')
         $('#user-admin-box-lower').addClass('visually-hidden')
+        $('#lower-nav').css('z-index', 'unset')
+
       }
     });
   </script>

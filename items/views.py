@@ -4,9 +4,12 @@ from django.db.models import F, Q, Func
 from django.db.models.functions import Lower
 from django.contrib import messages
 
+from basket.views import remove_from_basket
+
 from .models import Genre, Item, Author, Age_range
 from .forms import ItemForm, AuthorDataForm
 from .templatetags.price_tools import calc_discounted_price
+from softdelete.models import SoftDeleteRecord
 
 import json
 
@@ -52,12 +55,12 @@ def all_items(request):
         if 'genres' in request.GET and 'ages' not in request.GET:
             genres = request.GET['genres'].split(',')
             items = items.filter(genre__name__in=genres)
-            narrow_age = True
+            narrow_age = None if items.count() == 0 else True
         
         if 'ages' in request.GET and 'genres' not in request.GET:
             ages = request.GET['ages'].split(',')
             items = items.filter(age_range__age_range__in=ages)
-            narrow_genre = True
+            narrow_genre = None if items.count() == 0 else True
 
         if 'genres_narrow' in request.GET:
             genres = request.GET['genres_narrow'].split(',')
@@ -190,8 +193,9 @@ def delete_item(request, item_id):
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only superusers can do that.')
         return redirect(reverse('home'))
-        
+   
     item = get_object_or_404(Item, pk=item_id)
+    print(item_id)
     item.delete()
     messages.success(request, 'Product successfully deleted!')
 

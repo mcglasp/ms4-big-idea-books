@@ -59,7 +59,7 @@ form.addEventListener('submit', function (ev) {
         'save_info': saveInfo,
     };
     let url = '/checkout/cache_checkout_data/';
-
+    
     $.post(url, postData).done(function () {
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
@@ -73,8 +73,10 @@ form.addEventListener('submit', function (ev) {
                         line1: $.trim(form.street_address2.value),
                         city: $.trim(form.town_or_city.value),
                     }
+
                 }
             },
+
             shipping: {
                 name: $.trim(form.customer_name.value),
                 phone: $.trim(form.phone_number.value),
@@ -85,7 +87,8 @@ form.addEventListener('submit', function (ev) {
                     postal_code: $.trim(form.postcode.value),
                 }
             },
-        }).then(function(result) {
+
+        }).then(function (result) {
             if (result.error) {
                 let errorDiv = document.getElementById('card-errors');
                 let html = `
@@ -100,13 +103,15 @@ form.addEventListener('submit', function (ev) {
                     'disabled': false
                 });
                 $('#submit-button').attr('disabled', false);
+
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     form.submit();
                 }
             }
         });
-    }).fail(function() {
+
+    }).fail(function () {
         // just reload the page, the error will be in django messages
         location.reload();
     })

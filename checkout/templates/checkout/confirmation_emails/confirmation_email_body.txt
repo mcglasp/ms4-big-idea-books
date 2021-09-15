@@ -1,0 +1,10 @@
+Hello {{ order.customer_name }}
+
+This is to confirm that we've received your order. Please check the details below:
+
+Order Number: {{ order.order_number }}
+Order summary:
+
+
+
+Many thanks for shopping at Big Idea Books, we look forward to seeing you again soon.

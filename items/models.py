@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from .utils import create_new_sku, format_discount
 
-
 # Create your models here.
 
 class Genre(models.Model):
@@ -67,5 +66,3 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
-    
-
