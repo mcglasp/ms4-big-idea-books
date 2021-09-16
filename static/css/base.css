@@ -450,6 +450,47 @@ h1#logo-header {
   top: -20px;
 }
 
+#logo-icon-left, #logo-icon-right, #logo-icon-middle {
+  /* position: relative;
+right: 100px;
+top: 20px; */
+font-size: 1rem;
+}
+
+#logo-icon-right {
+  position: relative;
+  bottom: 45px;
+}
+
+#header-icons-left {
+  position: absolute;
+  left: 25px;
+  bottom: -5px;
+  padding: 0;
+}
+
+#header-icons-right {
+  position: absolute;
+  right: 25px;
+  bottom: -5px;
+  padding: 0;
+}
+
+#header-icons-left i.fa-motorcycle, #header-icons-right i.fa-tree {
+position: relative;
+bottom: -2px;
+padding-right: 5px;
+}
+
+#header-icons-right i.fa-tree {
+bottom: 0px;
+}
+
+#header-icons-right i.fa-tree, #header-icons-left i.fa-truck-monster {
+  font-size: 1.6rem;
+}
+
+
 h1#logo-header a {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+58,ffffff+100&1+43,0+96 */
   background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 43%, rgba(255, 255, 255, 0.72) 58%, rgba(255, 255, 255, 0) 96%, rgba(255, 255, 255, 0) 100%);

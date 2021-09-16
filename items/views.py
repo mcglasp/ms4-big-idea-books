@@ -9,7 +9,6 @@ from basket.views import remove_from_basket
 from .models import Genre, Item, Author, Age_range
 from .forms import ItemForm, AuthorDataForm
 from .templatetags.price_tools import calc_discounted_price
-from softdelete.models import SoftDeleteRecord
 
 import json
 
@@ -115,7 +114,7 @@ def add_item(request):
         form = ItemForm(request.POST, request.FILES)
         title = request.POST.get("title")
         description = request.POST.get("description")
-        
+
         if form.is_valid():
             check_item = Item.objects.filter(title=title, description=description)
             if check_item.exists() is True:
@@ -136,6 +135,7 @@ def add_item(request):
                         author_to_attach = name
                         instance.author.add(author_to_attach)
                         messages.success(request, f"{title} has been added to the shop")
+                return redirect('add_item')
         else:
             messages.error(request, "There's something wrong with your form, please check for errors.")
             return redirect(reverse('add_item'))

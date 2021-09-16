@@ -31,7 +31,16 @@ class ItemForm(forms.ModelForm):
         self.fields['title'].label = "<span class='bold'>Title. </span>"
         self.fields['description'].label = "<span class='bold'>Description  </span>"
         self.fields['price'].label = "<span class='bold'>Price  </span>"
-        self.fields['image'].label = "<span class='bold'>Select an image  </span>"
+        self.fields['price'].widget.attrs['min'] = 0.00
+        self.fields['set_sale_price'].widget.attrs['min'] = 0.00
+        self.fields['discount'].widget.attrs['min'] = 0
+        self.fields['image'].label = "<span class='bold'>Select an image  </span>"            
+        # self.fields['price'].widget.attrs['onfocus'] = "this.value=''"
+        # # if self.fields['price'] == '0.00' else self.fields['price']
+        
+
+        # self.fields['set_sale_price'].widget.attrs['onfocus'] = "this.value=''"
+        # self.fields['discount'].widget.attrs['onfocus'] = "this.value=''"
 
 
 
