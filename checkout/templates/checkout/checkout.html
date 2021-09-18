@@ -10,56 +10,8 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <div class="card m-3">
-                <div class="card-header zig-zag">
-                    <div class="white-fade"></div>
-                    <h5 id="top-layer">Your details</h5>
-                </div>
-                <div class="card-body">
-                    <p>{{ payment_process_info }}</p>
-                    <p>{{ profile.default_phone_number }}</p>
-                    <form action="{% url 'checkout' %}" method="POST" id="payment-form">
-                        {% csrf_token %}
-                        <p>{{ order_form.customer_name | as_crispy_field }}</p>
-                        <p>{{ order_form.phone_number | as_crispy_field }}</p>
-                        <p>{{ order_form.email_address | as_crispy_field }}</p>
-                        <p>{{ order_form.street_address1 | as_crispy_field }}</p>
-                        <p>{{ order_form.street_address2 | as_crispy_field }}</p>
-                        <p>{{ order_form.town_or_city | as_crispy_field }}</p>
-                        <p>{{ order_form.postcode | as_crispy_field }}</p>
-                        <fieldset class="pb-3">
-                            {% if user.is_authenticated %}
-                            <div class="tickbox-control">
-                                <label class="form-check-label" for="id-save-info">Save this delivery information to my
-                                    profile</label>
-                                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info"
-                                    name="save-info" checked>
-                            </div>
-                            {% else %}
-                            <label class="form-check-label" for="id-save-info">
-                                <a id="pay-create" class="text-info" href="{% url 'account_signup' %}">Create an
-                                    account</a> or
-                                <a id="pay-login" class="text-info" href="{% url 'account_login' %}">log in</a> to save
-                                this information
-                            </label>
-                            {% endif %}
-                            <div class="payment">
-                                <legend class="fieldset-label small text-black w-auto pt-3 pb-3">Payment</legend>
-                                <!-- A Stripe card element will go here -->
-                                <div class="mb-3" id="card-element"></div>
-                                <!-- Used to display form errors -->
-                                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                            </div>
-                        </fieldset>
-                        <button id="submit-button" type="submit">Confirm & Pay</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    
     {% if basket_items|length > 0 %}
-    <div class="col-6">
+    <div class="col-sm-12 col-md-12 col-lg-6">
         <div class="card m-3">
             <div class="card-header zig-zag">
                 <div class="white-fade"></div>
@@ -77,31 +29,75 @@
                         </div>
                     </div>
                     {% for item in basket_items %}
-
                     <div class="row">
                         <div class="col-8">
-                            {{ item.item.title }}
+                            <a
+                    href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</a>
                         </div>
                         <div class="col-4 d-flex justify-content-end">
                             {{ item.quantity }}
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <div>Standard UK delivery: £{{ delivery_cost }}</div>
-                        <div>Total: £{{ grand_total }}</div>
-                    </div>
-
+                <hr>
+                <div class="row d-flex justify-content-end flex-column align-items-end pr-4 pt-2">
+                        <h6 class="col-6 d-flex justify-content-between" id="uk-delivery">Standard UK delivery: <strong>£{{ delivery_cost }}</strong></h6>
+                        <h5 class="col-6 d-flex justify-content-between" id="checkout-total">Total: <strong>£{{ grand_total }}</strong></h5>
                 </div>
-                {% else %}
-                <p>There are no items in your basket.</p>
             </div>
-            {% endif %}
         </div>
     </div>
+    <div class="col-sm-12 col-md-12 col-lg-6">
+        <div class="card m-3">
+            <div class="card-header zig-zag">
+                <div class="white-fade"></div>
+                <h5 id="top-layer">Your details</h5>
+            </div>
+            <div class="card-body">
+                <p>{{ payment_process_info }}</p>
+                <p>{{ profile.default_phone_number }}</p>
+                <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                    {% csrf_token %}
+                    <p>{{ order_form.customer_name | as_crispy_field }}</p>
+                    <p>{{ order_form.phone_number | as_crispy_field }}</p>
+                    <p>{{ order_form.email_address | as_crispy_field }}</p>
+                    <p>{{ order_form.street_address1 | as_crispy_field }}</p>
+                    <p>{{ order_form.street_address2 | as_crispy_field }}</p>
+                    <p>{{ order_form.town_or_city | as_crispy_field }}</p>
+                    <p>{{ order_form.postcode | as_crispy_field }}</p>
+                    <fieldset class="pb-3">
+                        {% if user.is_authenticated %}
+                        <div class="tickbox-control">
+                            <label class="form-check-label" for="id-save-info">Save this delivery information to my
+                                profile</label>
+                            <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info"
+                                name="save-info" checked>
+                        </div>
+                        {% else %}
+                        <label class="form-check-label" for="id-save-info">
+                            <a id="pay-create" class="text-info" href="{% url 'account_signup' %}">Create an
+                                account</a> or
+                            <a id="pay-login" class="text-info" href="{% url 'account_login' %}">log in</a> to save
+                            this information
+                        </label>
+                        {% endif %}
+                        <div class="payment">
+                            <legend class="fieldset-label small text-black w-auto pt-3 pb-3">Payment</legend>
+                            <!-- A Stripe card element will go here -->
+                            <div class="mb-3" id="card-element"></div>
+                            <!-- Used to display form errors -->
+                            <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                        </div>
+                    </fieldset>
+                    <button id="submit-button" type="submit">Confirm & Pay</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>There are no items in your basket.</p>
+{% endif %}
 </div>
 </div>
 <div id="loading-overlay">

@@ -13,10 +13,11 @@
             {% if basket_items|length > 0 %}
             {% for item in basket_items %}
             <div class="row line-item">
-                <div class="col-2">
-                    <img class="line-item-img" src="/media/{{ item.item.image }}" alt="">
+                <div class="col-md-2 col-sm-4"><a
+                    href="{% url 'item_detail' item.item.id %}">
+                    <img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></a>
                 </div>
-                <div class="col-7">
+                <div class="col-md-6 col-sm-12">
                     <p class="line-title"><strong><a
                                 href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</strong></a>
                         {% for author in item.item.author.all %}
@@ -40,7 +41,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-md-3 col-sm-12">
                     <div class="subtotal">Subtotal:</div>
                     <div class="price">£{{ item.price | line_total:item.quantity | floatformat:2}}</div>
                 </div>

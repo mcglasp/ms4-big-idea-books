@@ -24,7 +24,7 @@
                                 </h5>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
                                             {{ form.title | as_crispy_field }}
                                             <p class="bold">Author/s</p>
                                             <div class="inline-author-input">
@@ -66,7 +66,7 @@
                                             {{ form.age_range | as_crispy_field }}
                                             {{ form.image | as_crispy_field }}
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
                                             {{ form.description | as_crispy_field }}
                                             {{ form.price | as_crispy_field }}
                                             {{ form.discount | as_crispy_field }}
@@ -77,7 +77,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="d-grid gap-2 col-6 mx-auto">
+                                            <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto">
                                                 <button type="submit" class="btn btn-secondary standard-button"
                                                     id="add-item-btn">Update book listing</button>
                                                 <a href="{% url 'items' %}" id="add-cancel-btn"

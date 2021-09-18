@@ -33,7 +33,7 @@
           <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=science">Science</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=ages">Preschool</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=preschool">Preschool</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7">5-7</a>
@@ -61,11 +61,11 @@
         <p class="dropdown-header">Your basket:</p>
         <div class="dropdown-divider"></div>
         {% for item in basket_items %}
-        <p class="text-truncate">{{ item.item.title }}</p>
+        <a href="{% url 'item_detail' item.item.id %}" class="basket-drop-line p-1"><span class="text-truncate" >{{ item.item.title }}</span><span>£{{ item.item.final_price }}</span></a>
         {% endfor %}
-        <p>£{{ basket_total }}</p>
-        <li><a class="dropdown-item text-center" href="{% url 'view_basket' %}">View basket</a></li>
-        <li><a class="dropdown-item text-center" href="{% url 'checkout' %}">Go to checkout</a></li>
+        <p>£{{ basket_total | floatformat:2 }}</p>
+        <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'view_basket' %}">View basket</a></li>
+        <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}">Go to checkout</a></li>
       </ul>
     </div>
 

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.db.models import F, Q, Func
 from django.db.models.functions import Lower
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from basket.views import remove_from_basket
 
@@ -49,6 +50,12 @@ def all_items(request):
             if sort_by == 'quantity_sold':
                 sort_by = '-quantity_sold'
 
+            if sort_by == 'newly_listed':
+                sort_by = '-date_added'
+
+            if sort_by == 'featured':
+                sort_by = '-featured'
+
             items = items.order_by(sort_by)
 
         if 'genres' in request.GET and 'ages' not in request.GET:
@@ -76,8 +83,8 @@ def all_items(request):
         if 'q' in request.GET:
             user_query = request.GET['q']
             
-            user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query)
-            items = items.filter(user_queries).distinct()
+            user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query) | Q(age_range__age_range__icontains=user_query)
+            items = items.filter(user_queries).distinct() 
 
     context = {
         'items': items,
@@ -107,7 +114,12 @@ def item_detail(request, item_id):
     return render(request, 'items/item_detail.html', context)
 
 
+@login_required
 def add_item(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only staff members can do that.')
+        return redirect(reverse('home'))
+    
     authors_select = Author.objects.all()
 
     if request.method == 'POST':
@@ -137,8 +149,10 @@ def add_item(request):
                         messages.success(request, f"{title} has been added to the shop")
                 return redirect('add_item')
         else:
+            
+            form = ItemForm(request.POST, request.FILES)
             messages.error(request, "There's something wrong with your form, please check for errors.")
-            return redirect(reverse('add_item'))
+            
     else:
         form = ItemForm()
 
@@ -149,8 +163,11 @@ def add_item(request):
 
     return render(request, 'items/add_item.html', context)
 
-
+@login_required
 def update_item(request, item_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only staff members can do that.')
+        return redirect(reverse('home'))
 
     authors_select = Author.objects.all()
 
@@ -188,7 +205,7 @@ def update_item(request, item_id):
     
     return render(request, template, context)
 
-
+@login_required
 def delete_item(request, item_id):
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only superusers can do that.')

@@ -2,6 +2,8 @@ from django import forms
 from django.forms import ModelChoiceField
 from .widgets import CustomClearableFileInput
 from .models import Item, Genre, Age_range, Author
+from django.core.exceptions import ValidationError
+
 
 
 class ItemForm(forms.ModelForm):
@@ -26,21 +28,22 @@ class ItemForm(forms.ModelForm):
         self.fields['genre'].label = "<span class='bold'>Genre</span> <span class='italic'> Hold down Cmd to select more than one  </span>"
         self.fields['genre'].required = True
         self.fields['age_range'].label = "<span class='bold'>Target age</span> <span class='italic'> Hold down Cmd to select more than one  </span>"
-        self.fields['discount'].label = "<span class='bold'>Discount in %</span> <span class='italic'> Enter a percentage. </span>"
+        self.fields['discount'].label = "<span class='bold'>Discount in %</span> <span class='italic'> Enter a percentage </span>"
         self.fields['set_sale_price'].label = "<span class='bold'>Fixed sale price</span> <span class='italic'> Enter a fixed sale amount to override any discount applied  </span>"
-        self.fields['title'].label = "<span class='bold'>Title. </span>"
+        self.fields['title'].label = "<span class='bold'>Title </span>"
         self.fields['description'].label = "<span class='bold'>Description  </span>"
         self.fields['price'].label = "<span class='bold'>Price  </span>"
         self.fields['price'].widget.attrs['min'] = 0.00
+        self.fields['price'].widget.attrs['min'] = 0.00
         self.fields['set_sale_price'].widget.attrs['min'] = 0.00
+        self.fields['set_sale_price'].required = False
         self.fields['discount'].widget.attrs['min'] = 0
-        self.fields['image'].label = "<span class='bold'>Select an image  </span>"            
-        # self.fields['price'].widget.attrs['onfocus'] = "this.value=''"
-        # # if self.fields['price'] == '0.00' else self.fields['price']
-        
+        self.fields['discount'].widget.attrs['default'] = 0
+        self.fields['discount'].required = False
+        self.fields['image'].label = "<span class='bold'>Select an image  </span>"    
 
-        # self.fields['set_sale_price'].widget.attrs['onfocus'] = "this.value=''"
-        # self.fields['discount'].widget.attrs['onfocus'] = "this.value=''"
+
+
 
 
 

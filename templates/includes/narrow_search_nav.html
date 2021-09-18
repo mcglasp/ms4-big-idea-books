@@ -1,6 +1,6 @@
 {% if narrow_age is True %}
 <p>Narrow your search by age:</p>
-<div class="narrow-search-buttons">
+<div class="narrow-search-buttons age">
   <a class="btn btn-outline-primary" aria-labelledby=""
     href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=preschool">Preschool</a>
   <a class="btn btn-outline-success" aria-labelledby=""
@@ -13,7 +13,7 @@
 {% endif %}
 {% if narrow_genre is True %}
 <p>Narrow your search by subject:</p>
-<div class="narrow-search-buttons">
+<div class="narrow-search-buttons genre">
   <a class="square-button" aria-labelledby=""
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=animals">
     <div class="text-orange">

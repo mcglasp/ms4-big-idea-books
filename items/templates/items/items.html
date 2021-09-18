@@ -6,12 +6,12 @@
 
 <div class="container">
     <div class="row {% if narrow_age or narrow_genre %} narrow-search {% endif %} sort-only">
-        <div class="col-7">
+        <div class="col-md-7 col-sm-12">
             {% if narrow_age or narrow_genre %}
             {% include 'includes/narrow_search_nav.html' %}
             {% endif %}
         </div>
-        <div class="col-5">
+        <div class="col-md-5 col-sm-6 pt-2">
             {% include 'includes/sort_field.html' %}
         </div>
     </div>
@@ -30,19 +30,14 @@
                     </small>
                 </div>
                 {% endif %}
-                <img src="/media/{{ item.image }}" class="card-img-top zig-zag" alt="...">
+                <a href="{% url 'item_detail' item.id %}"><img src="/media/{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.id %}">
                         <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong>
+                            <span class="item-card-author">by</span>
                             {% for author in item.author.all %}
                             <span class="item-card-author">
-                                {% if forloop.first %}
-                                by
-                                {% endif %}
-                                <!-- {% if forloop.last %} -->
-                                & {{ author }}
-                                {% if forloop.last %}{% if not forloop.first %} & {{ author }}{% endif %}{% else %} ,
-                                {% endif %}{% endif %}
+                               {{ author }}{% if not forloop.last %}, {% endif %}
                             </span>
                             {% endfor %}
                         </p>

@@ -13,9 +13,9 @@
                     <h5 class="card-header">Add a book to the shop</h5>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 {{ form.title | as_crispy_field }}
-                                <p class="bold">Author/s</p>
+                                <p class="bold">Author/s *</p>
                                 <p class="italic">Select an existing author or add a new one in the fields below.</p>
                                 <div class="inline-author-input">
                                     <select id="id_authors" class="form-select">
@@ -39,27 +39,22 @@
                                         author</button>
                                 </div>
                                 <p class="bold">Selected Authors</p>
-
                                 <div id="store-authors" class="form-control" readonly></div>
                                 <textarea class="visually-hidden" id="hidden-authors" type="textarea" name="authors"
                                     required></textarea>
-
                                 {{ form.genre | as_crispy_field }}
                                 {{ form.age_range | as_crispy_field }}
                                 {{ form.image | as_crispy_field }}
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 {{ form.description | as_crispy_field }}
                                 {{ form.price | as_crispy_field }}
                                 {{ form.discount | as_crispy_field }}
                                 {{ form.set_sale_price | as_crispy_field }}
-
                                 {{ form.featured | as_crispy_field }}
-
                             </div>
-
                             <div class="row">
-                                <div class="d-grid gap-2 col-6 mx-auto">
+                                <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto">
                                     <button type="submit" class="btn btn-secondary standard-button"
                                         id="add-item-btn">Add Book To Shop</button>
                                     <a href="{% url 'items' %}" id="add-cancel-btn"
@@ -67,7 +62,6 @@
                                 </div>
                             </div>
             </form>
-
         </div>
     </div>
 </div>
@@ -133,89 +127,90 @@
         document.getElementById('hidden-authors').innerHTML = replaced
     }
 
-
-
-    $(document).ready(function() {
+    $(document).ready(function () {
         let set_sale_price = $('#id_set_sale_price')
         let discount = $('#id_discount')
         discount.prop('disabled', true);
         set_sale_price.prop('disabled', true);
-  
 
-    $('#id_price').focusin(function () {
-        let price_field = $('#id_price')
-        if (price_field.val() == '0.0') {
-            price_field.val("")
-        } else if (price_field.val() == '0.00') {
-            price_field.val("")
-        } else if (price_field.val() == '0'){
-            price_field.val('0.00')
-        } else {
-            let updated_price = price_field.val()
-            price_field.val(updated_price)
-        }
+
+        $('#id_price').focusin(function () {
+            let price_field = $('#id_price')
+            if (price_field.val() == '0.0') {
+                price_field.val("")
+            } else if (price_field.val() == '0.00') {
+                price_field.val("")
+            } else if (price_field.val() == '0') {
+                price_field.val('0.00')
+            } else {
+                let updated_price = price_field.val()
+                price_field.val(updated_price)
+            }
+        })
+
+        $('#id_price').blur(function () {
+            let price_field = $('#id_price')
+            if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() ==
+                    "0")) {
+                price_field.val("0.00")
+                discount.val('0')
+                set_sale_price.val('0.00')
+                discount.prop('disabled', true);
+                set_sale_price.prop('disabled', true);
+            } else {
+                let updated_price = price_field.val()
+                price_field.val(updated_price)
+                discount.prop('disabled', false);
+                set_sale_price.prop('disabled', false);
+            }
+        })
+
+
+
+        $('#id_discount').focusin(function () {
+            let discount = $('#id_discount')
+            if ((discount.val() == '0') || (discount.val() == '0.00')) {
+                discount.val("")
+            } else {
+                let updated_discount = discount.val()
+                discount.val(updated_discount)
+            }
+        })
+
+        $('#id_discount').blur(function () {
+            let discount = $('#id_discount')
+            if (discount.val() == '') {
+                discount.val("0")
+            } else {
+                let updated_discount = discount.val()
+                discount.val(updated_discount)
+            }
+        })
+
+        $('#id_set_sale_price').blur(function () {
+            let set_sale_price = $('#id_set_sale_price')
+            if (set_sale_price.val() == '') {
+                set_sale_price.val("0.00")
+            } else {
+                let updated_sale_price = set_sale_price.val()
+                set_sale_price.val(updated_sale_price)
+            }
+        })
+
+        $('#id_set_sale_price').focusin(function () {
+            let set_sale_price = $('#id_set_sale_price')
+            if (set_sale_price.val() == '0.0') {
+                set_sale_price.val("")
+            } else if (set_sale_price.val() == '0.00') {
+                set_sale_price.val("")
+            } else if (set_sale_price.val() == '0') {
+                set_sale_price.val('0.00')
+            } else {
+                let updated_sale_price = set_sale_price.val()
+                set_sale_price.val(updated_sale_price)
+            }
+        })
+
     })
-
-    $('#id_price').blur(function () {
-        let price_field = $('#id_price')
-        if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() == "0")) {
-            price_field.val("0.00")
-            discount.val('0')
-            set_sale_price.val('0.00')
-            discount.prop('disabled', true);
-            set_sale_price.prop('disabled', true);
-        } else {
-            let updated_price = price_field.val()
-            price_field.val(updated_price)
-            discount.prop('disabled', false);
-            set_sale_price.prop('disabled', false);
-        }
-    })
-
-    $('#id_discount').focusin(function () {
-        let discount = $('#id_discount')
-        if ((discount.val() == '0') || (discount.val() == '0.00')){
-            discount.val("")
-        } else {
-            let updated_discount = discount.val()
-            discount.val(updated_discount)
-        }
-    })
-
-    $('#id_discount').blur(function () {
-        let discount = $('#id_discount')
-        if (discount.val() == '') {
-            discount.val("0")
-        } else { 
-            let updated_discount = discount.val()
-            discount.val(updated_discount)
-        }
-    })
-
-    $('#id_set_sale_price').blur(function () {
-        let set_sale_price = $('#id_set_sale_price')
-        if (set_sale_price.val() == '') {
-            set_sale_price.val("0.00")
-        } else {
-            let updated_sale_price = set_sale_price.val()
-            set_sale_price.val(updated_sale_price)
-        }
-    })
-
-    $('#id_set_sale_price').focusin(function () {
-        let set_sale_price = $('#id_set_sale_price')
-        if (set_sale_price.val() == '0.0') {
-            set_sale_price.val("")
-        } else if (set_sale_price.val() == '0.00') {
-            set_sale_price.val("")
-        } else if (set_sale_price.val() == '0'){
-            set_sale_price.val('0.00')
-        } else {
-            let updated_sale_price = set_sale_price.val()
-            set_sale_price.val(updated_sale_price)
-        }
-    })
-
-})
 </script>
 {% endblock %}

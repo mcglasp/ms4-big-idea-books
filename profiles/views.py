@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import UserProfile
 from .forms import UserProfileForm
@@ -8,8 +9,8 @@ from .forms import UserProfileForm
 from items.models import Item
 
 
+@login_required
 def profile(request):
-
     # check for any previous orders
     profile = get_object_or_404(UserProfile, user=request.user)
     orders = None

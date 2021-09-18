@@ -12,28 +12,23 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-8">
             <div class="card">
+                {% if request.user.is_authenticated %}
+                {% if user.is_superuser %}
                 <div class="card-header">
                     <a href="{% url 'update_item' item.id %}">Edit</a> | 
                     <a href="{% url 'delete_item' item.id %}">Delete</a>
                 </div>
-                
+                {% endif %}
+                {% endif %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                     <p class="title">{{ item.title }}</p>
                     <p class="authors">
-                        {% for author in item.author.all %}
-                        {% if forloop.first %}
                         by
-                        {% endif %}
-                        {% if forloop.length > 1 %}
-                        {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
-                        {% endif %}{% endif %}
-                        {% else %}
-                        {{ author }}
-                        {% endif %}
+                        {% for author in item.author.all %}
+                        {{ author }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
-  
                     <p class="age">                        
                         {% for age in item.age_range.all %}
                         {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
