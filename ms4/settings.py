@@ -63,7 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'basket.contexts.basket_contents',
+                'django.template.context_processors.media',
                 'basket.contexts.basket_contents',
 
             ],
@@ -170,6 +170,8 @@ if 'USE_AWS' in os.environ:
         'Expires': 'Thu, 31 December 2099 20:00:00 GMT',
         'CacheControl': 'max-age=94608000',
     }
+
+    # https://ms4-bigideabooks.s3.eu-west-2.amazonaws.com/media/how_a_plane_works.jpeg
     # Bucket config
     AWS_STORAGE_BUCKET_NAME = 'ms4-bigideabooks'
     AWS_S3_REGION_NAME = 'eu-west-2'
