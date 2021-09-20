@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+    {% for campaign in campaigns %}
+    {{ campaign.campaign_name }}
+    <form action="{% url 'deactivate_campaign' campaign.id %}" method="post">
+      {% csrf_token %}
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="active">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Active</label>
+      </div>
+      <button type="submit">Deactive</button>
+    </form>
+    {% endfor %}
+</div>
+
+{% endblock %}

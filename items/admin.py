@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Genre, Author, Age_range, Item
+from .models import Genre, Author, Age_range, Item, Campaign
 
 # Register your models here.
 
@@ -70,6 +70,7 @@ class ItemAdmin(admin.ModelAdmin):
         'price',
         'discount',
         'set_sale_price',
+        'original_sale_price',
         'final_price',
         'quantity_sold',
         'featured',
@@ -79,6 +80,11 @@ class ItemAdmin(admin.ModelAdmin):
     ordering = ('title', 'date_added',)
 
 
+class CampaignAdmin(admin.ModelAdmin):
+    model = Campaign
+
+
+admin.site.register(Campaign, CampaignAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Age_range, AgeRangeAdmin)

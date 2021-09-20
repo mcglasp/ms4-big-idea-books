@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import ModelChoiceField
+from django.forms import ModelChoiceField, CheckboxSelectMultiple, MultipleChoiceField
 from .widgets import CustomClearableFileInput
-from .models import Item, Genre, Age_range, Author
+from .models import Item, Genre, Age_range, Author, Campaign
 from django.core.exceptions import ValidationError
 
 
@@ -43,12 +43,18 @@ class ItemForm(forms.ModelForm):
         self.fields['image'].label = "<span class='bold'>Select an image  </span>"    
 
 
-
-
-
-
 class AuthorDataForm(forms.ModelForm):
 
     class Meta:
         model = Author
+        fields = '__all__'
+
+
+class CampaignForm(forms.ModelForm):
+    
+    choices = Item.objects.all()
+    included_items = forms.ModelMultipleChoiceField(queryset=choices, widget=forms.CheckboxSelectMultiple, initial=0)
+
+    class Meta:
+        model = Campaign
         fields = '__all__'

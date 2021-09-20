@@ -30,7 +30,7 @@
                     </small>
                 </div>
                 {% endif %}
-                <a href="{% url 'item_detail' item.id %}"><img src="/media/{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
+                <a href="{% url 'item_detail' item.id %}"><img src="MEDIA_URL{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.id %}">
                         <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong>

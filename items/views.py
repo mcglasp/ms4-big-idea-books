@@ -1,21 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.http import HttpResponse
-from django.db.models import F, Q, Func
+from django.db.models import F, Q
 from django.db.models.functions import Lower
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from basket.views import remove_from_basket
-
-from .models import Genre, Item, Author, Age_range
-from .forms import ItemForm, AuthorDataForm
-from .templatetags.price_tools import calc_discounted_price
-
-import json
-
-
-
-# Create your views here.
+from .models import Item, Author, Campaign
+from .forms import ItemForm, AuthorDataForm, CampaignForm
 
 
 def all_items(request):
@@ -126,6 +116,8 @@ def add_item(request):
         form = ItemForm(request.POST, request.FILES)
         title = request.POST.get("title")
         description = request.POST.get("description")
+        genres = request.POST.get('genre')
+    
 
         if form.is_valid():
             check_item = Item.objects.filter(title=title, description=description)
@@ -235,3 +227,52 @@ def add_author(request):
     }
 
     return render(request, 'items/add_author.html', context)
+
+
+def create_campaign(request):
+
+    form = CampaignForm()
+    campaigns = Campaign.objects.all()
+
+    if request.method == "POST":
+        form = CampaignForm(request.POST, request.FILES)
+        included_items = request.POST.getlist('included_items')
+        for item in included_items:
+            instance = Item.objects.get(pk=item)
+            instance.original_sale_price = instance.set_sale_price
+            instance.save(update_fields=['original_sale_price'])
+            instance.set_sale_price = request.POST.get('fixed_price')
+            instance.save(update_fields=['set_sale_price', 'final_price'])
+        form.save()
+        messages.success(request, 'Your campaign has been created.')
+
+    context = {
+        'form': form,
+        'campaigns': campaigns,
+    }
+
+    return render(request, 'items/create_campaign.html', context)
+
+
+def manage_campaigns(request):
+    campaigns = Campaign.objects.all()
+
+    context = {
+        'campaigns': campaigns,
+    }
+
+    return render(request, 'items/manage_campaigns.html', context)
+
+
+def deactivate_campaign(request, campaign_id):
+
+    campaign = get_object_or_404(Campaign, pk=campaign_id)
+    included_items = campaign.included_items.all()
+    print(list(included_items))
+    for item in included_items:
+        instance = Item.objects.get(title=item)
+        instance.set_sale_price = instance.original_sale_price
+        instance.save(update_fields=['set_sale_price', 'final_price'])
+
+    return redirect(reverse('manage_campaigns'))
+
