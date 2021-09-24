@@ -7,7 +7,6 @@ from django.contrib import messages
 def basket_contents(request):
 
     basket = request.session.get('basket', {})
-    print(basket)
     dict_to_compare = basket
     d_keys = dict_to_compare.keys()
 
@@ -27,7 +26,6 @@ def basket_contents(request):
     price = 0
     delivery_cost = settings.STANDARD_DELIVERY_COST
     basket = request.session.get('basket', {})
-    print(basket)
     if basket:
         for item_id, value in basket.items():
             if isinstance(value, int):

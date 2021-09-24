@@ -219,6 +219,7 @@ def update_item(request, item_id):
 @login_required
 def delete_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
+    print(item)
     try:
         item.campaign = None
         item.save()

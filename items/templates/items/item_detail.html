@@ -4,87 +4,113 @@
 
 
 {% block content %}
-
+<!-- MODAL -->
+<div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you really want to delete the item {{ item.title }}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No!
+                    Cancel</button>
+                <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary">Yes, delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
 <div class="container mt-3">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <img id="header-cover" class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ item.image }}" alt="{{ item.name }}">
+            <img id="header-cover" class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ item.image }}"
+                alt="{{ item.name }}">
         </div>
         <div class="col-sm-12 col-md-6 col-lg-8">
             <div class="card">
                 {% if request.user.is_authenticated %}
                 {% if user.is_superuser %}
                 <div class="card-header">
-                    <a href="{% url 'update_item' item.id %}">Edit</a> | 
-                    <a href="{% url 'delete_item' item.id %}">Delete</a>
+                    <a href="{% url 'update_item' item.id %}">Edit</a> |
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}">Delete</a>
                 </div>
                 {% endif %}
                 {% endif %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                    <p class="title">{{ item.title }}</p>
-                    <p class="authors">
-                        by
-                        {% for author in item.author.all %}
-                        {{ author }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
-                    <p class="age">                        
-                        {% for age in item.age_range.all %}
-                        {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
-                        {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
-                        {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
-                        {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
-                        {% endif %}
-                        {% endfor %}
-                    </p>
-                   </li>
-                   <li class="list-group-item">
-                    <p class="description">{{ item.description }}</p>
-                </li>
+                        <p class="title">{{ item.title }}</p>
+                        <p class="authors">
+                            by
+                            {% for author in item.author.all %}
+                            {{ author }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="age">
+                            {% for age in item.age_range.all %}
+                            {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
+                            {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
+                            {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
+                            {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </p>
+                    </li>
                     <li class="list-group-item">
-                    {% if item.set_sale_price != 0.00 %}
-                    <strike>£{{ item.price }}</strike>
-                    <p class="price">Sale Price! £{{ item.set_sale_price }}</p>
-                    {% elif item.discount > 0 %}
-                    <strike>£{{ item.price }}</strike>
-                    <p class="discount">{{ item.discount }}% off! <span class="price">£{{ item.price | calc_discount:item.discount }}</span></p>
-                    {% else %}
-                    <p class="price">£{{ item.price }}</p>
-                    {% endif %}
-                </li>
-                <li class="list-group-item">
-                
-                    <form class="quantity-form form" action="{% url 'add_to_basket' item.id %}" method="POST">
-                        {% csrf_token %}
-                                <span class="form-group quantity mt-3"><strong>Quantity:</strong>
-                                    <input class="form-control qty_input" type="number" name="quantity" value="1"
-                                        min="1" max="99" data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
-                                
-                                <input class="btn btn-secondary standard-button" type="submit" class="" value="Add to Basket">
+                        <p class="description">{{ item.description }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        {% if item.set_sale_price != 0.00 %}
+                        <strike>£{{ item.price }}</strike>
+                        <p class="price">Sale Price! £{{ item.set_sale_price }}</p>
+                        {% elif item.discount > 0 %}
+                        <strike>£{{ item.price }}</strike>
+                        <p class="discount">{{ item.discount }}% off! <span
+                                class="price">£{{ item.price | calc_discount:item.discount }}</span></p>
+                        {% else %}
+                        <p class="price">£{{ item.price }}</p>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+
+                        <form class="quantity-form form" action="{% url 'add_to_basket' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <span class="form-group quantity mt-3"><strong>Quantity:</strong>
+                                <input class="form-control qty_input" type="number" name="quantity" value="1" min="1"
+                                    max="99" data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
+
+                                <input class="btn btn-secondary standard-button" type="submit" class=""
+                                    value="Add to Basket">
                                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                            </span>                            
-                </form>
-                </li>
-            </ul>
+                            </span>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 
 <div class="related-items row mt-3">
-    
+
     <h4>Items related to your search...</h4>
 
-<div class="row zig-zag pt-3 pb-3">
-    {% for related in related_items|slice:":6" %}
-    <div class="col-sm-12 col-md-2">
-    
-        <a class="related-item" href="{% url 'item_detail' related.id %}"><img src="{{ MEDIA_URL }}{{ related.image }}" alt=""></a>
-    
-</div>
-    {% endfor %}
-</div>
+    <div class="row zig-zag pt-3 pb-3">
+        {% for related in related_items|slice:":6" %}
+        <div class="col-sm-12 col-md-2">
+
+            <a class="related-item" href="{% url 'item_detail' related.id %}"><img
+                    src="{{ MEDIA_URL }}{{ related.image }}" alt=""></a>
+
+        </div>
+        {% endfor %}
+    </div>
 </div>
 </div>
 
@@ -113,8 +139,6 @@
     span.onclick = function () {
         modal.style.display = "none";
     }
-
-
 </script>
 
 {% endblock %}

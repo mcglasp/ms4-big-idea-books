@@ -15,8 +15,7 @@ def profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     orders = None
     previous_orders = profile.orders.all()
-    featured_items = Item.objects.filter(featured=True)
-    print(featured_items)
+    featured_items = Item.objects.filter(featured=True).filter(active=True)
 
     if previous_orders:
         previous_orders = True
@@ -27,7 +26,6 @@ def profile(request):
 
     if 'show-all' in request.GET:
         orders = profile.orders.all().order_by('-order_date')
-        print(orders)
 
     if request.method == 'POST':
         info_form = UserProfileForm(request.POST, instance=profile)

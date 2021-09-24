@@ -25,21 +25,22 @@
                     {% for order in orders %}
                     <hr>
                     <table class="table">
-                        <thead class="table-light p-1">
-                            <th scope="col">Order Number:</th>
-                            <th scope="col"> {{ order.order_number }}</th>
-                            <th scope="col">Order Date:</th>
-                            <th scope="col">{{ order.order_date|date:'d-m-Y' }}</th>
-                        </thead>
+                        <div class="list-group-flush">
+                            <p class="list-item m-0 pl-2"><strong>Order Number:</strong> {{ order.order_number }}</p>
+                            <p class="list-item m-0 pl-2"><strong>Order Date:</strong> {{ order.order_date|date:'d-m-Y' }}:</p>
+                        </div>
                         {% for o in order.lineitems.all %}
                         <tr>
-                            <td colspan="3">{{ o.item.title }}</td>
-                            <td colspan="2">{{ o.item.price }}</td>
+                            
+                            <td colspan="2" class="text-truncate d-inline-block m-0">{{ o.item.title }}</td>
+                            <td colspan="1" class="text-muted"> x {{ o.quantity }}</td>
+                            <td colspan="2" class="text-end pr-4">{{ o.line_total }}</td>
                         </tr>
                         {% endfor %}
                         <tr>
-                            <td colspan="3">Total basket cost:</th>
-                            <td colspan="2">{{ order.basket_total }}</th>
+                            
+                            <td colspan="3" class="d-inline-block m-0">Total basket cost:</td>
+                            <td colspan="2" class="text-end">{{ order.basket_total }}</td>
                         </tr>
                     </table>
                     {% endfor %}

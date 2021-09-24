@@ -4,37 +4,15 @@
 
 {% block content %}
 
-                      <!-- MODAL -->
 
-                      <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              ...
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-
-                      <!-- END MODAL -->
 
 <div class="container">
     <div class="row {% if narrow_age or narrow_genre %} narrow-search {% endif %} sort-only">
         {% if 'go_to_offer' in request.path %}
         <div class="col-md-7 col-sm-12">
 
-        <h2>{{ offer.campaign_name }}</h2>
-    </div>
+            <h2>{{ offer.campaign_name }}</h2>
+        </div>
 
         {% else %}
         <div class="col-md-7 col-sm-12">
@@ -52,25 +30,50 @@
         <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
         {% else %}
         {% for item in items %}
-
+        <!-- MODAL -->
+        <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog"
+            aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want to delete the item {{ item.title }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No!
+                            Cancel</button>
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary">Yes, delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL -->
         <div class="col-lg-3 col-md-4 col-sm-12 item">
             {% if item.featured %} <i class="featured-star fas fa-star"></i> {% endif %}
             <div class="item-card card {% if item.featured %} featured {% endif %}">
                 {% if request.user.is_superuser %}
                 <div class="user-controls card-footer">
                     <small class="text-muted"> <a class="" href="{% url 'update_item' item.id %}">Edit</a>
-                        | <a id="{{ item.id }}" href="{% url 'delete_item' item.id %}">Delete</a>
+                        | <a id="{{ item.id }}" href="#" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{ item.id }}">Delete</a>
                     </small>
+
                 </div>
                 {% endif %}
-                <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
+                <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}"
+                        class="card-img-top zig-zag" alt="..."></a>
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.id %}">
                         <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong>
                             <span class="item-card-author">by</span>
                             {% for author in item.author.all %}
                             <span class="item-card-author">
-                               {{ author }}{% if not forloop.last %}, {% endif %}
+                                {{ author }}{% if not forloop.last %}, {% endif %}
                             </span>
                             {% endfor %}
                         </p>
@@ -127,4 +130,3 @@
 </div>
 
 {% endblock %}
-

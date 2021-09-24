@@ -47,7 +47,7 @@ class LineItem(models.Model):
 
     def save(self, *args, **kwargs):
 
-        self.line_total = self.item.price * self.quantity
+        self.line_total = self.item.final_price * self.quantity
         super().save(*args, **kwargs)
 
     def __str__(self):
