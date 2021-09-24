@@ -28,6 +28,8 @@ class AuthorAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
 
+    readonly_fields = ['set_sale_price', 'campaign']
+
     def author_display(self, obj):
         author_list = []
 
@@ -69,12 +71,11 @@ class ItemAdmin(admin.ModelAdmin):
         'age_range_display',
         'price',
         'discount',
-        'set_sale_price',
-        'original_sale_price',
         'final_price',
         'quantity_sold',
         'featured',
-        'date_added',  
+        'date_added',
+        'campaign'
     )
 
     ordering = ('title', 'date_added',)

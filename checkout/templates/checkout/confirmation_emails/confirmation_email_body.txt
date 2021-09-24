@@ -3,7 +3,7 @@ Hello {{ order.customer_name }}
 This is to confirm that we've received your order. Please check the details below:
 
 Order Number: {{ order.order_number }}
-Order summary:
+Order summary
 
 
 

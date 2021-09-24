@@ -1,5 +1,14 @@
+{% load shuffle %}
+
 <div id="specials-and-admin" class="navbar pt-1 pb-1">
-  <div id="special-offers">Special offers go here!</div>
+  {% if current_offers|length > 0 %}
+  {% for offer in current_offers.all|shuffle|slice:':1' %}
+  <div id="special-offers"><a href="{% url 'go_to_offer' offer.id %}">{{ offer.campaign_name }}</a></div>
+  {% endfor %}
+  {% else %}
+
+  <div id="special-offers"><a href="{% url 'latest_items' %}">Browse our latest books!</a></div>
+{% endif %}
   <div id="user-admin-box-top">
     {% if request.user.is_authenticated %}
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
@@ -34,6 +43,9 @@
       {% if request.user.is_superuser %}
       <li>
         <a class="dropdown-item text-center" href="{% url 'add_item' %}">Add items</a>
+      </li>
+      <li>
+        <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>
       </li>
       {% endif %}
 

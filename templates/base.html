@@ -67,8 +67,6 @@
   {% endblock %}
   <main>
   {% include 'includes/nav.html' %}
-
-
   {% block subhead %}
   {% endblock %}
   {% block messages %}
@@ -89,9 +87,10 @@
   {% block content %}
   {% endblock %}
 </main>
-<footer class="container py-5 m-1">
-  <h1>NEED A FOOTER</h1>
-</footer>
+{% block footer %}
+{% include 'includes/footer.html' %}
+{% endblock %}
+
   {% block postloadjs %}
   {{ block.super }}
   <script>

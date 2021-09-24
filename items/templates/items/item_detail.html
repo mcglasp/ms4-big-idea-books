@@ -8,7 +8,7 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <img id="header-cover" class="card-img-top img-fluid" src="/media/{{ item.image }}" alt="{{ item.name }}">
+            <img id="header-cover" class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ item.image }}" alt="{{ item.name }}">
         </div>
         <div class="col-sm-12 col-md-6 col-lg-8">
             <div class="card">
@@ -80,7 +80,7 @@
     {% for related in related_items|slice:":6" %}
     <div class="col-sm-12 col-md-2">
     
-        <a class="related-item" href="{% url 'item_detail' related.id %}"><img src="/media/{{ related.image }}" alt=""></a>
+        <a class="related-item" href="{% url 'item_detail' related.id %}"><img src="{{ MEDIA_URL }}{{ related.image }}" alt=""></a>
     
 </div>
     {% endfor %}
@@ -113,6 +113,8 @@
     span.onclick = function () {
         modal.style.display = "none";
     }
+
+
 </script>
 
 {% endblock %}

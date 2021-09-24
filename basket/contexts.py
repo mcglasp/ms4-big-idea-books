@@ -7,28 +7,27 @@ from django.contrib import messages
 def basket_contents(request):
 
     basket = request.session.get('basket', {})
+    print(basket)
     dict_to_compare = basket
-
     d_keys = dict_to_compare.keys()
 
 # Check for deleted database items in existing basket
     for key in list(d_keys):
-        is_in_db = Item.objects.filter(id=key).exists()
+        is_in_db = Item.objects.filter(id=key).filter(active=True).exists()
         if is_in_db:
             continue
         else:
             dict_to_compare.pop(key)
             messages.error(request, "An item in your basket has been deleted as it is not currently available.")
   
-    dict_to_compare = basket
-
+    basket = dict_to_compare
     basket_items = []
     total_items = 0
     total = 0
     price = 0
     delivery_cost = settings.STANDARD_DELIVERY_COST
     basket = request.session.get('basket', {})
-     
+    print(basket)
     if basket:
         for item_id, value in basket.items():
             if isinstance(value, int):

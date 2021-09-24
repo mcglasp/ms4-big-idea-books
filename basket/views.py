@@ -13,19 +13,24 @@ def view_basket(request):
 def add_to_basket(request, item_id):
 
     item = Item.objects.get(pk=item_id)
-    quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url')
-    basket = request.session.get('basket', {})
+    if item.active:
+        redirect_url = request.POST.get('redirect_url')
+        quantity = int(request.POST.get('quantity'))
+        basket = request.session.get('basket', {})
 
-    if item_id in list(basket.keys()):
-        basket[item_id] += quantity
-    else:
-        basket[item_id] = quantity
+        if item_id in list(basket.keys()):
+            basket[item_id] += quantity
+        else:
+            basket[item_id] = quantity
     
-    messages.success(request, f'{item.title} has been added to your basket.')
-    request.session['basket'] = basket
-    
-    return redirect(redirect_url)
+        messages.success(request, f'{item.title} has been added to your basket.')
+        request.session['basket'] = basket
+        return redirect(redirect_url)
+
+    else: 
+        messages.error(request, f'Sorry, {item.title} is not currently available.')
+        return redirect('items')
+
 
 
 def update_quantity(request, item_id):

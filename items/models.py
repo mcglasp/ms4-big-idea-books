@@ -45,12 +45,13 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     discount = models.DecimalField(max_digits=2, decimal_places=0, default=0)
     set_sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    original_sale_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     final_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=False, editable=False)
     quantity_sold = models.DecimalField(
         max_digits=6, decimal_places=0, default=0)
     featured = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now)
+    campaign = models.ForeignKey('Campaign', on_delete=models.CASCADE, null=True)
+    active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if self.set_sale_price != 0.00:
@@ -72,11 +73,8 @@ class Item(models.Model):
 class Campaign(models.Model):
 
     campaign_name = models.CharField(max_length=50, null=False, blank=False, default='Special Offer')
-    included_items = models.ManyToManyField(Item, blank=False)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     fixed_price = models.DecimalField(max_digits=6, blank=True, null=True, decimal_places=2)
-    multibuy = models.BooleanField(default=False)
-
 
     def __str__(self):
 

@@ -3,7 +3,7 @@ from django.db.models import F, Q
 from django.db.models.functions import Lower
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.db import IntegrityError
 from .models import Item, Author, Campaign
 from .forms import ItemForm, AuthorDataForm, CampaignForm
 
@@ -19,7 +19,7 @@ def all_items(request):
     narrow_genre = None
     user_query = None
     sort_by = None
-
+    
     if request.GET:
         if 'sort' in request.GET:
             sort_by = request.GET['sort']
@@ -76,6 +76,7 @@ def all_items(request):
             user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query) | Q(age_range__age_range__icontains=user_query)
             items = items.filter(user_queries).distinct() 
 
+    items = items.filter(active=True)
     context = {
         'items': items,
         'genres': genres,
@@ -89,12 +90,38 @@ def all_items(request):
     return render(request, 'items/items.html', context)
     
 
+def latest_items(request):
+    items = Item.objects.filter(active=True).order_by('-date_added')[:10]
+    context = {
+        "items": items
+    }
+
+    return render(request, 'items/items.html', context)
+
+
+def go_to_offer(request, offer_id):
+
+    items = Item.objects.filter(campaign__pk=offer_id).filter(active=True)
+ 
+    context = {
+        'items': items,
+    }
+
+    return render(request, 'items/items.html', context)
+
+
+
 def item_detail(request, item_id):
-    """ View the selected item """
     
     item = get_object_or_404(Item, pk=item_id)
-    related_lookup = item.genre.all()[0]
-    related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id)
+
+    if item.active:
+        related_lookup = item.genre.all()[0]
+        related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True)
+    
+    else:
+        messages.error(request, 'Sorry, that item is not currently available.')
+        return redirect('items')
 
     context = {
         'item': item,
@@ -106,9 +133,6 @@ def item_detail(request, item_id):
 
 @login_required
 def add_item(request):
-    if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only staff members can do that.')
-        return redirect(reverse('home'))
     
     authors_select = Author.objects.all()
 
@@ -117,8 +141,6 @@ def add_item(request):
         title = request.POST.get("title")
         description = request.POST.get("description")
         genres = request.POST.get('genre')
-    
-
         if form.is_valid():
             check_item = Item.objects.filter(title=title, description=description)
             if check_item.exists() is True:
@@ -157,9 +179,6 @@ def add_item(request):
 
 @login_required
 def update_item(request, item_id):
-    if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only staff members can do that.')
-        return redirect(reverse('home'))
 
     authors_select = Author.objects.all()
 
@@ -199,63 +218,52 @@ def update_item(request, item_id):
 
 @login_required
 def delete_item(request, item_id):
-    if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only superusers can do that.')
-        return redirect(reverse('home'))
-   
     item = get_object_or_404(Item, pk=item_id)
-    print(item_id)
-    item.delete()
-    messages.success(request, 'Product successfully deleted!')
+    try:
+        item.campaign = None
+        item.save()
+        item.delete()
+    except IntegrityError:
+        item.active = False
+        item.save()
+    finally:
+        messages.success(request, 'Product successfully deleted!')
 
     return redirect(reverse('items'))
 
 
-def add_author(request):
-
-    if request.method == 'POST':
-        author_form = AuthorDataForm(request.POST, request.FILES)
-        if author_form.is_valid():
-            author_form.save()
-            messages.success(request, 'Author added.')
-
-    else:
-        author_form = AuthorDataForm(request.POST, request.FILES)
-
-    context = {
-        'author_form': author_form,
-    }
-
-    return render(request, 'items/add_author.html', context)
-
-
+@login_required
 def create_campaign(request):
 
-    form = CampaignForm()
-    campaigns = Campaign.objects.all()
+    available = Item.objects.filter(campaign__isnull=True).filter(active=True)
+    not_available = Item.objects.filter(campaign__isnull=False).filter(active=True)
 
     if request.method == "POST":
         form = CampaignForm(request.POST, request.FILES)
         included_items = request.POST.getlist('included_items')
-        for item in included_items:
-            instance = Item.objects.get(pk=item)
-            instance.original_sale_price = instance.set_sale_price
-            instance.save(update_fields=['original_sale_price'])
-            instance.set_sale_price = request.POST.get('fixed_price')
-            instance.save(update_fields=['set_sale_price', 'final_price'])
+        campaign_name = request.POST.get('campaign_name')
         form.save()
+        for list_item in included_items:
+            list_item = Item.objects.get(pk=list_item)
+            list_item.campaign = Campaign.objects.get(campaign_name=campaign_name)
+            list_item.set_sale_price = request.POST.get('fixed_price')
+            list_item.save()
         messages.success(request, 'Your campaign has been created.')
+    else:
+        form = CampaignForm()
 
+    available = available.filter(active=True)
     context = {
+        'not_available': not_available,
+        'available': available,
         'form': form,
-        'campaigns': campaigns,
     }
 
     return render(request, 'items/create_campaign.html', context)
 
-
+@login_required
 def manage_campaigns(request):
-    campaigns = Campaign.objects.all()
+    campaigns = Campaign.objects.all().order_by('campaign_name')
 
     context = {
         'campaigns': campaigns,
@@ -264,15 +272,91 @@ def manage_campaigns(request):
     return render(request, 'items/manage_campaigns.html', context)
 
 
+@login_required
 def deactivate_campaign(request, campaign_id):
-
     campaign = get_object_or_404(Campaign, pk=campaign_id)
-    included_items = campaign.included_items.all()
-    print(list(included_items))
-    for item in included_items:
-        instance = Item.objects.get(title=item)
-        instance.set_sale_price = instance.original_sale_price
-        instance.save(update_fields=['set_sale_price', 'final_price'])
+    included_items = Item.objects.filter(campaign__pk=campaign_id)
+    for item_instance in included_items:
+        item_instance.set_sale_price = 0.00
+        item_instance.save()
+    
+    campaign.active = False
+    campaign.save()
+    
+    messages.success(request, 'Campaign successfully deactivated')
 
     return redirect(reverse('manage_campaigns'))
 
+
+@login_required
+def activate_campaign(request, campaign_id):
+    campaign = get_object_or_404(Campaign, pk=campaign_id)
+    included_items = Item.objects.filter(campaign__pk=campaign_id)
+    for item_instance in included_items:
+        item_instance.set_sale_price = campaign.fixed_price
+        item_instance.save()
+
+    campaign.active = True
+    campaign.save()
+
+    messages.success(request, 'Campaign successfully activated')
+
+    return redirect(reverse('manage_campaigns'))
+
+@login_required
+def update_campaign(request, campaign_id):
+    
+    campaign = get_object_or_404(Campaign, pk=campaign_id)
+    available = Item.objects.filter(campaign__isnull=True).filter(active=True)
+    
+    original_inclusion_list = campaign.item_set.all()
+    original_inclusion_ids = campaign.item_set.all().values_list('id', flat=True)
+    not_available_list = Item.objects.filter(campaign__isnull=False).filter(active=True)
+    not_available = not_available_list.difference(original_inclusion_list)
+    
+    if request.method == "POST":
+        form = CampaignForm(request.POST, request.FILES, instance=campaign)
+        form.save()
+        included_items = request.POST.getlist('included_items')
+        already_included = request.POST.getlist('already_included')
+        campaign_name = request.POST.get('campaign_name')
+        new_list = included_items + already_included
+        #clear campaigns items
+        old_campaign_items = Item.objects.filter(campaign__pk=campaign_id)
+        for item in old_campaign_items:
+            item.campaign = None
+            item.save()
+        current_campaign = Campaign.objects.get(pk=campaign_id)
+        fixed_price = request.POST.get('fixed_price')
+        for list_item in new_list:
+            list_item = Item.objects.get(pk=list_item)
+            list_item.campaign = current_campaign
+            list_item.set_sale_price = fixed_price
+            list_item.save()
+    else:
+        form = CampaignForm(instance=campaign)
+
+    available = available.filter(active=True)
+    context = {
+        'original_inclusion_list': original_inclusion_list,
+        'not_available': not_available,
+        'available': available,
+        'form': form,
+        'campaign': campaign
+    }
+    
+    return render(request, 'items/update_campaign.html', context)
+
+
+@login_required
+def delete_campaign(request, campaign_id):
+    #clear campaigns items
+    old_campaign_items = Item.objects.filter(campaign__pk=campaign_id)
+    for item in old_campaign_items:
+        item.campaign = None
+        item.save()
+    campaign = get_object_or_404(Campaign, pk=campaign_id)
+    campaign.delete()
+    messages.success(request, 'Campaign successfully deleted.')
+
+    return redirect(reverse('manage_campaigns'))

@@ -58,7 +58,7 @@
                         {% for featured in featured_items|slice:":3" %}
                         <div class="col-4">
                             <a class="related-item" href="{% url 'item_detail' featured.id %}"><img
-                                    src="/media/{{ featured.image }}" alt=""></a>
+                                    src="{{ MEDIA_URL }}{{ featured.image }}" alt=""></a>
                         </div>
                         {% endfor %}
                         {% endif %}

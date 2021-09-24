@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load price_tools %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
@@ -50,7 +51,6 @@
                                 {{ form.description | as_crispy_field }}
                                 {{ form.price | as_crispy_field }}
                                 {{ form.discount | as_crispy_field }}
-                                {{ form.set_sale_price | as_crispy_field }}
                                 {{ form.featured | as_crispy_field }}
                             </div>
                             <div class="row">
@@ -128,11 +128,8 @@
     }
 
     $(document).ready(function () {
-        let set_sale_price = $('#id_set_sale_price')
         let discount = $('#id_discount')
         discount.prop('disabled', true);
-        set_sale_price.prop('disabled', true);
-
 
         $('#id_price').focusin(function () {
             let price_field = $('#id_price')
@@ -154,14 +151,11 @@
                     "0")) {
                 price_field.val("0.00")
                 discount.val('0')
-                set_sale_price.val('0.00')
                 discount.prop('disabled', true);
-                set_sale_price.prop('disabled', true);
             } else {
                 let updated_price = price_field.val()
                 price_field.val(updated_price)
                 discount.prop('disabled', false);
-                set_sale_price.prop('disabled', false);
             }
         })
 
@@ -187,30 +181,8 @@
             }
         })
 
-        $('#id_set_sale_price').blur(function () {
-            let set_sale_price = $('#id_set_sale_price')
-            if (set_sale_price.val() == '') {
-                set_sale_price.val("0.00")
-            } else {
-                let updated_sale_price = set_sale_price.val()
-                set_sale_price.val(updated_sale_price)
-            }
-        })
-
-        $('#id_set_sale_price').focusin(function () {
-            let set_sale_price = $('#id_set_sale_price')
-            if (set_sale_price.val() == '0.0') {
-                set_sale_price.val("")
-            } else if (set_sale_price.val() == '0.00') {
-                set_sale_price.val("")
-            } else if (set_sale_price.val() == '0') {
-                set_sale_price.val('0.00')
-            } else {
-                let updated_sale_price = set_sale_price.val()
-                set_sale_price.val(updated_sale_price)
-            }
-        })
-
     })
+
+
 </script>
 {% endblock %}

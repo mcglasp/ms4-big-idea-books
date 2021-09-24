@@ -1,3 +1,5 @@
+// Code below adapted for use in Big Idea Books from Boutique Ado project checkout app.
+
 let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 let clientSecret = $('#id_client_secret').text().slice(1, -1);
 let stripe = Stripe(stripePublicKey);
@@ -22,7 +24,6 @@ let card = elements.create('card', {
 });
 card.mount('#card-element');
 
-// Handle realtime validation errors on the card element
 card.addEventListener('change', function (event) {
     let errorDiv = document.getElementById('card-errors');
     if (event.error) {
@@ -38,7 +39,6 @@ card.addEventListener('change', function (event) {
     }
 });
 
-// Handle form submit
 let form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function (ev) {
@@ -103,16 +103,13 @@ form.addEventListener('submit', function (ev) {
                     'disabled': false
                 });
                 $('#submit-button').attr('disabled', false);
-
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     form.submit();
                 }
             }
         });
-
     }).fail(function () {
-        // just reload the page, the error will be in django messages
         location.reload();
     })
 });

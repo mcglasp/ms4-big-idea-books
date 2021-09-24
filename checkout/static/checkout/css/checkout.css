@@ -1,3 +1,10 @@
+#payment-form input {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+/* Code below based on CSS from Boutique Ado project, which was taken from Stripe documents */
+
 .StripeElement,
 .stripe-style-input {
   box-sizing: border-box;
@@ -33,7 +40,8 @@
 #payment-form .form-control,
 #card-element {
     color: #000;
-    border: 1px solid #000;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }
 
 select, select option {

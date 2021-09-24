@@ -5,26 +5,59 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <form method="POST" action="{% url 'create_campaign' %}" id="item-form" class="form mb-2"
-                enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="manage-cards card">
-                    <h5 class="card-header">Create A Flash Sale</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                {{ form.campaign_name | as_crispy_field }}
-                                {{ form.included_items | as_crispy_field }}
-                                {{ form.fixed_price | as_crispy_field }}
-                                <button type="submit">Create Campaign</button>
-                            </div>
-                        </div>
-            </form>
-        </div>
+  <div class="card m-3">
+    <div class="card-header zig-zag">
+      <div class="white-fade"></div>
+      <h5>Create A Flash Sale</h5>
     </div>
+    <div class="card-body">
+      <form method="POST" action="{% url 'create_campaign' %}" id="item-form" class="form mb-2"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+           
+              <p class="pt-3">Items available for inclusion</p>
+              <div class="include-container available">
+                {% for a in available %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="{{ a.pk }}" id="" name="included_items">
+                  <label class="form-check-label" for="defaultCheck1">
+                    {{ a }}                
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
+              
+              <p class="pt-3">Items not available for inclusion</p>
+  
+              <div class="include-container not-available">
+                {% for n in not_available %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="{{ n }}" id="" disabled>
+                  <label class="form-check-label" for="defaultCheck1">
+                    {{ n }}                
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
+  
+          
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6">
+              {{ form.campaign_name | as_crispy_field }}
+              {{ form.fixed_price | as_crispy_field }}
+              {{ form.active | as_crispy_field }}
+            <button class='btn btn-secondary standard-button' type="submit">Create Campaign</button>
+            <a href="{% url 'manage_campaigns' %}" id="add-cancel-btn"
+            class="btn btn-secondary standard-button">Cancel</a>          
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </div>
 
 {% endblock %}
+

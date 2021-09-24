@@ -42,16 +42,19 @@ The below table outlines the 21 application features that I consider essential f
 |--|--|**Managing The Store's Content** |---|
 | 19	| site owner	| update an existing item	 | keep product information up-to-date |
 | 20	| site owner	| delete and item from the store |	remove items that are no longer needed on the store |
+|--|--|**Building Sales Campaigns**|--|--|
+| 21 | site owner | create a sales campaign | boost site revenue |
+| 22 | site owner | apply a flash sale price to multiple items | create campaigns quickly without having to edit individual records |
+| 23 | site owner | enable and disable campaigns in one click | have a flash sale for short periods without much admin overhead |
 
 
 The table below outlines those features that are 'nice-to-have' and not essential to the succesful launch of the MVP, as outlined above. These features may or may not be implemented, depending on the scope of the initial development stage.
 
 | User story ID	| As a... |	I want to be able to... | So that I can... |
 | ----------| ------|---------|---------|
-| 21	| site owner	| add, delete and update authors via the store front end |	ensure the catalogue is up-to-date |
-| 22 |	site owner |	create a sale campaign |	highlight or reduce the cost of multiple items for a limited time, without having to open each item indivdually | 
-| 23 | customer | research and purchase subscription options | buy subscriptions as a larger gift; receive newly added and recommended products as they are launched |
-| 24 | customer | add an item to a wishlist for later purchase | keep track of titles I might like to purchase in future, or send the list to family and friends for gift ideas |
+| 24	| site owner	| add, delete and update authors via the store front end |	ensure the catalogue is up-to-date |
+| 25 | customer | research and purchase subscription options | buy subscriptions as a larger gift; receive newly added and recommended products as they are launched |
+| 26 | customer | add an item to a wishlist for later purchase | keep track of titles I might like to purchase in future, or send the list to family and friends for gift ideas |
 
 
 # Structure 
@@ -88,6 +91,15 @@ The Add Item page is almost identical to the Update item page, which is accessib
 An important feature to note about the Add and Update item pages are the three pricing fields: Price, Discount and Set Sale Price. The basic principle is that the user choose to apply either a percentage discount to the product or a set sale price, but the set sale price will always override the discounted price. As an example, if the recommended retail price (RRP) is £10, and the site owner wishes to apply a 10% discount to that product, then the price will be displayed as £9 (noting that it is a sale price). If the owner then wishes to run a 'flash sale' for that or a number of items, they can leave that percentage discount information in tact and price the item at, say, £5 for as long as they wish. When they then remove that Set Sale Price, the price will automatically revert to the discounted price.
 
 To prevent faulty pricing information reaching the live site, or indeed the database, the Discount and Set Sale Price fields are not enabled until a price above £0.00 is entered.
+
+Managing Campaigns
+The site owner can enable and disable all their campaigns from one page, from which they can also navigate to the 'create a campaign' form. Within this form they are given a list of items that are available to select as part of the campaign, and they are also shown a disabled list of items currently included in other campaigns and therefore not available for selection. They use this form to name and give a fixed price to their campaign. On creation of a campaign, each item's set sale price is set to the campaign's fixed price. If the item already has a set sale price, it is saved into an original sale price field for later recall. This same process happens when enabling a campaign after a period of deactivation. On deletion of a campaign, all references to that campaign are removed from its included items, their original sale prices (if applicable) are reloaded in the set sale price field and the original price field is set to zero. This helps to reduce the admin overhead to the store user. See below for an example of how this works:
+
+    - Item 1 has an RRP of £12.99, but the shop sells it for £10 as standard, and therefore the figure of £10 is set in the set_sale_price field.
+
+    - Item 2 has an RRP of £11.99 and it sells for that, therefore it does not have a set_sale_price.
+
+    - Both items are put into a £5 flash sale that lasts a few days. When the owner disables the sale, it would be an unwelcome admin overhead to have to go through each included product and reset whatever sale price they may originally have had (assuming the site owner could even remember!). Instead, whatever is in original_sale_price is loaded into set_sale_price. Elsewhere the site will show the set_sale_price if it is more than £0.00, otherwise displaying the normal price (or percentage-discounted price, if applicable). The original_sale_price field is zeroed to prevent it from later overriding the set_sale_price if the item were included in a future sale.
 
 # Skeleton
 
@@ -155,6 +167,35 @@ Superuser (including all of the above)*
 
 **Note that superusers should have access to all enduser facilities, such as viewing and purchasing products. While they may not be the most obvious customers of the site, it will be extremely useful for them to be able to test their own administraion of the site and ensure everything is working properly.*
 
+Campaigns:
+- Add a new campaign
+- Delete a campaign
+- Add a product to an existing campaign
+- Remove a product from an existing campaign
+- Enable campaign
+- Disable campaign
+- Delete a product from the database without any effect on its related campaigns
+
+Expected behaviour:
+When deleting a campaign, all references to that campaign should disappear from individual item records. Similarly, when a product is deleted, the campaign it belonged to should be left intact.
+
+Found behaviour:
+Deleting a campaign behaved as expected. However, deleting an item that was associated with a campaign generated an Integrity Errorwith specific reference to 'campaign_campaign_included_items', suggesting that the Campaign's included_items field still referenced that item, and the delete failed. Removing the item from the campaign prior to deletion did not fix the error. In investigating the issue I uncovered what I felt to be a larger problem with the design of the Item and Campaign models; the Item did not reference the Campaign at all, but the Campaign included a ManyToMany field that held a list of items included in the Campaign. This was not an obvious issue at first, but revealed problems when trying to update included items when editing campaigns. It also became evident that allowing an Item to be included in more than one campaign was problematic. For example, if a user included an item in the £5 sale, and then created a £10 sale, they could include both, thereby undermining the campaign itself and likely causing the database to throw an error.
+
+Campaign functionality rebuild:
+
+I removed the view, model and form functionality that referenced the included_items ManyToMany field and instead created a Campaign ForeignKey field in the Item model. If the campaign field of an item instance is null, then it is available for inclusion in a campaign. However, if it is already populated with a campaign name, it cannot be selected as part of a new campaign.
+
+The views were then updated to filter item availability within campaigns into three categories: 'Available to select', 'Not available to select' and, in the case of updating an existing campaign, 'Already selected'.
+
+However, this did not solve the issue as expected. After extensive testing it was revealed that the error as referenced above was being incorrectly described by Django's debug facility, as the error actually related to items that were included as a line item on a previous order. To correct this, my mentor suggested adding a 'soft delete' function. An 'active' BooleanField was added to Item, which defaults to true unless deleted, at which point the field becomes false, rather than the item being deleted from the database entirely. Views returning querysets of items were also altered to filter out results in which an item's Active field was false. This soft-delete function ensured that existing objects, such as past orders, did not try to reference a non-existing entity, which would cause an error.
+
+This has a knock-on benefit to the site owner, which is that the data is always available for use, either for the purposes of marketing and analysis, or simply for bringing an old product back into stock without the need to create a new record.
+
+Post-rebuild Campaign Testing:
+
+
+
 General Site Functionality
 - Check for suitable 404 handling where appropriate
 - Ensure all the above actions function correctly across a variety of popular desktop, tablet and mobile platforms, and on popular browsers.
@@ -166,9 +207,6 @@ General Site Functionality
  2. "As a customer I want to be able read about the products in detail so I can	find out the price, author, subject and suggested age recommendation and read the description."
  3. "As a customer I want to be able to search by keyword so I can quickly find exactly what I'm looking for."
  4. "As a customer I want to be able to filter items by genre, age recommendation and author so that I can identify the most suitable item to buy."
-
-FOUND - Preschool not returning results, though products in that category exist.
-
  5. "As a customer I want to be able to sort, search and filter results by price so that I can find a suitable product within my price range."  
  6. "As a customer I want to be able to add a number of items to my bassket directly from the search results so that I can buy items when I see them, without clicking through to individual item detail pages."
  7. "As a customer I want to be able to add one or more of the same item from the item detail page  buy what I want without navigating back to the search results."
@@ -184,6 +222,9 @@ FOUND - Preschool not returning results, though products in that category exist.
  18. "As a site owner I want to be able to add an item to the store so that I can quickly add new products as soon as they are available."
  19. "As a site owner I want to be able to update an existing item so that I can keep product information up-to-date."
  20. "As a site owner I want to be able to delete and item from the store so that I can remove items that are no longer needed on the store."
+ 21. "As a site owner I want to be able to create a sales campaign so that I can boost site revenue."
+ 22. "As a site owner I want to be able to apply a flash sale price to multiple items so that I can create campaigns quickly without having to edit individual records."
+ 23. "As a site owner I want to be able to enable and disable campaigns in one click so that I can have a flash sale for short periods without much admin overhead."
 
 
 

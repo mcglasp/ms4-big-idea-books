@@ -1,23 +1,61 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container m-auto">
+<div class="container-fluid d-md-none d-sm-block">
+    <div class="row">
+        <div class="col-12 img-row">
+        <img id="mobile-image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 img-row">
+        <img id="mobile-image-2" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">
+    </div>
+</div>
+    <div class="row">
+        <div class="col-12 img-row">
+        <img id="mobile-image-3" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
+    </div>
+</div>
+</div>
+</div>
+<div class="container-fluid d-md-block d-sm-none">
         <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
-                
                 <div class="carousel-item active">
-                    <div id="overlay"><div id="overlay-text">Our World</div></div>
-                    <div id="image-1" class="d-block w-100"></div>
+                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Little Astronomers...
+                   </a>
+                    <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
                 </div>
                 <div id="image-2" class="carousel-item">
-                    <div id="overlay"><div id="overlay-text">Things that move</div></div>
-                    <div class="d-block w-100"></div>
+                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Curious Minds...
+                   </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">
                 </div>
                 <div id="image-3" class="carousel-item">
-                    <div id="overlay"><div id="overlay-text">Little Astronomers</div></div>
-                    <div class="d-block w-100"></div>
+                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Mad Scientists...
+                   </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
                 </div>
-            
+                <div id="image-4" class="carousel-item">
+                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Budding Builders...
+                   </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+                {% for item in items|slice:':3' %}
+                <div class="col-lg-4 col-md-4 col-sm-16 item">
+                    <div class="item-card card">
+                        <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
+                        <div class="card-body">
+                            <a href="{% url 'item_detail' item.id %}">
+                                <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong></p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

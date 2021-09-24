@@ -1,6 +1,5 @@
 from django import template
 from items.utils import format_discount
-from items.models import Item
 
 register = template.Library()
 

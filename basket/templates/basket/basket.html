@@ -15,7 +15,7 @@
             <div class="row line-item">
                 <div class="col-md-2 col-sm-4"><a
                     href="{% url 'item_detail' item.item.id %}">
-                    <img class="line-item-img" src="/media/{{ item.item.image }}" alt=""></a>
+                    <img class="line-item-img" src="{{ MEDIA_URL }}{{ item.item.image }}" alt=""></a>
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <p class="line-title"><strong><a
@@ -28,7 +28,7 @@
                         {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
                         {% endif %}{% endif %}
                         {% endfor %}</p>
-                    <p class="truncate">{{ item.item.description }}</p>
+                    <p class="text-truncate">{{ item.item.description }}</p>
                     <p>£{{ item.price|floatformat:2 }}</p>
                     <div class="update-controls">
                         <form action="{% url 'update_quantity' item.item.id %}" method="POST">

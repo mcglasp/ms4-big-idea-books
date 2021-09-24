@@ -3,19 +3,63 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-    {% for campaign in campaigns %}
-    {{ campaign.campaign_name }}
-    <form action="{% url 'deactivate_campaign' campaign.id %}" method="post">
-      {% csrf_token %}
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="active" {% if campaign.active == True %}checked{% endif %}>
-        <label class="form-check-label" for="flexSwitchCheckDefault">Active</label>
-      </div>
-      <button type="submit">Update</button>
-    </form>
-    {% endfor %}
-</div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-8">
+            <div class="card m-3">
+                <div class="card-header zig-zag">
+                    <div class="white-fade"></div>
+                    <h5>Manage Your Flash Sales & Campaigns</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto w-100">
+                            <a class="btn btn-secondary standard-button" href="{% url 'create_campaign' %}">Create A New
+                                Flash Sale</a>
+                        </div>
+                    </div>
+                    <hr>
+                    {% if campaigns|length > 0 %}
+                    <div class="row d-flex">
+                        {% for campaign in campaigns %}
+                        <div class="campaign-details">
+                            <a href="{% url 'update_campaign' campaign.id %}">{{ campaign.campaign_name }}</a>
+                            <ul class="list-group-flush list-group">
+                                <li class="list-group-item p-0 disabled">{{ campaign.item_set.all.count }} Items
+                                    Included</li>
+                                {% for c in campaign.item_set.all %}
+                                <li class="list-group-item p-0">{{ c }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <span>Price: £{{ campaign.fixed_price }}</span>
+                            {% if campaign.active == True %}
+                            <div class="d-flex flex-column">
+                                <a class="btn btn-enabled standard-button campaign-mng-button"
+                                    href="{% url 'deactivate_campaign' campaign.id %}">Disable</a>
+                                {% elif campaign.active == False %}
+                                <a class="btn btn-disabled standard-button campaign-mng-button"
+                                    href="{% url 'activate_campaign' campaign.id %}">Enable</a>
+                                {% endif %}
+                                <a class="btn btn-danger standard-button campaign-mng-button"
+                                    href="{% url 'delete_campaign' campaign.id %}">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if not forloop.last %}
+            <hr>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <div class="row">
+                <p>Looks like you don't currently have any campaigns. Why not <a href="{% url 'create_campaign' %}"> set
+                        one up?</a></p>
+            </div>
+            {% endif %}
 
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}

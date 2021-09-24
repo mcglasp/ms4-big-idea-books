@@ -4,13 +4,45 @@
 
 {% block content %}
 
+                      <!-- MODAL -->
+
+                      <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              ...
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+
+                      <!-- END MODAL -->
+
 <div class="container">
     <div class="row {% if narrow_age or narrow_genre %} narrow-search {% endif %} sort-only">
+        {% if 'go_to_offer' in request.path %}
+        <div class="col-md-7 col-sm-12">
+
+        <h2>{{ offer.campaign_name }}</h2>
+    </div>
+
+        {% else %}
         <div class="col-md-7 col-sm-12">
             {% if narrow_age or narrow_genre %}
             {% include 'includes/narrow_search_nav.html' %}
             {% endif %}
         </div>
+        {% endif %}
         <div class="col-md-5 col-sm-6 pt-2">
             {% include 'includes/sort_field.html' %}
         </div>
@@ -20,13 +52,14 @@
         <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
         {% else %}
         {% for item in items %}
+
         <div class="col-lg-3 col-md-4 col-sm-12 item">
             {% if item.featured %} <i class="featured-star fas fa-star"></i> {% endif %}
             <div class="item-card card {% if item.featured %} featured {% endif %}">
                 {% if request.user.is_superuser %}
                 <div class="user-controls card-footer">
                     <small class="text-muted"> <a class="" href="{% url 'update_item' item.id %}">Edit</a>
-                        | <a class="" href="{% url 'delete_item' item.id %}">Delete</a>
+                        | <a id="{{ item.id }}" href="{% url 'delete_item' item.id %}">Delete</a>
                     </small>
                 </div>
                 {% endif %}
@@ -41,7 +74,6 @@
                             </span>
                             {% endfor %}
                         </p>
-                        <!-- ADD USER CHECK HERE -->
                     </a>
                     <hr>
                     <p>
@@ -95,3 +127,4 @@
 </div>
 
 {% endblock %}
+
