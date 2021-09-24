@@ -56,9 +56,9 @@
               {{ form.campaign_name | as_crispy_field }}
               {{ form.fixed_price | as_crispy_field }}
               {{ form.active | as_crispy_field }}
-            <button class='btn btn-secondary standard-button campaign-mng-button' type="submit">Update Campaign</button>
+            <button class='btn btn-secondary standard-button' type="submit">Update</button>
             <a href="{% url 'manage_campaigns' %}" id="add-cancel-btn"
-            class="btn btn-secondary standard-button campaign-mng-button">Cancel</a>          
+            class="btn btn-secondary standard-button">Cancel</a>          
           </div>
         </div>
       </form>

@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-8">
+        <div class="col-md-10 col-sm-12">
             <div class="card m-3">
                 <div class="card-header zig-zag">
                     <div class="white-fade"></div>
@@ -20,8 +20,8 @@
                     </div>
                     <hr>
                     {% if campaigns|length > 0 %}
-                    <div class="row d-flex">
-                        {% for campaign in campaigns %}
+                    {% for campaign in campaigns %}
+                    <div class="row d-flex ">
 
                         <!-- MODAL -->
                         <div class="modal fade" id="deleteModal{{ campaign.id }}" tabindex="-1" role="dialog"
@@ -38,7 +38,7 @@
                                         Do you really want to delete the campaign {{ campaign.campaign_name }}?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No!
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No!
                                             Cancel</button>
                                         <a href="{% url 'delete_campaign' campaign.id %}" class="btn btn-secondary">Yes,
                                             delete</a>
@@ -48,45 +48,56 @@
                         </div>
                         <!-- END MODAL -->
 
-                        <div class="campaign-details">
-                            <a href="{% url 'update_campaign' campaign.id %}">{{ campaign.campaign_name }}</a>
-                            <ul class="list-group-flush list-group">
-                                <li class="list-group-item p-0 disabled">{{ campaign.item_set.all.count }} Items
-                                    Included</li>
-                                {% for c in campaign.item_set.all %}
-                                <li class="list-group-item p-0">{{ c }}
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            <span>Price: £{{ campaign.fixed_price }}</span>
-                            {% if campaign.active == True %}
-                            <div class="d-flex flex-column">
-                                <a class="btn btn-enabled standard-button campaign-mng-button"
-                                    href="{% url 'deactivate_campaign' campaign.id %}">Disable</a>
-                                {% elif campaign.active == False %}
-                                <a class="btn btn-disabled standard-button campaign-mng-button"
-                                    href="{% url 'activate_campaign' campaign.id %}">Enable</a>
-                                {% endif %}
-                                <a class="btn btn-danger standard-button campaign-mng-button" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ campaign.id }}">Delete</a>
+                        <div class="row campaign-details justify-content-between">
+                            <div class="col-md-3">
+                                <a href="{% url 'update_campaign' campaign.id %}">{{ campaign.campaign_name }}</a>
                             </div>
+                            <div class="col-md-5">
+                                <li class="p-0">{{ campaign.item_set.all.count }} Item{% if campaign.item_set.all.count != 1 %}s{% endif %}
+                                        Included</li>
+                            </div>
+                            <div class="col-md-2">
+                                <span>Price: £{{ campaign.fixed_price }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="d-flex flex-column">
+                                    {% if campaign.active == True %}
+                                    <a class="btn btn-enabled standard-button"
+                                        href="{% url 'deactivate_campaign' campaign.id %}">Disable</a>
+                                    {% elif campaign.active == False %}
+                                    <a class="btn btn-disabled standard-button"
+                                        href="{% url 'activate_campaign' campaign.id %}">Enable</a>
+                                    {% endif %}
+                                    <a class="btn btn-danger standard-button" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ campaign.id }}">Delete</a>
+                                </div>
+                            </div>
+
                         </div>
+                    
+                        {% if not forloop.last %}
+                        
+                        {% endif %}
+                    </div>   
+                    {% if not forloop.last %}  
+                    <hr>
+                    {% endif %}                   
+                    {% endfor %}
+                    
+                    {% else %}
+                    <div class="row">
+                        
+                        <div class="row">
+                            <p>Looks like you don't currently have any campaigns. Why not <a
+                                    href="{% url 'create_campaign' %}"> set
+                                    one up?</a></p>
+                        </div>
+                        
                     </div>
+                    {% endif %}
                 </div>
             </div>
-            {% if not forloop.last %}
-            <hr>
-            {% endif %}
-            {% endfor %}
-            {% else %}
-            <div class="row">
-                <p>Looks like you don't currently have any campaigns. Why not <a href="{% url 'create_campaign' %}"> set
-                        one up?</a></p>
-            </div>
-            {% endif %}
-
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

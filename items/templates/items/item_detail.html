@@ -19,7 +19,7 @@
                 Do you really want to delete the item {{ item.title }}?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No!
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No!
                     Cancel</button>
                 <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary">Yes, delete</a>
             </div>

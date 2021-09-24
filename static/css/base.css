@@ -1419,13 +1419,25 @@ table.table.basket-table thead tr th {
 
 .campaign-details {
   display: flex;
+
 }
 
-.campaign-details .list-group-flush {
-  height: 100px;
-  overflow: scroll;
+
+.campaign-details .btn {
+  height: 20px;
+  line-height: 48%;
+  font-size: 0.8rem;
+  margin-top: 2px;
 }
 
 #current-image {
   height: 80px;
+}
+
+.modal .btn {
+
+}
+
+.card {
+  font-family: 'Source Sans Pro', sans-serif;
 }
