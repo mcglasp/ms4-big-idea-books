@@ -8,7 +8,7 @@
   <div class="card m-3">
     <div class="card-header zig-zag">
       <div class="white-fade"></div>
-      <h5>Create A Flash Sale</h5>
+      <h3>Create A Sales Campaign</h3>
     </div>
     <div class="card-body">
       <form method="POST" action="{% url 'create_campaign' %}" id="item-form" class="form mb-2"
@@ -16,7 +16,6 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-6">
-           
               <p class="pt-3">Items available for inclusion</p>
               <div class="include-container available">
                 {% for a in available %}
@@ -28,9 +27,7 @@
                 </div>
                 {% endfor %}
               </div>
-              
               <p class="pt-3">Items not available for inclusion</p>
-  
               <div class="include-container not-available">
                 {% for n in not_available %}
                 <div class="form-check">
@@ -41,22 +38,19 @@
                 </div>
                 {% endfor %}
               </div>
-  
-          
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
               {{ form.campaign_name | as_crispy_field }}
               {{ form.fixed_price | as_crispy_field }}
               {{ form.active | as_crispy_field }}
-            <button class='btn btn-secondary standard-button' type="submit">Create</button>
+            <button class='btn btn-secondary standard-button' type="submit" aria-label="Create campaign">Create</button>
             <a href="{% url 'manage_campaigns' %}" id="add-cancel-btn"
-            class="btn btn-secondary standard-button">Cancel</a>          
+            class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>          
           </div>
         </div>
       </form>
     </div>
   </div>
-
 </div>
 
 {% endblock %}

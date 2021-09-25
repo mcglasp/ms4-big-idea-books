@@ -11,7 +11,7 @@
                 enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="manage-cards card">
-                    <h5 class="card-header">Add a book to the shop</h5>
+                    <h3 class="card-header">Add a book to the shop</h3>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -25,8 +25,8 @@
                                         <option value="{{ author }}">{{ author }}</option>
                                         {% endfor %}
                                     </select>
-                                    <button type="button" id="add_author_1"
-                                        class="btn btn-secondary standard-button">Confirm</button>
+                                    <button type="button" id="add_author_1" class="btn btn-secondary standard-button"
+                                        aria-label="Select author">Confirm</button>
                                 </div>
                                 <div class="inline-author-input">
                                     <div id="id_new_authors" class="input-group">
@@ -35,8 +35,8 @@
                                         <input type="text" aria-label="Last name" class="form-control" id="id_surname"
                                             placeholder="Last name">
                                     </div>
-                                    <button id="add_author_2" class="btn btn-secondary standard-button"
-                                        type="button">Add
+                                    <button id="add_author_2" class="btn btn-secondary standard-button" type="button"
+                                        aria-label="Add new author">Add
                                         author</button>
                                 </div>
                                 <p class="bold">Selected Authors</p>
@@ -55,10 +55,10 @@
                             </div>
                             <div class="row">
                                 <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto">
-                                    <button type="submit" class="btn btn-secondary standard-button"
-                                        id="add-item-btn">Add Book To Shop</button>
+                                    <button type="submit" class="btn btn-secondary standard-button" id="add-item-btn"
+                                        aria-label="Add item to shop">Add Book To Shop</button>
                                     <a href="{% url 'items' %}" id="add-cancel-btn"
-                                        class="btn btn-secondary standard-button">Cancel</a>
+                                        class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>
                                 </div>
                             </div>
             </form>
@@ -182,7 +182,5 @@
         })
 
     })
-
-
 </script>
 {% endblock %}

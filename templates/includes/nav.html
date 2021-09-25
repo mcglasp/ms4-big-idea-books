@@ -12,46 +12,45 @@
     <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'items' %}">Show all</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'items' %}" aria-label="Show all items">Show all</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=animals">Animals</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=animals" aria-label="Select genre: animals">Animals</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=space">Space</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=space" aria-label="Select genre: space">Space</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=history">History</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=history" aria-label="Select genre: history">History</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=prehistory">Prehistory</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=prehistory" aria-label="Select genre: prehistory">Prehistory</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=nature">Nature</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=nature" aria-label="Select genre: nature">Nature</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=science">Science</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?genres=science" aria-label="Select genre: science">Science</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=preschool">Preschool</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=preschool" aria-label="Select age category: preschool">Preschool</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7">5-7</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=5-7" aria-label="Select age category: 5-7">5-7</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=8-10">8-10</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=8-10" aria-label="Select age category: 8-10">8-10</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen">Teen</a>
+          <a class="nav-link" aria-labelledby="" href="{% url 'items' %}?ages=teen" aria-label="Select age category: teen">Teen</a>
         </li>
       </ul>
-      
     </div>
   </div>
   <div id="user-admin-box-lower" class="visually-hidden">
     <div class="btn-group">
       <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-        data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
+        data-bs-display="static" aria-expanded="false" aria-label="Your basket"><i class="fas fa-shopping-basket"></i></button>
       {% if basket_items %}
       <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger basket-quantity">
         {{ total_items }}
@@ -68,10 +67,9 @@
         <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}">Go to checkout</a></li>
       </ul>
     </div>
-
     <div class="btn-group">
       <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-        aria-expanded="false">
+        aria-expanded="false" aria-label="Account and admin">
         <i class="fas fa-user-alt"></i>
       </button>
       <ul class="dropdown-menu p-3 text-muted dropdown-menu-end" aria-labelledby="dropdownMenuLink">
@@ -83,15 +81,12 @@
           <a class="dropdown-item text-center" href="{% url 'add_item' %}">Add items</a>
         </li>
           <li>
-            <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>
-          
+            <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>  
         </li>
         {% endif %}
-
         {% else %}
         <li><a class="dropdown-item text-center" href="{% url 'account_login' %}">Log in</a></li>
         <li><a class="dropdown-item text-center" href="{% url 'account_signup' %}">Register</a></li>
-
         {% endif %}
       </ul>
     </div>

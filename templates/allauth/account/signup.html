@@ -11,7 +11,7 @@
 <div class="manage-cards card">
 <div class="card-header zig-zag">
   <div class="white-fade"></div>
-<h5>Register</h5>
+<h3>Register</h3>
 <span>{% blocktrans %}Already have an account? Then please <a id="signin" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</span>
 
 </div>
@@ -22,7 +22,7 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="btn btn-secondary standard-button" type="submit">{% trans "Sign Up" %}</button>
+  <button class="btn btn-secondary standard-button" type="submit" aria-label="Register account">{% trans "Sign Up" %}</button>
 </form>
 </div>
 </div>

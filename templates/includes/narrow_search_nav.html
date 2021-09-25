@@ -2,19 +2,19 @@
 <p>Narrow your search by age:</p>
 <div class="narrow-search-buttons age">
   <a class="btn btn-outline-primary" aria-labelledby=""
-    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=preschool">Preschool</a>
+    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=preschool" aria-label="Narrow results: preschool">Preschool</a>
   <a class="btn btn-outline-success" aria-labelledby=""
-    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=5-7">5-7</a>
-  <a class="btn btn-outline-warning" aria-labelledby=""
-    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=8-10">8-10</a>
+    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=5-7" aria-label="Narrow results: 5-7">5-7</a>
+  <a class="btn btn-outline-warning outline-purple" aria-labelledby=""
+    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=8-10" aria-label="Narrow results: 8-10">8-10</a>
   <a class="btn btn-outline-danger" aria-labelledby=""
-    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=teen">Teen</a>
+    href="{% url 'items' %}?genres={% for g in genres %}{{ g }}{% if not forloop.last %},{% endif %}{% endfor %}&ages_narrow=teen" aria-label="Narrow results: teen">Teen</a>
 </div>
 {% endif %}
 {% if narrow_genre is True %}
 <p>Narrow your search by subject:</p>
 <div class="narrow-search-buttons genre">
-  <a class="square-button" aria-labelledby=""
+  <a class="square-button" aria-label="Narrow results: animals"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=animals">
     <div class="text-orange">
       Animals 
@@ -23,7 +23,7 @@
             <i class="fas fa-crow"></i>
     </div>
 </a>
-  <a class="square-button" aria-labelledby=""
+  <a class="square-button" aria-label="Narrow results: space"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=space">
     <div class="text-orange">
       Space
@@ -32,7 +32,7 @@
       <i class="fas fa-meteor"></i>
     </div>
   </a>
-  <a class="square-button" aria-labelledby=""
+  <a class="square-button" aria-label="Narrow results: history"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=history">
     <div class="text-orange">
       History
@@ -41,7 +41,7 @@
     <i class="fas fa-landmark"></i>
   </div>
 </a>
-  <a class="square-button" aria-labelledby=""
+  <a class="square-button" aria-label="Narrow results: prehistory"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=prehistory">
     <div class="text-orange">
     Prehistory
@@ -51,7 +51,7 @@
     </div>
     </a>
   
-      <a class="square-button" aria-labelledby=""
+      <a class="square-button" aria-label="Narrow results: nature"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=nature">
     <div class="text-orange">
       Nature
@@ -61,7 +61,7 @@
     </div>
     </a>
 
-  <a class="square-button" aria-labelledby=""
+  <a class="square-button" aria-label="Narrow results: science"
     href="{% url 'items' %}?ages={% for a in ages %}{{ a }}{% if not forloop.last %},{% endif %}{% endfor %}&genres_narrow=science">
     <div class="text-orange">
       Science

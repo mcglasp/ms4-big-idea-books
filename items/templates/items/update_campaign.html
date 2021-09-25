@@ -7,7 +7,7 @@
   <div class="card m-3">
     <div class="card-header zig-zag">
       <div class="white-fade"></div>
-      <h5>Update Campaign</h5>
+      <h3>Update Campaign</h3>
     </div>
     <div class="card-body">
       <form method="POST" action="{% url 'update_campaign' campaign.id %}" id="item-form" class="form mb-2"
@@ -56,9 +56,9 @@
               {{ form.campaign_name | as_crispy_field }}
               {{ form.fixed_price | as_crispy_field }}
               {{ form.active | as_crispy_field }}
-            <button class='btn btn-secondary standard-button' type="submit">Update</button>
+            <button class="btn btn-secondary standard-button" type="submit" aria-label="Update campaign">Update</button>
             <a href="{% url 'manage_campaigns' %}" id="add-cancel-btn"
-            class="btn btn-secondary standard-button">Cancel</a>          
+            class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>          
           </div>
         </div>
       </form>

@@ -33,7 +33,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                        <h3 class="modal-title" id="deleteModalLabel">Are you sure?</h3>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -42,9 +42,9 @@
                         Do you really want to delete the item {{ item.title }}?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No!
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cancel">No!
                             Cancel</button>
-                        <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary">Yes, delete</a>
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary" aria-label="Delete item">Yes, delete</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                         {% for age in item.age_range.all %}
                         {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
                         {% elif age.age_range == "5-7" %} <span class="badge bg-success">{{ age }}</span>
-                        {% elif age.age_range == "8-10" %} <span class="badge bg-warning">{{ age }}</span>
+                        {% elif age.age_range == "8-10" %} <span class="badge bg-purple">{{ age }}</span>
                         {% elif age.age_range == "teen" %} <span class="badge bg-danger">{{ age }}</span>
                         {% endif %}
                         {% endfor %}
@@ -103,7 +103,7 @@
                                 {% csrf_token %}
                                 <input class="qty_input" type="number" name="quantity" value="1" min="1" max="99"
                                     data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
-                                <button class="btn btn-outline-secondary" type="submit"><i
+                                <button class="btn btn-outline-secondary" type="submit" aria-label="Add to basket"><i
                                         class="fas fa-cart-plus"></i></button>
                                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
                             </form>

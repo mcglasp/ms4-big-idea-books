@@ -14,7 +14,7 @@
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
     {% endif %}
   <div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle basket-quantity" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="fas fa-shopping-basket"></i></button>
+    <button type="button" class="btn btn-secondary dropdown-toggle basket-quantity" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Your basket"><i class="fas fa-shopping-basket"></i></button>
     {% if basket_items %}
     <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger">
       {{ total_items }}
@@ -27,13 +27,12 @@
       <a href="{% url 'item_detail' item.item.id %}" class="basket-drop-line p-1"><span class="d-inline-block text-truncate" >{{ item.item.title }}</span><span>£{{ item.item.final_price }}</span></a>
       {% endfor %}
       <p>£{{ basket_total | floatformat:2 }}</p>
-      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'view_basket' %}">View basket</a></li>
-      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}">Go to checkout</a></li>
+      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'view_basket' %}" aria-label="View basket">View basket</a></li>
+      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}" aria-label="Go to checkout">Go to checkout</a></li>
     </ul>
   </div>
-
 <div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account and admin">
       <i class="fas fa-user-alt"></i>
     </button>
     <ul class="dropdown-menu p-3 text-muted dropdown-menu-end" aria-labelledby="dropdownMenuLink">
@@ -48,11 +47,9 @@
         <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>
       </li>
       {% endif %}
-
       {% else %}
       <li><a class="dropdown-item text-center" href="{% url 'account_login' %}">Log in</a></li>
       <li><a class="dropdown-item text-center" href="{% url 'account_signup' %}">Register</a></li>
-
       {% endif %}
     </ul>
   </div>

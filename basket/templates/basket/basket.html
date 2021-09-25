@@ -6,7 +6,7 @@
     <div class="card m-3">
         <div class="card-header zig-zag">
             <div class="white-fade"></div>
-            <h5 id="top-layer-signin">Your basket</h5>
+            <h3 id="top-layer-signin">Your basket</h3>
         </div>
         <div class="card-body">
 
@@ -35,9 +35,9 @@
                             {% csrf_token %}
                             <p class="mb-1">Update quantity:</p>
                             <input class="quantity-input form-control" type="number" name="quantity"
-                                value="{{ item.quantity }}">
-                            <button class="btn" type="submit"><i class="fas fa-sync"></i></button>
-                            <a href="{% url 'remove_from_basket' item.item.id %}"><i class="far fa-trash-alt"></i></a>
+                                value="{{ item.quantity }}" aria-label="Selected quantity">
+                            <button class="btn" type="submit" aria-label="Update quantity"><i class="fas fa-sync"></i></button>
+                            <a href="{% url 'remove_from_basket' item.item.id %}" aria-label="Remove the basket"><i class="far fa-trash-alt"></i></a>
                         </form>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div id="totals">
                 <p class="">Standard UK delivery: £{{ delivery_cost }}</p>
                 <p class="price">Total: £{{ grand_total }}</p>
-                <a class="btn btn-secondary standard-button mt-3" href="{% url 'checkout' %}">Go to checkout</a>
+                <a class="btn btn-secondary standard-button mt-3" href="{% url 'checkout' %}" aria-label="Go to checkout">Go to checkout</a>
                 {% else %}
                 <p>There are no items in your basket.</p>
                 {% endif %}

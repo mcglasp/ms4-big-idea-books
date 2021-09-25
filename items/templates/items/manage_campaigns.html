@@ -9,12 +9,12 @@
             <div class="card m-3">
                 <div class="card-header zig-zag">
                     <div class="white-fade"></div>
-                    <h5>Manage Your Flash Sales & Campaigns</h5>
+                    <h3>Manage Your Flash Sales & Campaigns</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto w-100">
-                            <a class="btn btn-secondary standard-button" href="{% url 'create_campaign' %}">Create A New
+                            <a class="btn btn-secondary standard-button" href="{% url 'create_campaign' %}" aria-label="Create a new campaign">Create A New
                                 Flash Sale</a>
                         </div>
                     </div>
@@ -23,13 +23,13 @@
                     {% for campaign in campaigns %}
                     <div class="row d-flex ">
 
-                        <!-- MODAL -->
+                        <!-- DELETE CAMPAIGN MODAL -->
                         <div class="modal fade" id="deleteModal{{ campaign.id }}" tabindex="-1" role="dialog"
                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                                        <h3 class="modal-title" id="deleteModalLabel">Are you sure?</h3>
                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -38,9 +38,9 @@
                                         Do you really want to delete the campaign {{ campaign.campaign_name }}?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No!
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cancel">No!
                                             Cancel</button>
-                                        <a href="{% url 'delete_campaign' campaign.id %}" class="btn btn-secondary">Yes,
+                                        <a href="{% url 'delete_campaign' campaign.id %}" class="btn btn-secondary" aria-label="Confirm delete">Yes,
                                             delete</a>
                                     </div>
                                 </div>
@@ -63,13 +63,13 @@
                                 <div class="d-flex flex-column">
                                     {% if campaign.active == True %}
                                     <a class="btn btn-enabled standard-button"
-                                        href="{% url 'deactivate_campaign' campaign.id %}">Disable</a>
+                                        href="{% url 'deactivate_campaign' campaign.id %}" aria-label="Disable campaign">Disable</a>
                                     {% elif campaign.active == False %}
                                     <a class="btn btn-disabled standard-button"
-                                        href="{% url 'activate_campaign' campaign.id %}">Enable</a>
+                                        href="{% url 'activate_campaign' campaign.id %}" aria-label="Enable campaign">Enable</a>
                                     {% endif %}
                                     <a class="btn btn-danger standard-button" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ campaign.id }}">Delete</a>
+                                        data-bs-target="#deleteModal{{ campaign.id }}" aria-label="Delete campaign">Delete</a>
                                 </div>
                             </div>
 

@@ -10,13 +10,13 @@
                   enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="manage-cards card">
-                      <h5 class="card-header">
+                      <h3 class="card-header">
                           Update item: {{ item.title }} by {% for author in item.author.all %}
                           {% if not forloop.first %}{% if forloop.last %} and {% else %},
                           {% endif %}{% endif %}
                           {{ author }}
                           {% endfor %}
-                      </h5>
+                      </h3>
                       <div class="card-body">
                           <div class="row">
                               <div class="col-sm-12 col-md-6 col-lg-6">
@@ -30,7 +30,7 @@
                                           {% endfor %}
                                       </select>
                                       <button type="button" id="add_author_1"
-                                          class="btn btn-secondary standard-button">Select
+                                          class="btn btn-secondary standard-button" aria-label="Select author">Select
                                           author</button>
                                   </div>
                                   <div class="inline-author-input">
@@ -41,7 +41,7 @@
                                               placeholder="Last name">
                                       </div>
                                       <button id="add_author_2" class="btn btn-secondary standard-button"
-                                          type="button">Add new
+                                          type="button" aria-label="Add new author">Add new
                                           author</button>
                                   </div>
                                   <p class="bold">Selected Authors</p>
@@ -50,15 +50,11 @@
                                       {% for a in item.author.all %}
                                       <span class="badge rounded-pill bg-light text-dark ml-1"><span
                                               class="just-text">{{ a }}</span><a onclick="deleteThis(this)"
-                                              class="p-1"><i class="fas fa-times"></i></a></span></p>
-
-
+                                              class="p-1" aria-label="Remove selected author"><i class="fas fa-times"></i></a></span></p>
                                       {% endfor %}
-
                                   </div>
                                   <textarea class="visually-hidden" id="hidden-authors" type="textarea" name="authors"
                                       required></textarea>
-
                                   {{ form.genre | as_crispy_field }}
                                   {{ form.age_range | as_crispy_field }}
                                   <div class="image-container">
@@ -66,26 +62,22 @@
                                       <img id="current-image" src="{{ MEDIA_URL }}{{ item.image }}" alt="">
                                       {{ form.image | as_crispy_field }}
                                   </div>
-
                               </div>
                               <div class="col-sm-12 col-md-6 col-lg-6">
                                   {{ form.description | as_crispy_field }}
                                   {{ form.price | as_crispy_field }}
                                   {{ form.discount | as_crispy_field }}
                                   {{ form.featured | as_crispy_field }}
-
                               </div>
-
                               <div class="row">
                                   <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto">
                                       <button type="submit" class="btn btn-secondary standard-button"
-                                          id="add-item-btn">Update book listing</button>
+                                          id="add-item-btn" aria-label="Update item">Update book listing</button>
                                       <a href="{% url 'items' %}" id="add-cancel-btn"
-                                          class="btn btn-secondary standard-button">Cancel</a>
+                                          class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>
                                   </div>
                               </div>
               </form>
-
           </div>
       </div>
   </div>

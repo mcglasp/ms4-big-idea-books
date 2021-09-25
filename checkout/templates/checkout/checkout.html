@@ -15,14 +15,12 @@
         <div class="card m-3">
             <div class="card-header zig-zag">
                 <div class="white-fade"></div>
-                <h5 id="top-layer">Your basket</h5>
+                <h3 id="top-layer">Your basket</h3>
             </div>
-
             <div class="card-body">
                 <div class="container">
                     <div class="row">
                         <div class="col-8"><strong>Item</strong>
-
                         </div>
                         <div class="col-4 col-4 d-flex justify-content-end">
                             <strong>Quantity</strong>
@@ -42,8 +40,8 @@
                 </div>
                 <hr>
                 <div class="row d-flex justify-content-end flex-column align-items-end pr-4 pt-2">
-                        <h6 class="col-6 d-flex justify-content-between" id="uk-delivery">Standard UK delivery: <strong>£{{ delivery_cost }}</strong></h6>
-                        <h5 class="col-6 d-flex justify-content-between" id="checkout-total">Total: <strong>£{{ grand_total }}</strong></h5>
+                        <h3 class="col-6 d-flex justify-content-between" id="uk-delivery">Standard UK delivery: <strong>£{{ delivery_cost }}</strong></h3>
+                        <h3 class="col-6 d-flex justify-content-between" id="checkout-total">Total: <strong>£{{ grand_total }}</strong></h3>
                 </div>
             </div>
         </div>
@@ -52,7 +50,7 @@
         <div class="card m-3">
             <div class="card-header zig-zag">
                 <div class="white-fade"></div>
-                <h5 id="top-layer">Your details</h5>
+                <h3 id="top-layer">Your details</h3>
             </div>
             <div class="card-body">
                 <p>{{ payment_process_info }}</p>
@@ -76,21 +74,19 @@
                         </div>
                         {% else %}
                         <label class="form-check-label" for="id-save-info">
-                            <a id="pay-create" class="text-info" href="{% url 'account_signup' %}">Create an
+                            <a id="pay-create" class="text-info" href="{% url 'account_signup' %}" aria-label="Create an account">Create an
                                 account</a> or
-                            <a id="pay-login" class="text-info" href="{% url 'account_login' %}">log in</a> to save
+                            <a id="pay-login" class="text-info" href="{% url 'account_login' %}" aria-label="Log in">log in</a> to save
                             this information
                         </label>
                         {% endif %}
                         <div class="payment">
                             <legend class="fieldset-label small text-black w-auto pt-3 pb-3">Payment</legend>
-                            <!-- A Stripe card element will go here -->
                             <div class="mb-3" id="card-element"></div>
-                            <!-- Used to display form errors -->
                             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                         </div>
                     </fieldset>
-                    <button id="submit-button" type="submit">Confirm & Pay</button>
+                    <button id="submit-button" type="submit" aria-label="Pay">Confirm & Pay</button>
                 </form>
             </div>
         </div>
@@ -103,7 +99,7 @@
 <div id="loading-overlay">
     <h1 class="text-light logo-font loading-spinner">
         <span class="icon">
-            <img src="/media/book_loader.gif" alt="Loading icon">
+            <img src="{{ MEDIA_URL }}book_loader.gif" alt="Loading icon">
         </span>
     </h1>
 </div>
