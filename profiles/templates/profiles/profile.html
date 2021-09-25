@@ -30,15 +30,13 @@
                             <p class="list-item m-0 pl-2"><strong>Order Date:</strong> {{ order.order_date|date:'d-m-Y' }}:</p>
                         </div>
                         {% for o in order.lineitems.all %}
-                        <tr>
-                            
+                        <tr> 
                             <td colspan="2" class="text-truncate d-inline-block m-0">{{ o.item.title }}</td>
                             <td colspan="1" class="text-muted"> x {{ o.quantity }}</td>
                             <td colspan="2" class="text-end pr-4">{{ o.line_total }}</td>
                         </tr>
                         {% endfor %}
                         <tr>
-                            
                             <td colspan="3" class="d-inline-block m-0">Total basket cost:</td>
                             <td colspan="2" class="text-end">{{ order.basket_total }}</td>
                         </tr>

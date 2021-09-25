@@ -101,9 +101,11 @@ def latest_items(request):
 
 def go_to_offer(request, offer_id):
 
+    offer = get_object_or_404(Campaign, pk=offer_id)
     items = Item.objects.filter(campaign__pk=offer_id).filter(active=True)
  
     context = {
+        'offer': offer,
         'items': items,
     }
 
@@ -116,8 +118,19 @@ def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
 
     if item.active:
-        related_lookup = item.genre.all()[0]
-        related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True)
+        related_genres = item.genre.all()
+        if related_genres.count() > 1:
+            rel_1 = related_genres[0].item_set.count()
+            rel_2 = related_genres[1].item_set.count()
+            if rel_1 > rel_2:
+                related_lookup = related_genres[0]
+            else:
+                related_lookup = related_genres[1]
+            
+        related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True).exclude(image='')
+
+        if related_items.count() == 0:
+            related_items  = Item.objects.exclude(id=item_id).filter(active=True).exclude(image='').order_by('-date_added')
     
     else:
         messages.error(request, 'Sorry, that item is not currently available.')
@@ -250,6 +263,7 @@ def create_campaign(request):
             list_item.set_sale_price = request.POST.get('fixed_price')
             list_item.save()
         messages.success(request, 'Your campaign has been created.')
+        return redirect('manage_campaigns')
     else:
         form = CampaignForm()
 

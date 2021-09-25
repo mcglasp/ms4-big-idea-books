@@ -1,42 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container-fluid d-md-none d-sm-block">
+<div class="container-fluid d-block d-sm-none">
     <div class="row">
         <div class="col-12 img-row">
-        <img id="mobile-image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 img-row">
-        <img id="mobile-image-2" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">
-    </div>
-</div>
-    <div class="row">
-        <div class="col-12 img-row">
-        <img id="mobile-image-3" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
+        <img id="mobile-image-1" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">
     </div>
 </div>
 </div>
-</div>
-<div class="container-fluid d-md-block d-sm-none">
+<div class="container-fluid d-none d-sm-block">
         <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Little Astronomers...
+                    <a id="overlay-text" href="{% url 'items' %}/?&sort=newly_listed">Little Astronomers...
                    </a>
                     <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
                 </div>
                 <div id="image-2" class="carousel-item">
-                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Curious Minds...
+                    <a id="overlay-text" href="{% url 'items' %}/?&sort=newly_listed">Curious Minds...
                    </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">
                 </div>
                 <div id="image-3" class="carousel-item">
-                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Mad Scientists...
+                    <a id="overlay-text" href="{% url 'items' %}/?&sort=newly_listed">Mad Scientists...
                    </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
                 </div>
                 <div id="image-4" class="carousel-item">
-                    <a id="overlay-text"href="{% url 'items' %}/?&sort=newly_listed">Budding Builders...
+                    <a id="overlay-text"h ref="{% url 'items' %}/?&sort=newly_listed">Budding Builders...
                    </a>                    <img id="image-1" class="" src="{{ MEDIA_URL }}space_collection.jpg" alt="">
                 </div>
             </div>
@@ -44,8 +33,8 @@
     </div>
     <div class="container">
         <div class="row">
-                {% for item in items|slice:':3' %}
-                <div class="col-lg-4 col-md-4 col-sm-16 item">
+                {% for item in items|slice:':4' %}
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 item">
                     <div class="item-card card">
                         <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
                         <div class="card-body">

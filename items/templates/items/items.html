@@ -4,31 +4,28 @@
 
 {% block content %}
 
-
-
 <div class="container">
     <div class="row {% if narrow_age or narrow_genre %} narrow-search {% endif %} sort-only">
         {% if 'go_to_offer' in request.path %}
         <div class="col-md-7 col-sm-12">
-
             <h2>{{ offer.campaign_name }}</h2>
         </div>
-
+        {% endif %}
+        {% if items.count is 0 %}
+        <div class="col-md-7 col-sm-12">
+        <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
+        </div>
         {% else %}
         <div class="col-md-7 col-sm-12">
             {% if narrow_age or narrow_genre %}
             {% include 'includes/narrow_search_nav.html' %}
             {% endif %}
         </div>
-        {% endif %}
         <div class="col-md-5 col-sm-6 pt-2">
             {% include 'includes/sort_field.html' %}
         </div>
     </div>
     <div class="row items-row">
-        {% if items.count is 0 %}
-        <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
-        {% else %}
         {% for item in items %}
         <!-- MODAL -->
         <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog"
@@ -62,7 +59,6 @@
                         | <a id="{{ item.id }}" href="#" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{ item.id }}">Delete</a>
                     </small>
-
                 </div>
                 {% endif %}
                 <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}"

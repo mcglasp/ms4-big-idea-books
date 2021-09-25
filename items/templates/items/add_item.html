@@ -83,7 +83,7 @@
             node.innerHTML =
                 `${newValue} <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`
             alreadyHiddenText.appendChild(hiddenTextToAdd)
-            $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1')
+            $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1 mb-1')
             $('#store-authors').append(node)
             alreadyInput.push(newValue)
         }
@@ -105,7 +105,7 @@
                     node.innerHTML =
                         `${newValue} <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`
                     alreadyHiddenText.appendChild(hiddenTextToAdd)
-                    $(node).attr('class', 'badge rounded-pill bg-light text-dark')
+                    $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1 mb-1')
                     $('#store-authors').append(node)
                     alreadyInput.push(newValue)
                 }

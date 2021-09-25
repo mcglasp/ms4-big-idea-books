@@ -101,13 +101,11 @@
 
     <h4>Items related to your search...</h4>
 
-    <div class="row zig-zag pt-3 pb-3">
+    <div class="row zig-zag pt-3 pb-3 justify-content-around">
         {% for related in related_items|slice:":6" %}
         <div class="col-sm-12 col-md-2">
-
             <a class="related-item" href="{% url 'item_detail' related.id %}"><img
                     src="{{ MEDIA_URL }}{{ related.image }}" alt=""></a>
-
         </div>
         {% endfor %}
     </div>
@@ -115,8 +113,8 @@
 </div>
 
 <!-- CREDIT W3Schools for Cover Image Modal display -->
-<div id="cover-img-modal" class="modal">
-    <span class="close">&times;</span>
+<div id="cover-img-modal" class="img-modal">
+    <span class="img-close">&times;</span>
     <img class="modal-content" id="cover">
 </div>
 
@@ -128,14 +126,12 @@
     var modal = document.getElementById("cover-img-modal");
     var img = document.getElementById("header-cover");
     var modalImg = document.getElementById("cover");
-    var captionText = document.getElementById("caption");
     img.onclick = function () {
         modal.style.display = "block";
         modalImg.src = this.src;
-        captionText.innerHTML = this.alt;
     }
 
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementsByClassName("img-close")[0];
     span.onclick = function () {
         modal.style.display = "none";
     }
