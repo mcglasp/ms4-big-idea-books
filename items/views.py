@@ -127,7 +127,7 @@ def item_detail(request, item_id):
             else:
                 related_lookup = related_genres[1]
             
-        related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True).exclude(image='')
+            related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True).exclude(image='')
 
         if related_items.count() == 0:
             related_items  = Item.objects.exclude(id=item_id).filter(active=True).exclude(image='').order_by('-date_added')
