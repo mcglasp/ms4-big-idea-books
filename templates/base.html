@@ -4,7 +4,7 @@
 
 <head>
   {% block meta %}
-  <meta http-equiv="X-UA-Compatible" content="ie-edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   {% endblock %}
@@ -58,42 +58,42 @@
   {% include 'includes/user_account.html' %}
   {% block header %}
   <header class="zig-zag">
-    <h1 id=logo-header><i id="logo-icon-left" class="fas fa-crow"></i><a href="/">Big Idea Books</a><i id="logo-icon-right" class="fas fa-dove"></i></h1>
-    <h2>curated non-fiction for kids</h3>
-    <div id="header-icons-left"><i class="fas fa-motorcycle"></i><i class="fas fa-truck-monster"></i></div>
-    <div id="header-icons-right"><i class="fas fa-tree"></i><i class="fas fa-map-signs"></i></div>
+    <h1 id=logo-header><i id="logo-icon-left" class="fas fa-crow"></i><a href="/">Big Idea Books</a><i
+        id="logo-icon-right" class="fas fa-dove"></i></h1>
+    <h2>curated non-fiction for kids</h2>
+      <div id="header-icons-left"><i class="fas fa-motorcycle"></i><i class="fas fa-truck-monster"></i></div>
+      <div id="header-icons-right"><i class="fas fa-tree"></i><i class="fas fa-map-signs"></i></div>
   </header>
   {% endblock %}
   <main>
-  {% include 'includes/nav.html' %}
-  {% block subhead %}
-  {% endblock %}
-  {% block messages %}
-  {% if messages %}
-  <div class="message-container">
-    {% for message in messages %}
-    {% with message.level as level %}
-    {% if level == 40 %}
-    {% include 'includes/messages/error_message.html' %}
-    {% else %}
-    {% include 'includes/messages/success_message.html' %}
+    {% include 'includes/nav.html' %}
+    {% block subhead %}
+    {% endblock %}
+    {% block messages %}
+    {% if messages %}
+    <div class="message-container">
+      {% for message in messages %}
+      {% with message.level as level %}
+      {% if level == 40 %}
+      {% include 'includes/messages/error_message.html' %}
+      {% else %}
+      {% include 'includes/messages/success_message.html' %}
+      {% endif %}
+      {% endwith %}
+      {% endfor %}
+    </div>
     {% endif %}
-    {% endwith %}
-    {% endfor %}
-  </div>
-  {% endif %}
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+  </main>
+  {% block footer %}
+  {% include 'includes/footer.html' %}
   {% endblock %}
-  {% block content %}
-  {% endblock %}
-</main>
-{% block footer %}
-{% include 'includes/footer.html' %}
-{% endblock %}
 
   {% block postloadjs %}
   {{ block.super }}
   <script>
-
     $(document).ready(function () {
       $('.toast').toast('show');
     });
@@ -101,17 +101,15 @@
     $(window).scroll(function () {
       var scrollPos = $(document).scrollTop();
       // console.log(scrollPos)
-      if (scrollPos > 185 ) {
-        $('#user-admin-box-top').addClass('visually-hidden')
-        $('#user-admin-box-lower').removeClass('visually-hidden')
-        $('#lower-nav').css('z-index', '9999')
-
+      if (scrollPos > 185) {
+        $('#user-admin-box-top').addClass('visually-hidden');
+        $('#user-admin-box-lower').removeClass('visually-hidden');
+        $('#lower-nav').css('z-index', '9999');
       }
-      if (scrollPos < 185 ) {
-        $('#user-admin-box-top').removeClass('visually-hidden')
-        $('#user-admin-box-lower').addClass('visually-hidden')
-        $('#lower-nav').css('z-index', 'unset')
-
+      if (scrollPos < 185) {
+        $('#user-admin-box-top').removeClass('visually-hidden');
+        $('#user-admin-box-lower').addClass('visually-hidden');
+        $('#lower-nav').css('z-index', 'unset');
       }
     });
   </script>

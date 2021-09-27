@@ -14,7 +14,7 @@
                     <div id="search-field">
                         <form class="" method="GET" action="{% url 'profile' %}">
                             <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"
-                                name="q">
+                                name="q" required>
                             <button class="btn btn-secondary profile-buttons" type="submit">Search</button>
                             <a id="show-all" href="{% url 'profile' %}?show-all"
                                 class="btn btn-secondary profile-buttons">Show all orders</a>
@@ -27,10 +27,11 @@
                     <table class="table">
                         <div class="list-group-flush">
                             <p class="list-item m-0 pl-2"><strong>Order Number:</strong> {{ order.order_number }}</p>
-                            <p class="list-item m-0 pl-2"><strong>Order Date:</strong> {{ order.order_date|date:'d-m-Y' }}:</p>
+                            <p class="list-item m-0 pl-2"><strong>Order Date:</strong>
+                                {{ order.order_date|date:'d-m-Y' }}:</p>
                         </div>
                         {% for o in order.lineitems.all %}
-                        <tr> 
+                        <tr>
                             <td colspan="2" class="text-truncate d-inline-block m-0">{{ o.item.title }}</td>
                             <td colspan="1" class="text-muted"> x {{ o.quantity }}</td>
                             <td colspan="2" class="text-end pr-4">{{ o.line_total }}</td>
@@ -49,8 +50,11 @@
                         Orders'?</p>
                     {% endif %}
                     {% else %}
-                    <p class="p-1">You don't yet have any orders to display. 
-                        {% if featured_items %}
+                    <p class="p-1">
+                        You don't yet have any orders to display.
+                    </p>
+                    {% if featured_items %}
+                    <p class="p-1">
                         Why not take a look at our featured books?
                     </p>
                     <div class="row zig-zag pt-3 pb-3">
@@ -60,32 +64,30 @@
                                     src="{{ MEDIA_URL }}{{ featured.image }}" alt=""></a>
                         </div>
                         {% endfor %}
-                        {% endif %}
                     </div>
                     {% endif %}
-
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="card m-3">
+                <div class="card-header zig-zag">
+                    <div class="white-fade"></div>
+                    <h3 id="top-layer-orders">Your details</h3>
+                </div>
+                <div class="card-body">
+                    <p><a class="btn btn-secondary standard-button" href="{% url 'account_change_password' %}">Change
+                            password</a></p>
+                    <form class="" action="{% url 'profile' %}" method="POST">
+                        {% csrf_token %}
+                        {{ info_form|crispy }}
+                        <button class="btn btn-secondary mt-2">Save information</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="col-sm-12 col-md-6 col-lg-6">
-    <div class="card m-3">
-        <div class="card-header zig-zag">
-            <div class="white-fade"></div>
-            <h3 id="top-layer-orders">Your details</h3>
-        </div>
-        <div class="card-body">
-            <p><a class="btn btn-secondary standard-button" href="{% url 'account_change_password' %}">Change
-                    password</a></p>
-            <form class="" action="{% url 'profile' %}" method="POST">
-                {% csrf_token %}
-                {{ info_form|crispy }}
-                <button class="btn btn-secondary mt-2">Save information</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 
 {% endblock %}

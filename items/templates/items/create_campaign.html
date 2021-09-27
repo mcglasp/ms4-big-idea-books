@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load price_tools %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -16,11 +15,12 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-6">
+            <span id="check-not-valid"></span>
               <p class="pt-3">Items available for inclusion</p>
               <div class="include-container available">
                 {% for a in available %}
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="{{ a.pk }}" id="" name="included_items">
+                <div class="inc-check form-check">
+                  <input class="form-check-input" type="checkbox" value="{{ a.pk }}" name="included_items" >
                   <label class="form-check-label" for="defaultCheck1">
                     {{ a }}                
                   </label>
@@ -31,7 +31,7 @@
               <div class="include-container not-available">
                 {% for n in not_available %}
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="{{ n }}" id="" disabled>
+                  <input class="form-check-input" type="checkbox" value="{{ n }}" disabled>
                   <label class="form-check-label" for="defaultCheck1">
                     {{ n }}                
                   </label>
@@ -43,7 +43,7 @@
               {{ form.campaign_name | as_crispy_field }}
               {{ form.fixed_price | as_crispy_field }}
               {{ form.active | as_crispy_field }}
-            <button class='btn btn-secondary standard-button' type="submit" aria-label="Create campaign">Create</button>
+            <button id="create" class='btn btn-secondary standard-button' type="submit" aria-label="Create campaign">Create</button>
             <a href="{% url 'manage_campaigns' %}" id="add-cancel-btn"
             class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>          
           </div>
@@ -54,4 +54,20 @@
 </div>
 
 {% endblock %}
+{% block postloadjs %}
+{{ block.super }}
+<script>
+// Prevent form from submitting if fewer than 3 items have been selected.
+$( "#item-form" ).submit(function(e) {
+  if ($('.available :checkbox:checked').length > 2) {
+  return
+  } else {
+    $('#check-not-valid').text("You must select at least three items.")
+  e.preventDefault();
+  }
+});
 
+
+
+</script>
+{% endblock %}

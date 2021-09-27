@@ -2,15 +2,16 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpR
 from django.contrib import messages
 from items.models import Item
 from checkout.models import LineItem
-# Create your views here.
 
 
 def view_basket(request):
+    """ Returns the full-page basket view """
 
     return render(request, 'basket/basket.html')
 
 
 def add_to_basket(request, item_id):
+    """ Adds an item to the basket without refreshing the page """
 
     item = Item.objects.get(pk=item_id)
     if item.active:
@@ -34,6 +35,7 @@ def add_to_basket(request, item_id):
 
 
 def update_quantity(request, item_id):
+    """Update quantity of item in basket from full-page basket view"""
 
     quantity = int(request.POST.get('quantity'))
     item = get_object_or_404(Item, pk=item_id)
@@ -53,6 +55,7 @@ def update_quantity(request, item_id):
 
 
 def remove_from_basket(request, item_id):
+    """Remove item from basket from full-page basket view"""
 
     basket = request.session.get('basket', {})
     item = get_object_or_404(Item, pk=item_id)

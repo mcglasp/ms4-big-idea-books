@@ -3,12 +3,18 @@ from django.db.models import F, Q
 from django.db.models.functions import Lower
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db import IntegrityError
 from .models import Item, Author, Campaign
 from .forms import ItemForm, AuthorDataForm, CampaignForm
 
 
 def all_items(request):
+    """ 
+    Displays all items available on the store
+    and manages filtering and sorting
+    """
+
     try:
         items = Item.objects.all().order_by('-featured', 'quantity_sold')
     except:
@@ -72,12 +78,13 @@ def all_items(request):
 
         if 'q' in request.GET:
             user_query = request.GET['q']
-            
             user_queries = Q(title__icontains=user_query) | Q(description__icontains=user_query) | Q(genre__name__icontains=user_query) | Q(author__first_name__icontains=user_query) | Q(author__surname__icontains=user_query) | Q(age_range__age_range__icontains=user_query)
             items = items.filter(user_queries).distinct() 
-
+    
+    featured = items.filter(featured=True).exists()
     items = items.filter(active=True)
     context = {
+        'featured': featured,
         'items': items,
         'genres': genres,
         'ages': ages,
@@ -91,6 +98,10 @@ def all_items(request):
     
 
 def latest_items(request):
+    """
+    Displays the 10 most recently added items
+    """
+
     items = Item.objects.filter(active=True).order_by('-date_added')[:10]
     context = {
         "items": items
@@ -100,6 +111,9 @@ def latest_items(request):
 
 
 def go_to_offer(request, offer_id):
+    """
+    View the advertised sales campaign
+    """
 
     offer = get_object_or_404(Campaign, pk=offer_id)
     items = Item.objects.filter(campaign__pk=offer_id).filter(active=True)
@@ -112,9 +126,12 @@ def go_to_offer(request, offer_id):
     return render(request, 'items/items.html', context)
 
 
-
 def item_detail(request, item_id):
-    
+    """
+    Detailed view of a single product.
+    Also returns related items
+    """
+
     item = get_object_or_404(Item, pk=item_id)
 
     if item.active:
@@ -147,8 +164,12 @@ def item_detail(request, item_id):
 
 
 @login_required
+@staff_member_required
 def add_item(request):
-    
+    """
+    Add an item to the store
+    """
+
     authors_select = Author.objects.all()
 
     if request.method == 'POST':
@@ -165,6 +186,7 @@ def add_item(request):
                 saved_item = Item.objects.get(title=title, description=description)
                 item_id = saved_item.id
                 instance = get_object_or_404(Item, pk=item_id)
+                # Add author to database if not already added, associate it with added item
                 author_array = request.POST.get("authors")
                 authors = author_array.split(';')
                 for author in authors:
@@ -176,6 +198,7 @@ def add_item(request):
                         author_to_attach = name
                         instance.author.add(author_to_attach)
                         messages.success(request, f"{title} has been added to the shop")
+                
                 return redirect('add_item')
         else:
             
@@ -190,11 +213,16 @@ def add_item(request):
         'authors_select': authors_select,
     }
 
+
     return render(request, 'items/add_item.html', context)
 
 @login_required
+@staff_member_required
 def update_item(request, item_id):
-
+    """ 
+    A view to update existing product information 
+    """
+    
     authors_select = Author.objects.all()
 
     item = get_object_or_404(Item, pk=item_id)
@@ -203,6 +231,7 @@ def update_item(request, item_id):
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
+            # Add author to database if not already added, associate it with added item
             author_array = request.POST.get("authors")
             authors = author_array.split(';')
             for author in authors:
@@ -231,10 +260,17 @@ def update_item(request, item_id):
     
     return render(request, template, context)
 
+
 @login_required
+@staff_member_required
 def delete_item(request, item_id):
+    """
+    Delete a database item: if product is not included in a 
+    customer's Order lineitem from a previous order, make 
+    it active=False, otherwise delete.
+    """
+
     item = get_object_or_404(Item, pk=item_id)
-    print(item)
     try:
         item.campaign = None
         item.save()
@@ -249,8 +285,10 @@ def delete_item(request, item_id):
 
 
 @login_required
+@staff_member_required
 def create_campaign(request):
-
+    """ Create a sales campaign """
+    not_valid = False
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
     not_available = Item.objects.filter(campaign__isnull=False).filter(active=True)
 
@@ -258,14 +296,20 @@ def create_campaign(request):
         form = CampaignForm(request.POST, request.FILES)
         included_items = request.POST.getlist('included_items')
         campaign_name = request.POST.get('campaign_name')
-        form.save()
-        for list_item in included_items:
-            list_item = Item.objects.get(pk=list_item)
-            list_item.campaign = Campaign.objects.get(campaign_name=campaign_name)
-            list_item.set_sale_price = request.POST.get('fixed_price')
-            list_item.save()
-        messages.success(request, 'Your campaign has been created.')
-        return redirect('manage_campaigns')
+        # Check for existing campaign with same name
+        check_name = Campaign.objects.filter(campaign_name=campaign_name)
+        if check_name.exists():
+            messages.error(request, 'Sorry, a campaign with this name already exists')
+        else:
+            # return reverse('create_campaign')
+            form.save()
+            for list_item in included_items:
+                list_item = Item.objects.get(pk=list_item)
+                list_item.campaign = Campaign.objects.get(campaign_name=campaign_name)
+                list_item.set_sale_price = request.POST.get('fixed_price')
+                list_item.save()
+            messages.success(request, 'Your campaign has been created.')
+            return redirect('manage_campaigns')
     else:
         form = CampaignForm()
 
@@ -278,8 +322,12 @@ def create_campaign(request):
 
     return render(request, 'items/create_campaign.html', context)
 
+
 @login_required
+@staff_member_required
 def manage_campaigns(request):
+    """ View existing campaigns """
+
     campaigns = Campaign.objects.all().order_by('campaign_name')
 
     context = {
@@ -290,7 +338,13 @@ def manage_campaigns(request):
 
 
 @login_required
+@staff_member_required
 def deactivate_campaign(request, campaign_id):
+    """ 
+    Disable a campaign, without deleting it.
+    Included products will remain unavailable for inclusion in other campaigns
+    """
+
     campaign = get_object_or_404(Campaign, pk=campaign_id)
     included_items = Item.objects.filter(campaign__pk=campaign_id)
     for item_instance in included_items:
@@ -306,7 +360,10 @@ def deactivate_campaign(request, campaign_id):
 
 
 @login_required
+@staff_member_required
 def activate_campaign(request, campaign_id):
+    """ Enable an existing campaign """
+
     campaign = get_object_or_404(Campaign, pk=campaign_id)
     included_items = Item.objects.filter(campaign__pk=campaign_id)
     for item_instance in included_items:
@@ -321,11 +378,13 @@ def activate_campaign(request, campaign_id):
     return redirect(reverse('manage_campaigns'))
 
 @login_required
+@staff_member_required
 def update_campaign(request, campaign_id):
+    """ Update an existing campaign """
     
     campaign = get_object_or_404(Campaign, pk=campaign_id)
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
-    
+    # List of included items to compare against
     original_inclusion_list = campaign.item_set.all()
     original_inclusion_ids = campaign.item_set.all().values_list('id', flat=True)
     not_available_list = Item.objects.filter(campaign__isnull=False).filter(active=True)
@@ -338,7 +397,7 @@ def update_campaign(request, campaign_id):
         already_included = request.POST.getlist('already_included')
         campaign_name = request.POST.get('campaign_name')
         new_list = included_items + already_included
-        #clear campaigns items
+        # Clear campaign's included items to compile new list
         old_campaign_items = Item.objects.filter(campaign__pk=campaign_id)
         for item in old_campaign_items:
             item.campaign = None
@@ -366,13 +425,17 @@ def update_campaign(request, campaign_id):
 
 
 @login_required
+@staff_member_required
 def delete_campaign(request, campaign_id):
-    #clear campaigns items
+    """ Delete a campaign """
+    # Clear included items' association to campaign
     old_campaign_items = Item.objects.filter(campaign__pk=campaign_id)
     for item in old_campaign_items:
         item.campaign = None
         item.save()
+
     campaign = get_object_or_404(Campaign, pk=campaign_id)
+    # Delete campaign itself
     campaign.delete()
     messages.success(request, 'Campaign successfully deleted.')
 

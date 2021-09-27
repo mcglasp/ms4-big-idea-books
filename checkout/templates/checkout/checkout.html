@@ -15,7 +15,7 @@
         <div class="card m-3">
             <div class="card-header zig-zag">
                 <div class="white-fade"></div>
-                <h3 id="top-layer">Your basket</h3>
+                <h3>Your basket</h3>
             </div>
             <div class="card-body">
                 <div class="container">
@@ -40,8 +40,8 @@
                 </div>
                 <hr>
                 <div class="row d-flex justify-content-end flex-column align-items-end pr-4 pt-2">
-                        <h3 class="col-6 d-flex justify-content-between" id="uk-delivery">Standard UK delivery: <strong>£{{ delivery_cost }}</strong></h3>
-                        <h3 class="col-6 d-flex justify-content-between" id="checkout-total">Total: <strong>£{{ grand_total }}</strong></h3>
+                        <div class="col-6 d-flex justify-content-between" id="uk-delivery">Standard UK delivery: <strong>£{{ delivery_cost }}</strong></div>
+                        <div class="col-6 d-flex justify-content-between" id="checkout-total">Total: <strong>£{{ grand_total }}</strong></div>
                 </div>
             </div>
         </div>
@@ -50,20 +50,20 @@
         <div class="card m-3">
             <div class="card-header zig-zag">
                 <div class="white-fade"></div>
-                <h3 id="top-layer">Your details</h3>
+                <h3>Your details</h3>
             </div>
             <div class="card-body">
                 <p>{{ payment_process_info }}</p>
                 <p>{{ profile.default_phone_number }}</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
-                    <p>{{ order_form.customer_name | as_crispy_field }}</p>
-                    <p>{{ order_form.phone_number | as_crispy_field }}</p>
-                    <p>{{ order_form.email_address | as_crispy_field }}</p>
-                    <p>{{ order_form.street_address1 | as_crispy_field }}</p>
-                    <p>{{ order_form.street_address2 | as_crispy_field }}</p>
-                    <p>{{ order_form.town_or_city | as_crispy_field }}</p>
-                    <p>{{ order_form.postcode | as_crispy_field }}</p>
+                    {{ order_form.customer_name | as_crispy_field }}
+                    {{ order_form.phone_number | as_crispy_field }}
+                    {{ order_form.email_address | as_crispy_field }}
+                    {{ order_form.street_address1 | as_crispy_field }}
+                    {{ order_form.street_address2 | as_crispy_field }}
+                    {{ order_form.town_or_city | as_crispy_field }}
+                    {{ order_form.postcode | as_crispy_field }}
                     <fieldset class="pb-3">
                         {% if user.is_authenticated %}
                         <div class="tickbox-control">
@@ -81,7 +81,7 @@
                         </label>
                         {% endif %}
                         <div class="payment">
-                            <legend class="fieldset-label small text-black w-auto pt-3 pb-3">Payment</legend>
+                            <span class="fieldset-label small text-black w-auto p-2 pb-0">Payment</span>
                             <div class="mb-3" id="card-element"></div>
                             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                         </div>
@@ -103,7 +103,7 @@
         </span>
     </h1>
 </div>
-</div>
+
 
 {% endblock %}
 {% block postloadjs %}

@@ -50,11 +50,11 @@
 
                         <div class="row campaign-details justify-content-between">
                             <div class="col-md-3">
-                                <a href="{% url 'update_campaign' campaign.id %}">{{ campaign.campaign_name }}</a>
+                                <a href="{% url 'update_campaign' campaign.id %}"><h5 class="p-2 text-center">{{ campaign.campaign_name }}</h5></a>
                             </div>
                             <div class="col-md-5">
-                                <li class="p-0">{{ campaign.item_set.all.count }} Item{% if campaign.item_set.all.count != 1 %}s{% endif %}
-                                        Included</li>
+                                <p class="p-0">{{ campaign.item_set.all.count }} Item{% if campaign.item_set.all.count != 1 %}s{% endif %}
+                                        Included</p>
                             </div>
                             <div class="col-md-2">
                                 <span>Price: £{{ campaign.fixed_price }}</span>

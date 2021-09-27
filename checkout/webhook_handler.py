@@ -17,8 +17,6 @@ class StripeWH_Handler:
         self.request = request
 
     def _send_confirmation_email(self, order):
-        print("1111111111111111111111")
-        print('order', order)
         """Send the user a confirmation email"""
         customer_email = order.email_address
         subject = render_to_string(
@@ -55,9 +53,6 @@ class StripeWH_Handler:
         shipping_details = intent.shipping
         grand_total = round(intent.charges.data[0].amount / 100, 2)
 
-        print('b', billing_details)
-        print('s', shipping_details)
-
         for field, value in shipping_details.address.items():
             if value == "":
                 shipping_details.address[field] = None
@@ -81,17 +76,14 @@ class StripeWH_Handler:
                 order_exists = True
                 break
             except Order.DoesNotExist:
-                print('exception 2')
                 attempt += 1
                 time.sleep(1)
         if order_exists:
-            print('exists')
             self._send_confirmation_email(order)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
         else:
-            print('does not exist')
 
             order = None
             try:
@@ -118,7 +110,6 @@ class StripeWH_Handler:
                 
 
             except Exception as e:
-                print('exception 1:', e)
                 if order:
                     # o = vars(order)
                     # print(', '.join("%s: %s" % item for item in o.items()))
@@ -137,7 +128,6 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.payment_failed webhook from Stripe
         """
-        print('handle_payment_intent_payment_failed')
         return HttpResponse(
             content=f'3 Webhook received: {event["type"]}',
             status=200)

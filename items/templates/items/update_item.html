@@ -29,8 +29,8 @@
                                           <option value="{{ author }}">{{ author }}</option>
                                           {% endfor %}
                                       </select>
-                                      <button type="button" id="add_author_1"
-                                          class="btn btn-secondary standard-button" aria-label="Select author">Select
+                                      <button type="button" id="add_author_1" class="btn btn-secondary standard-button"
+                                          aria-label="Select author">Select
                                           author</button>
                                   </div>
                                   <div class="inline-author-input">
@@ -40,8 +40,8 @@
                                           <input type="text" aria-label="Last name" class="form-control" id="id_surname"
                                               placeholder="Last name">
                                       </div>
-                                      <button id="add_author_2" class="btn btn-secondary standard-button"
-                                          type="button" aria-label="Add new author">Add new
+                                      <button id="add_author_2" class="btn btn-secondary standard-button" type="button"
+                                          aria-label="Add new author">Add new
                                           author</button>
                                   </div>
                                   <p class="bold">Selected Authors</p>
@@ -49,8 +49,9 @@
                                   <div id="store-authors" class="form-control" readonly>
                                       {% for a in item.author.all %}
                                       <span class="badge rounded-pill bg-light text-dark ml-1"><span
-                                              class="just-text">{{ a }}</span><a onclick="deleteThis(this)"
-                                              class="p-1" aria-label="Remove selected author"><i class="fas fa-times"></i></a></span></p>
+                                              class="just-text">{{ a }}</span><a onclick="deleteThis(this)" class="p-1"
+                                              aria-label="Remove selected author"><i
+                                                  class="fas fa-times"></i></a></span></p>
                                       {% endfor %}
                                   </div>
                                   <textarea class="visually-hidden" id="hidden-authors" type="textarea" name="authors"
@@ -71,8 +72,8 @@
                               </div>
                               <div class="row">
                                   <div class="d-grid gap-2 col-sm-12 col-md-6 col-lg-6 mx-auto">
-                                      <button type="submit" class="btn btn-secondary standard-button"
-                                          id="add-item-btn" aria-label="Update item">Update book listing</button>
+                                      <button type="submit" class="btn btn-secondary standard-button" id="add-item-btn"
+                                          aria-label="Update item">Update book listing</button>
                                       <a href="{% url 'items' %}" id="add-cancel-btn"
                                           class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>
                                   </div>
@@ -88,130 +89,119 @@
       let storedAuthors = $('.just-text').map(function () {
           return $(this).text();
       }).toArray();
-      console.log(storedAuthors)
 
-      let alreadyInput = []
-      console.log(alreadyInput)
+      let alreadyInput = [];
       let hiddenAuthorField = document.getElementById("hidden-authors");
 
       function retainExistingAuthors(value) {
-
-          let existingToAdd = document.createTextNode(`${value};`)
+          let existingToAdd = document.createTextNode(`${value};`);
           if (existingToAdd != "" && existingToAdd != " ") {
-              hiddenAuthorField.appendChild(existingToAdd)
-
-              alreadyInput.push(value)
-              print = hiddenAuthorField.innerHTML
-              console.log(value)
+              hiddenAuthorField.appendChild(existingToAdd);
+              alreadyInput.push(value);
           }
       }
-      storedAuthors.forEach(retainExistingAuthors)
-
+      storedAuthors.forEach(retainExistingAuthors);
 
       $("#add_author_1").click(function (e) {
           e.preventDefault;
-          let newValue = $("#id_authors").val()
+          let newValue = $("#id_authors").val();
           let node = document.createElement("span");
           let alreadyHiddenText = document.getElementById("hidden-authors");
-          let hiddenTextToAdd = document.createTextNode(`${newValue};`)
+          let hiddenTextToAdd = document.createTextNode(`${newValue};`);
           if (alreadyInput.includes(newValue)) {
-              alert('You have already selected this author')
+              alert('You have already selected this author');
           } else {
               node.innerHTML =
-                  `<span class="just-text">${newValue}</span> <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`
-              alreadyHiddenText.appendChild(hiddenTextToAdd)
-              $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1')
-              $('#store-authors').append(node)
-              alreadyInput.push(newValue)
+                  `<span class="just-text">${newValue}</span> <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`;
+              alreadyHiddenText.appendChild(hiddenTextToAdd);
+              $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1');
+              $('#store-authors').append(node);
+              alreadyInput.push(newValue);
           }
       });
+
       $("#add_author_2").click(function (e) {
           e.preventDefault;
-          let valueFirstname = $("#id_first_name").val()
-          let valueSurname = $("#id_surname").val()
-          let newValue = `${valueFirstname} ${valueSurname}`
+          let valueFirstname = $("#id_first_name").val();
+          let valueSurname = $("#id_surname").val();
+          let newValue = `${valueFirstname} ${valueSurname}`;
           let node = document.createElement("span");
           let alreadyHiddenText = document.getElementById("hidden-authors");
-          let hiddenTextToAdd = document.createTextNode(`${newValue};`)
+          let hiddenTextToAdd = document.createTextNode(`${newValue};`);
           if (newValue != " ") {
               if (alreadyInput.includes(newValue)) {
-                  alert('You have already selected this author')
+                  alert('You have already selected this author');
               } else {
                   node.innerHTML =
-                      `<span class="just-text">${newValue}</span> <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`
-                  alreadyHiddenText.appendChild(hiddenTextToAdd)
-                  $(node).attr('class', 'badge rounded-pill bg-light text-dark')
-                  $('#store-authors').append(node)
-                  alreadyInput.push(newValue)
+                      `<span class="just-text">${newValue}</span> <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`;
+                  alreadyHiddenText.appendChild(hiddenTextToAdd);
+                  $(node).attr('class', 'badge rounded-pill bg-light text-dark');
+                  $('#store-authors').append(node);
+                  alreadyInput.push(newValue);
               }
           } else {
-              alert('Please select or enter an author name')
+              alert('Please select or enter an author name');
           }
       });
 
       function deleteThis(elem) {
           $(elem).parent('span').remove();
-          let string = document.getElementById('hidden-authors').innerHTML
-          console.log(string)
-          let term = elem.parentElement.textContent.trim()
-          console.log(term)
-          let replaced = string.replace(term, '')
-          document.getElementById('hidden-authors').innerHTML = replaced
+          let string = document.getElementById('hidden-authors').innerHTML;
+          let term = elem.parentElement.textContent.trim();
+          let replaced = string.replace(term, '');
+          document.getElementById('hidden-authors').innerHTML = replaced;
       }
 
       $(document).ready(function () {
-          let discount = $('#id_discount')
+          let discount = $('#id_discount');
           discount.prop('disabled', true);
-
-
           $('#id_price').focusin(function () {
-              let price_field = $('#id_price')
+              let price_field = $('#id_price');
               if (price_field.val() == '0.0') {
-                  price_field.val("")
+                  price_field.val("");
               } else if (price_field.val() == '0.00') {
-                  price_field.val("")
+                  price_field.val("");
               } else if (price_field.val() == '0') {
-                  price_field.val('0.00')
+                  price_field.val('0.00');
               } else {
-                  let updated_price = price_field.val()
-                  price_field.val(updated_price)
+                  let updated_price = price_field.val();
+                  price_field.val(updated_price);
               }
           })
 
           $('#id_price').blur(function () {
-              let price_field = $('#id_price')
+              let price_field = $('#id_price');
               if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() ==
                       "0")) {
-                  price_field.val("0.00")
-                  discount.val('0')
+                  price_field.val("0.00");
+                  discount.val('0');
                   discount.prop('disabled', true);
               } else {
-                  let updated_price = price_field.val()
-                  price_field.val(updated_price)
+                  let updated_price = price_field.val();
+                  price_field.val(updated_price);
                   discount.prop('disabled', false);
               }
           })
 
           $('#id_discount').focusin(function () {
-              let discount = $('#id_discount')
+              let discount = $('#id_discount');
               if ((discount.val() == '0') || (discount.val() == '0.00')) {
-                  discount.val("")
+                  discount.val("");
               } else {
-                  let updated_discount = discount.val()
-                  discount.val(updated_discount)
+                  let updated_discount = discount.val();
+                  discount.val(updated_discount);
               }
-          })
+          });
 
           $('#id_discount').blur(function () {
-              let discount = $('#id_discount')
+              let discount = $('#id_discount');
               if (discount.val() == '') {
-                  discount.val("0")
+                  discount.val("0");
               } else {
-                  let updated_discount = discount.val()
-                  discount.val(updated_discount)
+                  let updated_discount = discount.val();
+                  discount.val(updated_discount);
               }
-          })
-
-      })
+          });
+      });
   </script>
   {% endblock %}

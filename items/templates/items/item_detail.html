@@ -29,29 +29,38 @@
 <!-- END MODAL -->
 <div class="container mt-3">
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="d-none d-lg-block col-lg-4 d-flex justify-content-center">
             <img id="header-cover" class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ item.image }}"
                 alt="{{ item.name }}">
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-8">
+        <div class="col-md-12 col-lg-8">
             <div class="card">
                 {% if request.user.is_authenticated %}
                 {% if user.is_superuser %}
                 <div class="card-header">
-                    <a href="{% url 'update_item' item.id %}" aria-label="Edit item">Edit</a> |
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}"  aria-label="Delete item">Delete</a>
+                    <a class="btn btn-outline-warning btn-sm" href="{% url 'update_item' item.id %}" aria-label="Edit item">Edit</a>
+                    <a class="btn btn-outline-warning btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}"  aria-label="Delete item">Delete</a>
                 </div>
                 {% endif %}
                 {% endif %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
+                        <div class="row">
                         <p class="title">{{ item.title }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 d-lg-none">
+                            <img id="header-cover" class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ item.image }}"
+                        alt="{{ item.name }}">
+                    </div>
+                        <div class="col-md-7 col-lg-12 mt-3">
                         <p class="authors">
                             by
                             {% for author in item.author.all %}
                             {{ author }}{% if not forloop.last %}, {% endif %}
                             {% endfor %}
                         </p>
+                        <div id="age-genre">
                         <p class="age">
                             {% for age in item.age_range.all %}
                             {% if age.age_range == "preschool" %} <span class="badge bg-primary">{{ age }}</span>
@@ -61,16 +70,65 @@
                             {% endif %}
                             {% endfor %}
                         </p>
+                        <p id="item-detail-genre" class="genre">
+                            {% for genre in item.genre.all %}
+                            <div class="square-button">
+                                {% if genre.name == "prehistory" %}
+                                <div class="text-orange">
+                            {{ genre }}</div>
+                            <div class="icon-row">
+                                <img id="dino-icon" src="{{ MEDIA_URL }}diplodocus.png">
+                            </div>
+                            {% elif genre.name == "history" %}
+                            <div class="text-orange">
+                                {{ genre }}</div>
+                                <div class="icon-row">
+                                    <i class="fas fa-monument"></i>
+                                  </div>
+                            {% elif genre.name == "animals" %}
+                            <div class="text-orange">
+                                {{ genre }}</div>
+                                <div class="icon-row">
+                                    <i class="fas fa-crow"></i>
+                                  </div>
+                            {% elif genre.name == "science" %}
+                            <div class="text-orange">
+                                {{ genre }}</div>
+                                <div class="icon-row">
+                                    <i class="fas fa-atom"></i>
+                                  </div>
+                            {% elif genre.name == "space" %}
+                            <div class="text-orange">
+                                {{ genre }}</div>
+                                <div class="icon-row">
+                                    <i class="fas fa-meteor"></i>
+                                  </div>
+                            {% elif genre.name == "nature" %}
+                            <div class="text-orange">
+                                {{ genre }}</div>
+                                <div class="icon-row">
+                                    <i class="fas fa-leaf"></i>
+                                  </div>
+                                  {% endif %}
+                                </div>
+                                {% endfor %}
+                        </p>
+                    </div>
+                        </div>
+                    </div>
+
+                        
+                    
                     </li>
                     <li class="list-group-item">
                         <p class="description">{{ item.description }}</p>
                     </li>
                     <li class="list-group-item">
                         {% if item.set_sale_price != 0.00 %}
-                        <strike>£{{ item.price }}</strike>
+                        <span class="strike">£{{ item.price }}</span>
                         <p class="price">Sale Price! £{{ item.set_sale_price }}</p>
                         {% elif item.discount > 0 %}
-                        <strike>£{{ item.price }}</strike>
+                        <span class="strike">£{{ item.price }}</span>
                         <p class="discount">{{ item.discount }}% off! <span
                                 class="price">£{{ item.price | calc_discount:item.discount }}</span></p>
                         {% else %}
@@ -96,20 +154,20 @@
 </div>
 <div class="related-items row mt-3">
     <h4>Items related to your search...</h4>
-    <div class="row zig-zag pt-3 pb-3 justify-content-around">
+    <div class="row zig-zag pt-3 pb-3">
         {% for related in related_items|slice:":6" %}
-        <div class="col-sm-12 col-md-2">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <a class="related-item" href="{% url 'item_detail' related.id %}"><img
                     src="{{ MEDIA_URL }}{{ related.image }}" alt=""></a>
         </div>
         {% endfor %}
     </div>
 </div>
-</div>
+
 <!-- CREDIT W3Schools for Cover Image Modal display -->
 <div id="cover-img-modal" class="img-modal">
     <span class="img-close">&times;</span>
-    <img class="modal-content" id="cover">
+    <img class="modal-content" id="cover" src="#" alt="Full-screen cover image">
 </div>
 {% endblock %}
 
@@ -122,12 +180,12 @@
     img.onclick = function () {
         modal.style.display = "block";
         modalImg.src = this.src;
-    }
+    };
 
     var span = document.getElementsByClassName("img-close")[0];
     span.onclick = function () {
         modal.style.display = "none";
-    }
+    };
 </script>
 
 {% endblock %}

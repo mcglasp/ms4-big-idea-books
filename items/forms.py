@@ -45,7 +45,6 @@ class AuthorDataForm(forms.ModelForm):
 
 class CampaignForm(forms.ModelForm):
 
-
     class Meta:
         model = Campaign
         fields = '__all__'

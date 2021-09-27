@@ -5,7 +5,8 @@ from django.contrib import messages
 
 
 def basket_contents(request):
-
+    """Manages the basket contents and displays basket data across the site"""
+    
     basket = request.session.get('basket', {})
     dict_to_compare = basket
     d_keys = dict_to_compare.keys()

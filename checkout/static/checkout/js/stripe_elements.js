@@ -7,7 +7,7 @@ let elements = stripe.elements();
 let style = {
     base: {
         color: '#000',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontFamily: '"Source Sans Pro", sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
         '::placeholder': {
@@ -73,7 +73,6 @@ form.addEventListener('submit', function (ev) {
                         line1: $.trim(form.street_address2.value),
                         city: $.trim(form.town_or_city.value),
                     }
-
                 }
             },
 
@@ -111,5 +110,5 @@ form.addEventListener('submit', function (ev) {
         });
     }).fail(function () {
         location.reload();
-    })
+    });
 });

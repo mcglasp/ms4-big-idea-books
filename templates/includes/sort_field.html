@@ -1,15 +1,18 @@
 <div class="sort-field">
-<select id='sort-select' class="form-select form-select-sm" aria-label="">
-    <option {% if sort_by == None %} selected {% endif %} disabled>sort by</option>
-    <option href="{% url 'items' %}" value="price_high_low" {% if sort_by == '-final_price' %} selected {% endif %}>Price: high-low</option>
-    <option href="{% url 'items' %}" value="price_low_high" {% if sort_by == 'final_price' %} selected {% endif %}>Price: low-high</option>
-    <option href="{% url 'items' %}" value="title_az" {% if sort_by == 'lower_title' %} selected {% endif %}>Title (A-Z)</option>
-    <option href="{% url 'items' %}" value="most_discounted" {% if sort_by == '-discount_amount' %} selected {% endif %}>Most Discounted</option>
-    <option href="{% url 'items' %}" value="quantity_sold" {% if sort_by == 'quantity_sold' %} selected {% endif %}>Most Popular</option>
-    <option href="{% url 'items' %}" value="newly_listed" {% if sort_by == 'newly_listed' %} selected {% endif %}>New In</option>
-    <option href="{% url 'items' %}" value="featured" {% if sort_by == 'featured' %} selected {% endif %}>Featured</option>
-</select>
-</div>
+    <select id='sort-select' class="form-select form-select-sm" aria-label="">
+        <option {% if sort_by == None %} selected {% endif %} disabled>sort by</option>
+        <option value="price_high_low" {% if sort_by == '-final_price' %} selected {% endif %}>Price: high-low</option>
+        <option value="price_low_high" {% if sort_by == 'final_price' %} selected {% endif %}>Price: low-high</option>
+        <option value="title_az" {% if sort_by == 'lower_title' %} selected {% endif %}>Title (A-Z)</option>
+        <option value="most_discounted" {% if sort_by == '-discount_amount' %} selected {% endif %}>Most Discounted</option>
+        <option value="quantity_sold" {% if sort_by == 'quantity_sold' %} selected {% endif %}>Most Popular</option>
+        <option value="newly_listed" {% if sort_by == 'newly_listed' %} selected {% endif %}>New In</option>
+    {% if featured %}
+        <option value="featured" {% if sort_by == 'featured' %} selected {% endif %}>Featured</option>
+    {% endif %}
+    </select>
+    </div>
+
 <script>
     $('#sort-select').change(function() {
       let selector = $(this);

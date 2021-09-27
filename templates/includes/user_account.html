@@ -3,55 +3,60 @@
 <div id="specials-and-admin" class="navbar pt-1 pb-1">
   {% if current_offers|length > 0 %}
   {% for offer in current_offers.all|shuffle|slice:':1' %}
-  <div id="special-offers"><a href="{% url 'go_to_offer' offer.id %}">{{ offer.campaign_name }}</a></div>
+  <div id="special-offers"><a href="{% url 'go_to_offer' offer.id %}">{{ offer.campaign_name }}!</a></div>
   {% endfor %}
   {% else %}
-
   <div id="special-offers"><a href="{% url 'latest_items' %}">Browse our latest books!</a></div>
-{% endif %}
+  {% endif %}
   <div id="user-admin-box-top">
     {% if request.user.is_authenticated %}
     <p id="logged-in-msg">You are logged in as {{ request.user }}</p>
     {% endif %}
-  <div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle basket-quantity" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Your basket"><i class="fas fa-shopping-basket"></i></button>
-    {% if basket_items %}
-    <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger">
-      {{ total_items }}
-    </span>
-    {% endif %}
-    <ul class="dropdown-menu p-3 text-muted dropdown-menu-end">
-      <p class="dropdown-header">Your basket:</p>
-      <div class="dropdown-divider"></div>
-      {% for item in basket_items %}
-      <a href="{% url 'item_detail' item.item.id %}" class="basket-drop-line p-1"><span class="d-inline-block text-truncate" >{{ item.item.title }}</span><span>£{{ item.item.final_price }}</span></a>
-      {% endfor %}
-      <p>£{{ basket_total | floatformat:2 }}</p>
-      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'view_basket' %}" aria-label="View basket">View basket</a></li>
-      <li><a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}" aria-label="Go to checkout">Go to checkout</a></li>
-    </ul>
-  </div>
-<div class="btn-group">
-    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account and admin">
-      <i class="fas fa-user-alt"></i>
-    </button>
-    <ul class="dropdown-menu p-3 text-muted dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-      {% if request.user.is_authenticated %}
-      <li><a class="dropdown-item text-center" href="{% url 'profile' %}">Account</a></li>
-      <li><a class="dropdown-item text-center" href="{% url 'account_logout' %}">Log out</a></li>
-      {% if request.user.is_superuser %}
-      <li>
-        <a class="dropdown-item text-center" href="{% url 'add_item' %}">Add items</a>
-      </li>
-      <li>
-        <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>
-      </li>
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary dropdown-toggle basket-quantity" data-bs-toggle="dropdown"
+        data-bs-display="static" aria-expanded="false" aria-label="Your basket"><i
+          class="fas fa-shopping-basket"></i></button>
+      {% if basket_items %}
+      <span class="position-absolute start-0 translate-alert badge rounded-pill bg-danger">
+        {{ total_items }}
+      </span>
       {% endif %}
-      {% else %}
-      <li><a class="dropdown-item text-center" href="{% url 'account_login' %}">Log in</a></li>
-      <li><a class="dropdown-item text-center" href="{% url 'account_signup' %}">Register</a></li>
-      {% endif %}
-    </ul>
-  </div>
+      <div class="dropdown-menu p-3 text-muted dropdown-menu-end">
+        <div class="dropdown-header">Your basket:</div>
+        <div class="dropdown-divider"></div>
+        {% for item in basket_items %}
+        <a href="{% url 'item_detail' item.item.id %}" class="basket-drop-line p-1"><span
+            class="d-inline-block text-truncate">{{ item.item.title }}</span><span>£{{ item.item.final_price }}</span></a>
+        {% endfor %}
+        <p>£{{ basket_total | floatformat:2 }}</p>
+        <a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'view_basket' %}"
+          aria-label="View basket">View basket</a>
+        <a class="dropdown-item text-center btn btn-secondary m-1" href="{% url 'checkout' %}"
+          aria-label="Go to checkout">Go to checkout</a>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        aria-label="Account and admin">
+        <i class="fas fa-user-alt"></i>
+      </button>
+      <ul class="dropdown-menu p-3 text-muted dropdown-menu-end">
+        {% if request.user.is_authenticated %}
+        <li><a class="dropdown-item text-center" href="{% url 'profile' %}">Account</a></li>
+        <li><a class="dropdown-item text-center" href="{% url 'account_logout' %}">Log out</a></li>
+        {% if request.user.is_superuser %}
+        <li>
+          <a class="dropdown-item text-center" href="{% url 'add_item' %}">Add items</a>
+        </li>
+        <li>
+          <a class="dropdown-item text-center" href="{% url 'manage_campaigns' %}">Campaigns</a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li><a class="dropdown-item text-center" href="{% url 'account_login' %}">Log in</a></li>
+        <li><a class="dropdown-item text-center" href="{% url 'account_signup' %}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
   </div>
 </div>
