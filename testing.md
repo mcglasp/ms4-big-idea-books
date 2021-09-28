@@ -153,26 +153,67 @@ User Story Testing
 
  1. "As a customer I want to be able to view all of the products so I can select and buy one or more."    
 
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
 
- 
  2. "As a customer I want to be able read about the products in detail so I can	find out the price, author, subject and suggested age recommendation and read the description."
+<img src="readme-assets/item-detail.png" alt="Show all items" width="30%">
+
  3. "As a customer I want to be able to search by keyword so I can quickly find exactly what I'm looking for."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  4. "As a customer I want to be able to filter items by genre, age recommendation and author so that I can identify the most suitable item to buy."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  5. "As a customer I want to be able to sort, search and filter results by price so that I can find a suitable product within my price range."  
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  6. "As a customer I want to be able to add a number of items to my bassket directly from the search results so that I can buy items when I see them, without clicking through to individual item detail pages."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  7. "As a customer I want to be able to add one or more of the same item from the item detail page  buy what I want without navigating back to the search results."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  8. "As a customer I want to be able toremove items from my basket so that I can change my mind at the checkout."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  9. "As a customer I want to be able to change the quantity of items from within my basket so that I can buy more or less of something without navigating back through the item listings."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  10. "As a customer I want to be able tosee my basket contents and total from wherever I am on the site so that I can avoid overspending."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  11. "As a customer I want to be able to pay for my items without leaving the site so that I can have a simpler customer journey from start to finish."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  12. "As a customer I want to be notified if there is an issue with my payment so that I can easily identify and rectify the issue."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  13. "As a customer I want to be able to view my order history so that I can check what I've bought and how much I've spent."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  15. "As a customer I want to be able to save my address details so that I don't have to re-enter it every time I visit."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  16. "As a customer I want to be able to log in and out from any page so that I can feel certain no-one else is able to view my account."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  17. "As a customer I want to be able to change my password so that I can manage my account's security."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  18. "As a site owner I want to be able to add an item to the store so that I can quickly add new products as soon as they are available."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  19. "As a site owner I want to be able to update an existing item so that I can keep product information up-to-date."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  20. "As a site owner I want to be able to delete and item from the store so that I can remove items that are no longer needed on the store."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  21. "As a site owner I want to be able to create a sales campaign so that I can boost site revenue."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  22. "As a site owner I want to be able to apply a flash sale price to multiple items so that I can create campaigns quickly without having to edit individual records."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
+
  23. "As a site owner I want to be able to enable and disable campaigns in one click so that I can have a flash sale for short periods without much admin overhead."
+<img src="readme-assets/all_items.png" alt="Show all items" width="30%">
