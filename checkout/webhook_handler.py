@@ -13,7 +13,6 @@ import time
 
 
 class StripeWH_Handler:
-    print('handler')
     """Handle Stripe webhooks"""
 
     def __init__(self, request):
@@ -37,7 +36,6 @@ class StripeWH_Handler:
         )
 
     def handle_event(self, event):
-        print('handler 1')
         """
         Handle a generic/unknown/unexpected webhook event
         """
@@ -53,10 +51,6 @@ class StripeWH_Handler:
         pid = intent.id
         basket = intent.metadata.basket
         save_info = intent.metadata.save_info
-        print(intent)
-        print(pid)
-        print(basket)
-        print(save_info)
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
@@ -83,9 +77,6 @@ class StripeWH_Handler:
         attempt = 1
         while attempt <= 5:
             try:
-                times = 1
-                times += 1
-                print(times)
                 order = Order.objects.get(
                     customer_name__iexact=shipping_details.name,
                     email_address__iexact=billing_details.email,

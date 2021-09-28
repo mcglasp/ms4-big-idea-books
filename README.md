@@ -22,7 +22,7 @@ The below table outlines the 21 application features that I consider essential f
 | 2	| customer |	read about the products in detail |	find out the price, author, subject and suggested age recommendation and read the description.| 
 | 3	| customer |	search by keyword | quickly find exactly what I'm looking for |
 |--|--|**Sorting & Filtering Products** |---|
-| 4 |	customer |	filter items by genre, age recommendation and author | identify the most suitable item to buy |
+| 4 |	customer |	filter items by genre and age recommendation | identify the most suitable item to buy |
 | 5 |	customer |	sort search and filter results by price	find a suitable product within my price range | |
 |--|--|**Managing My Basket Items** |---|
 | 6	| customer	 | add a number of items to my basket directly from the search results | buy items when I see them, without clicking through to individual item details pages |
@@ -44,8 +44,7 @@ The below table outlines the 21 application features that I consider essential f
 | 20	| site owner	| delete and item from the store |	remove items that are no longer needed on the store |
 |--|--|**Building Sales Campaigns**|--|--|
 | 21 | site owner | create a sales campaign | boost site revenue |
-| 22 | site owner | apply a flash sale price to multiple items | create campaigns quickly without having to edit individual records |
-| 23 | site owner | enable and disable campaigns in one click | have a flash sale for short periods without much admin overhead |
+| 22 | site owner | enable and disable campaigns in one click | have a flash sale for short periods without much admin overhead |
 
 
 The table below outlines those features that are 'nice-to-have' and not essential to the succesful launch of the MVP, as outlined above. These features may or may not be implemented, depending on the scope of the initial development stage.
@@ -93,17 +92,19 @@ An important feature to note about the Add and Update item pages are the three p
 To prevent faulty pricing information reaching the live site, or indeed the database, the Discount and Set Sale Price fields are not enabled until a price above £0.00 is entered.
 
 Managing Campaigns
-The site owner can enable and disable all their campaigns from one page, from which they can also navigate to the 'create a campaign' form. Within this form they are given a list of items that are available to select as part of the campaign, and they are also shown a disabled list of items currently included in other campaigns and therefore not available for selection. They use this form to name and give a fixed price to their campaign. On creation of a campaign, each item's set sale price is set to the campaign's fixed price. If the item already has a set sale price, it is saved into an original sale price field for later recall. This same process happens when enabling a campaign after a period of deactivation. On deletion of a campaign, all references to that campaign are removed from its included items, their original sale prices (if applicable) are reloaded in the set sale price field and the original price field is set to zero. This helps to reduce the admin overhead to the store user. See below for an example of how this works:
+The site owner can enable and disable all their campaigns from one page, from which they can also navigate to the 'create a campaign' form. Within this form they are given a list of items that are available to select as part of the campaign, and they are also shown a disabled list of items currently included in other campaigns and therefore not available for selection. They use this form to name and give a fixed price to their campaign. On creation of a campaign, each included item's set sale price is set to the campaign's fixed price. If the campaign is deactivated, the items remain attached to that campaign, so that they cannot be reapplied to another campaign, but their sale prices are reset to either their original base price, or the individual product's discounted price, if applicable. When the campaign is re-enabled, the prices are again set to the campaign's sale price. On deletion of a campaign, all references to that campaign are removed from its related items.
 
-    - Item 1 has an RRP of £12.99, but the shop sells it for £10 as standard, and therefore the figure of £10 is set in the set_sale_price field.
+## Database Schema
+The site is made up of four apps: Basket, Checkout, Item, Profile. They contain the following models: (Checkout) Order, LineItems; (Items) Item, Author, Genre, Age_range, Campaign; (Profile) UserProfile. Their relationships are shown in the diagram below.
 
-    - Item 2 has an RRP of £11.99 and it sells for that, therefore it does not have a set_sale_price.
-
-    - Both items are put into a £5 flash sale that lasts a few days. When the owner disables the sale, it would be an unwelcome admin overhead to have to go through each included product and reset whatever sale price they may originally have had (assuming the site owner could even remember!). Instead, whatever is in original_sale_price is loaded into set_sale_price. Elsewhere the site will show the set_sale_price if it is more than £0.00, otherwise displaying the normal price (or percentage-discounted price, if applicable). The original_sale_price field is zeroed to prevent it from later overriding the set_sale_price if the item were included in a future sale.
+<img src="readme-assets/database_schema.png" alt="Database diagram">
 
 # Skeleton
 
-WIREFRAMES
+<div class="wireframes" width="100%" style="display: flex; align-items: center">
+<img src="readme-assets/desktop_bib_wireframe.png" alt="Desktop wireframe" width="55%" style="margin: 5px">
+<img src="readme-assets/mobile_bib_wireframe.png" alt="Desktop wireframe" width="40%" style="margin: 5px">
+</div>
 
 # Surface
 
@@ -127,148 +128,10 @@ I have tried to strike a balance here, including a friendly colour-scheme and su
 - Deployed using Github, Heroku and Amazon Web Services
 
 
-## Testing
+# Testing & Validation
 
-### Testing Plan
+Please see the separate [Testing & Validation]('testing.md') document for full test details and findings.
 
-The following functions will be tested using, where applicable, superuser access privilages, end-user logged-in privilages, or unauthenticated-user access:
-
-
-1. Item search and navigation: 
-1.2 Browse items, narrowed by age, narrowed by genre.
-1.3 Keyword search for titles, genres, age and authors.
-1.4 Access special offer items from home page.
-1.5 View items related to the item currently being viewed.
-
-2. Manage the basket:
-2.1 Add items to the basket.
-2.3 Update quantity within basket; price and feedback should reflect update.
-2.4 Remove item from basket; price and feedback should reflect update.
-2.5 View basket content summary from all locations on the site (via navbar).
-
-3. Purchasing items:
-3.1 Without logging in as a user.
-3.2 As a logged-in user.
-3.3 Cancel a purchase during checkout.
-3.4 Receive appropriate feedback on successful purchase, including via email.
-3.5 Receive appropriate feedback on unsuccessful purchase, eg. show card error.
-3.6 Save and change default customer information at the checkout.
-
-4. User profile:
-4.1 Create a user profile by registering on the site.
-4.2 View order history on a profile page.
-4.3 Search order history via keywords for genre, title, author and order number.
-4.4 Save and update default contact information.
-4.5 Change password
-
-5. Item management — Staff users
-5.1 Add an item to the store via front-end form.
-5.2 Update an existing item via front-end form.
-5.3 Recieve appropriate validation feedback on add/update item form.
-5.4 Apply individual discounts to items and have that change reflected throughout the site.
-5.5 Delete an item from the store, both via item detail page, or all-items page.
-5.6 Receive warning on delete.
-5.7 Items that are 'soft-deleted' should no longer be visible to the user, and deletion or soft-deletion should not impact on accessibility of related data, ie. order history search that include deleted line items.
-
-6. Campaign management - Staff users
-6.1 Create a sales campaign for a number of products.
-6.2 Select only those items not already included in existing campaigns.
-6.3 Disable a campaign (make available included items without losing campaign data).
-6.4 Enable existing campaign;HOW TO DEAL WITH INC ITEMS????
-6.5 Delete a campaign; receive warning on delete.
-6.6 Remove an item from an active campaign.
-6.7 Add an item to an active campaign.
-
-7. Site security:
-7.1 Areas of the site only accessible via registration and login should not be available to users who are either unregistered or registered users who are not logged in. These areas should neither be visible to them, or accessible via a direct url input.
-7.2 Site management areas should only be available to staff users, eg. item and campaign management pages and buttons.
-7.3 Logged-in Staff users should be able to access all areas, including end-user pages, such as the checkout, to enabling live-item testing without the need of a separate account.
-
-8. General Site Functionality:
-8.1 Check for suitable custom 404 handling should appear where appropriate (to test this a dummy item will be created, its product key noted, and then deleted. Access to the item information will be attempted via a direct link using the product key, where a custom 404 message should appear.)
-8.2 Ensure all the above actions function correctly across a variety of popular desktop, tablet and mobile platforms, and on popular browsers.
-8.3 The design of the site should behave responsively across the tested platforms and browsers.
-
-
-    - Error found: 'Preschool keyword not returning existing items within 'preschool' category. A typo in the link was identified as shown below:
-
-        ``href="{% url 'items' %}?ages=ages"``
-
-        This should read: 
-        
-        ``?ages=preschool``
-
-- Search for titles, genres, ages and authors.
-
-- Add items to, and manage, the basket.
-    - Works as expected, though I will consider truncating the description text of each item to make viewing the basket page at a glance more user friendly.
-
-**Note that superusers should have access to all enduser facilities, such as viewing and purchasing products. While they may not be the most obvious customers of the site, it will be extremely useful for them to be able to test their own administraion of the site and ensure everything is working properly.*
-
-Campaigns:
-- Add a new campaign
-- Delete a campaign
-- Add a product to an existing campaign
-- Remove a product from an existing campaign
-- Enable campaign
-- Disable campaign
-- Delete a product from the database without any effect on its related campaigns
-
-Expected behaviour:
-When deleting a campaign, all references to that campaign should disappear from individual item records. Similarly, when a product is deleted, the campaign it belonged to should be left intact.
-
-Found behaviour:
-Deleting a campaign behaved as expected. However, deleting an item that was associated with a campaign generated an Integrity Error with specific reference to 'campaign_campaign_included_items', suggesting that the Campaign's included_items field still referenced that item, and the delete failed. Removing the item from the campaign prior to deletion did not fix the error. In investigating the issue I uncovered what I felt to be a larger problem with the design of the Item and Campaign models; the Item did not reference the Campaign at all, but the Campaign included a ManyToMany field that held a list of items included in the Campaign. This was not an obvious issue at first, but revealed problems when trying to update included items when editing campaigns. It also became evident that allowing an Item to be included in more than one campaign was problematic. For example, if a user included an item in the £5 sale, and then created a £10 sale, they could include both, thereby undermining the campaign itself and likely causing the database to throw an error.
-
-Campaign functionality rebuild:
-
-I removed the view, model and form functionality that referenced the included_items ManyToMany field and instead created a Campaign ForeignKey field in the Item model. If the campaign field of an item instance is null, then it is available for inclusion in a campaign. However, if it is already populated with a campaign name, it cannot be selected as part of a new campaign.
-
-The views were then updated to filter item availability within campaigns into three categories: 'Available to select', 'Not available to select' and, in the case of updating an existing campaign, 'Already selected'.
-
-However, this did not solve the issue as expected. After extensive testing it was revealed that the error as referenced above was being incorrectly described by Django's debug facility, as the error actually related to items that were included as a line item on a previous order. To correct this, my mentor suggested adding a 'soft delete' function. An 'active' BooleanField was added to Item, which defaults to true unless deleted, at which point the field becomes false, rather than the item being deleted from the database entirely. Views returning querysets of items were also altered to filter out results in which an item's Active field was false. This soft-delete function ensured that existing objects, such as past orders, did not try to reference a non-existing entity, which would cause an error.
-
-This has a knock-on benefit to the site owner, which is that the data is always available for use, either for the purposes of marketing and analysis, or simply for bringing an old product back into stock without the need to create a new record.
-
-Post-rebuild Campaign Testing:
-
-
-
-
-## User Story Testing
-
- 1. "As a customer I want to be able to view all of the products so I can select and buy one or more."    
- 2. "As a customer I want to be able read about the products in detail so I can	find out the price, author, subject and suggested age recommendation and read the description."
- 3. "As a customer I want to be able to search by keyword so I can quickly find exactly what I'm looking for."
- 4. "As a customer I want to be able to filter items by genre, age recommendation and author so that I can identify the most suitable item to buy."
- 5. "As a customer I want to be able to sort, search and filter results by price so that I can find a suitable product within my price range."  
- 6. "As a customer I want to be able to add a number of items to my bassket directly from the search results so that I can buy items when I see them, without clicking through to individual item detail pages."
- 7. "As a customer I want to be able to add one or more of the same item from the item detail page  buy what I want without navigating back to the search results."
- 8. "As a customer I want to be able toremove items from my basket so that I can change my mind at the checkout."
- 9. "As a customer I want to be able to change the quantity of items from within my basket so that I can buy more or less of something without navigating back through the item listings."
- 10. "As a customer I want to be able tosee my basket contents and total from wherever I am on the site so that I can avoid overspending."
- 11. "As a customer I want to be able to pay for my items without leaving the site so that I can have a simpler customer journey from start to finish."
- 12. "As a customer I want to be notified if there is an issue with my payment so that I can easily identify and rectify the issue."
- 13. "As a customer I want to be able to view my order history so that I can check what I've bought and how much I've spent."
- 15. "As a customer I want to be able to save my address details so that I don't have to re-enter it every time I visit."
- 16. "As a customer I want to be able to log in and out from any page so that I can feel certain no-one else is able to view my account."
- 17. "As a customer I want to be able to change my password so that I can manage my account's security."
- 18. "As a site owner I want to be able to add an item to the store so that I can quickly add new products as soon as they are available."
- 19. "As a site owner I want to be able to update an existing item so that I can keep product information up-to-date."
- 20. "As a site owner I want to be able to delete and item from the store so that I can remove items that are no longer needed on the store."
- 21. "As a site owner I want to be able to create a sales campaign so that I can boost site revenue."
- 22. "As a site owner I want to be able to apply a flash sale price to multiple items so that I can create campaigns quickly without having to edit individual records."
- 23. "As a site owner I want to be able to enable and disable campaigns in one click so that I can have a flash sale for short periods without much admin overhead."
-
-
-
-Validator Testing
-HTML
-No errors were returned when passing through the official W3C validator
-CSS
-No errors were found when passing through the official (Jigsaw) validator
-Unfixed Bugs
-You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a big variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed.
 
 Deployment
 

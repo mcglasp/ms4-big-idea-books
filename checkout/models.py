@@ -6,7 +6,6 @@ from items.models import Item
 from profiles.models import UserProfile
 from .utils import create_order_number
 
-# Create your models here.
 
 class Order(models.Model):
 
