@@ -14,12 +14,11 @@ import stripe
 import json
 
 
-# Create your views here.
-
-
 @require_POST
 def cache_checkout_data(request):
     try:
+        print('cache 1')
+
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
@@ -29,6 +28,8 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
+        print('cache 2')
+
         messages.error(request, 'Sorry, we cannot process your payment right now.')
         return HttpResponse(content=e, status=400)
 
@@ -36,8 +37,6 @@ def cache_checkout_data(request):
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-
-    payment_process_info = ""
 
     if request.method == "POST":
 
@@ -56,48 +55,41 @@ def checkout(request):
         order_form = OrderForm(form_values)
 
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid
+            order.original_basket = json.dumps(basket)
             order.save()
 
             for item_id, item_data in basket.items():
-
-                item = Item.objects.get(id=item_id)
-                line_item = LineItem(
-                    related_order=order,
-                    item=item,
-                    quantity=item_data,
-                )
-                item.quantity_sold = line_item.quantity + item.quantity_sold
-                item.save(update_fields=['quantity_sold'])
-                line_item.save()
+                try:
+                    item = Item.objects.get(id=item_id)
+                    line_item = LineItem(
+                        related_order=order,
+                        item=item,
+                        quantity=item_data,
+                    )
+                    item.quantity_sold = line_item.quantity + item.quantity_sold
+                    item.save(update_fields=['quantity_sold'])
+                    line_item.save()
+	            
+                except Product.DoesNotExist:
+                    messages.error(request, (
+                        'One of your selected items is no longer available.')
+                    )
+                    order.delete()
+                    return redirect(reverse('view_basket'))
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('order_confirmation', args=[order.order_number]))
 
         else:
-            payment_process_info = "Something isn't quite right. Please check your form and try again"
-
+            messages.error(request, 'It looks like there\'s an error with your form.')
     else:
         basket = request.session.get('basket', {})
-
         if not basket:
             messages.error(request, 'Sorry, there is nothing in your basket.')
             return redirect(reverse('items'))
-
-        if request.user.is_authenticated:
-            profile = UserProfile.objects.get(user=request.user)
-            order_form = OrderForm(initial={
-                'customer_name': profile.user,
-                'phone_number': profile.default_phone_number,
-                'email_address': profile.default_email_address,
-                'street_address1': profile.default_street_address1,
-                'street_address2': profile.default_street_address2,
-                'town_or_city': profile.default_town_or_city,
-                'postcode': profile.default_postcode,
-            })
-        
-        else:
-            order_form = OrderForm()
 
         current_basket = basket_contents(request)
         total = current_basket['grand_total']
@@ -108,13 +100,32 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                order_form = OrderForm(initial={
+                    'customer_name': profile.user,
+                    'phone_number': profile.default_phone_number,
+                    'email_address': profile.default_email_address,
+                    'street_address1': profile.default_street_address1,
+                    'street_address2': profile.default_street_address2,
+                    'town_or_city': profile.default_town_or_city,
+                    'postcode': profile.default_postcode,
+                })
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+        else:
+            order_form = OrderForm()
+    if not stripe_public_key:
+        messages.warning(request, 'Stripe public key is missing. \
+            Did you forget to set it in your environment?')
+
     template = 'checkout/checkout.html'
     context = {
         'order_form': order_form,
         'total': total,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
-        'payment_process_info': payment_process_info,
     }
     return render(request, template, context)
 

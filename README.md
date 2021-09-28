@@ -199,9 +199,7 @@ The following functions will be tested using, where applicable, superuser access
         ``?ages=preschool``
 
 - Search for titles, genres, ages and authors.
-    - Search terms tested: 'space', 'castle', 'bryson', 'teen', '5'.
-    - All return expected results, apart from age category ('teen', '5'), which has since been added to search criteria and now returns expected results.
-    - Future development to consider: if a user inputs, for example, '6', items in the 5-7 category should be returned. Similarly, users could search in price brackets, such as £5 to return results within a set range above and below £5.
+
 - Add items to, and manage, the basket.
     - Works as expected, though I will consider truncating the description text of each item to make viewing the basket page at a glance more user friendly.
 
@@ -220,7 +218,7 @@ Expected behaviour:
 When deleting a campaign, all references to that campaign should disappear from individual item records. Similarly, when a product is deleted, the campaign it belonged to should be left intact.
 
 Found behaviour:
-Deleting a campaign behaved as expected. However, deleting an item that was associated with a campaign generated an Integrity Errorwith specific reference to 'campaign_campaign_included_items', suggesting that the Campaign's included_items field still referenced that item, and the delete failed. Removing the item from the campaign prior to deletion did not fix the error. In investigating the issue I uncovered what I felt to be a larger problem with the design of the Item and Campaign models; the Item did not reference the Campaign at all, but the Campaign included a ManyToMany field that held a list of items included in the Campaign. This was not an obvious issue at first, but revealed problems when trying to update included items when editing campaigns. It also became evident that allowing an Item to be included in more than one campaign was problematic. For example, if a user included an item in the £5 sale, and then created a £10 sale, they could include both, thereby undermining the campaign itself and likely causing the database to throw an error.
+Deleting a campaign behaved as expected. However, deleting an item that was associated with a campaign generated an Integrity Error with specific reference to 'campaign_campaign_included_items', suggesting that the Campaign's included_items field still referenced that item, and the delete failed. Removing the item from the campaign prior to deletion did not fix the error. In investigating the issue I uncovered what I felt to be a larger problem with the design of the Item and Campaign models; the Item did not reference the Campaign at all, but the Campaign included a ManyToMany field that held a list of items included in the Campaign. This was not an obvious issue at first, but revealed problems when trying to update included items when editing campaigns. It also became evident that allowing an Item to be included in more than one campaign was problematic. For example, if a user included an item in the £5 sale, and then created a £10 sale, they could include both, thereby undermining the campaign itself and likely causing the database to throw an error.
 
 Campaign functionality rebuild:
 

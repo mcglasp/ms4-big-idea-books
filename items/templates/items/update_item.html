@@ -169,7 +169,7 @@
               }
           })
 
-          $('#id_price').blur(function () {
+          $('#id_price').change(function () {
               let price_field = $('#id_price');
               if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() ==
                       "0")) {
@@ -181,7 +181,7 @@
                   price_field.val(updated_price);
                   discount.prop('disabled', false);
               }
-          })
+          });
 
           $('#id_discount').focusin(function () {
               let discount = $('#id_discount');

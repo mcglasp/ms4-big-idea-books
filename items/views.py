@@ -176,7 +176,6 @@ def add_item(request):
         form = ItemForm(request.POST, request.FILES)
         title = request.POST.get("title")
         description = request.POST.get("description")
-        genres = request.POST.get('genre')
         if form.is_valid():
             check_item = Item.objects.filter(title=title, description=description)
             if check_item.exists() is True:
@@ -197,8 +196,8 @@ def add_item(request):
                         (name, disregard) = this_author
                         author_to_attach = name
                         instance.author.add(author_to_attach)
-                        messages.success(request, f"{title} has been added to the shop")
                 
+                messages.success(request, f"{title} has been added to the shop")
                 return redirect('add_item')
         else:
             
@@ -220,7 +219,7 @@ def add_item(request):
 @staff_member_required
 def update_item(request, item_id):
     """ 
-    A view to update existing product information 
+    A view to update existing product information.
     """
     
     authors_select = Author.objects.all()
@@ -288,7 +287,6 @@ def delete_item(request, item_id):
 @staff_member_required
 def create_campaign(request):
     """ Create a sales campaign """
-    not_valid = False
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
     not_available = Item.objects.filter(campaign__isnull=False).filter(active=True)
 
@@ -386,7 +384,6 @@ def update_campaign(request, campaign_id):
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
     # List of included items to compare against
     original_inclusion_list = campaign.item_set.all()
-    original_inclusion_ids = campaign.item_set.all().values_list('id', flat=True)
     not_available_list = Item.objects.filter(campaign__isnull=False).filter(active=True)
     not_available = not_available_list.difference(original_inclusion_list)
     
@@ -395,7 +392,6 @@ def update_campaign(request, campaign_id):
         form.save()
         included_items = request.POST.getlist('included_items')
         already_included = request.POST.getlist('already_included')
-        campaign_name = request.POST.get('campaign_name')
         new_list = included_items + already_included
         # Clear campaign's included items to compile new list
         old_campaign_items = Item.objects.filter(campaign__pk=campaign_id)
@@ -409,6 +405,10 @@ def update_campaign(request, campaign_id):
             list_item.campaign = current_campaign
             list_item.set_sale_price = fixed_price
             list_item.save()
+        
+        messages.success(request, 'Campaign successfully updated.')
+        return redirect('manage_campaigns')
+        
     else:
         form = CampaignForm(instance=campaign)
 

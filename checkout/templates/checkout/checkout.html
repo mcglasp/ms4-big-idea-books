@@ -84,6 +84,7 @@
                             <span class="fieldset-label small text-black w-auto p-2 pb-0">Payment</span>
                             <div class="mb-3" id="card-element"></div>
                             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                            <input type="hidden" value="{{ client_secret }}" name="client_secret">
                         </div>
                     </fieldset>
                     <button id="submit-button" type="submit" aria-label="Pay">Confirm & Pay</button>
@@ -103,7 +104,6 @@
         </span>
     </h1>
 </div>
-
 
 {% endblock %}
 {% block postloadjs %}
