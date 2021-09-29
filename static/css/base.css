@@ -85,6 +85,22 @@ li.list-group-item {
   z-index: 0;
 }
 
+#featured-index-bottom, #featured-index-top {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin: 0px auto;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  padding: 10px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 1px #268080 dashed;
+  color: #268080;
+}
+
 .card-header.cogs h3,
 .card-header.cogs span {
   position: relative;
@@ -110,13 +126,25 @@ li.list-group-item {
   width: 100%;
 }
 
+.white-fade-index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* CREDIT Colorzilla created the gradient used behind some of the headers */
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 1)), color-stop(14%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(255, 255, 255, 0.7637429971988796)), to(rgba(255, 255, 255, 0))) !important;
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 0.7637429971988796) 47%, rgba(255, 255, 255, 0) 100%) !important;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 0.7637429971988796) 47%, rgba(255, 255, 255, 0) 100%) !important;
+  height: 100%;
+  width: 100%;
+}
+
 #special-offers {
   color: red;
   font-size: 1.5rem;
   font-weight: 600;
   padding-left: 20px;
- text-transform: capitalize;
- font-style: italic;
+  text-transform: capitalize;
+  font-style: italic;
 }
 
 .table tbody,
@@ -492,42 +520,19 @@ h1#logo-header a {
 }
 
 .img-row {
-  height: 40vh;
+  height: 60vh;
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-#mobile-image-1,
-#mobile-image-2,
-#mobile-image-3 {
-  position: absolute;
-  left: -15%;
-  display: block;
-  z-index: 10;
-  -webkit-animation: slide-left 2s ease-in-out;
-  animation: slide-left 2s ease-in-out;
-  height: 100%;
-}
-
-
-@keyframes slide-left {
-  0% {
-    left: 0%;
-  }
-
-  100% {
-    left: -15%;
-  }
-}
-
 /* Items & item detail */
 
 .campaign_name_offer {
-margin: 20px 0px;
-font-family: 'Henny Penny', cursive;
-color: red;
-font-size: 3rem;
+  margin: 20px 0px;
+  font-family: 'Henny Penny', cursive;
+  color: red;
+  font-size: 3rem;
 }
 
 .title {
@@ -625,7 +630,7 @@ font-size: 3rem;
 }
 
 #age-genre .square-button:first-of-type {
-margin-left: 20px;
+  margin-left: 20px;
 }
 
 .related-items {
@@ -1213,7 +1218,7 @@ button.btn.btn-outline-secondary {
 
 .line-item-img {
   max-height: 230px;
-  width: 100%;
+  max-width: 100%;
 }
 
 #totals {
@@ -1295,7 +1300,27 @@ h5.p-2:active {
   background-color: rgb(136, 136, 136);
 }
 
+#mobile-image-1 {
+  position: absolute;
+  left: -15%;
+  display: block;
+  z-index: 10;
+  -webkit-animation: slide-left 2s ease-in-out;
+  animation: slide-left 2s ease-in-out;
+  height: 100%;
+}
 
+
+@keyframes slide-left {
+  0% {
+    left: 0%;
+  }
+
+  100% {
+    left: -15%;
+  }
+
+}
 
 
 
@@ -1349,9 +1374,9 @@ h5.p-2:active {
 
 @media screen and (max-width: 670px) {
 
-.overlay-text {
-  font-size: 2rem;
-}
+  .overlay-text {
+    font-size: 2rem;
+  }
 
 }
 
@@ -1436,62 +1461,153 @@ h5.p-2:active {
   }
 }
 
+@media screen and (max-width: 470px) {
+
+  #mobile-image-1 {
+    position: absolute;
+    left: -20%;
+    display: block;
+    z-index: 10;
+    -webkit-animation: slide-left 4s ease-in-out;
+    animation: slide-left 4s ease-in-out;
+    height: 100%;
+  }
+
+  @keyframes slide-left {
+    0% {
+      left: 0%;
+    }
+
+    50% {
+      left: -130%;
+    }
+
+    100% {
+      left: -20%;
+    }
+  }
+}
+
 @media screen and (max-width: 380px) {
 
-  .quantity-form .quantity {
+  .featured-index-top {
+    position: relative;
+    height: 80px;
+    width: 100%;
+    margin: 0px auto;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    padding: 10px 0px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    }
-    
-    .quantity-form .quantity .standard-button {
-      margin-top: 5px;
+    border-bottom: 1px #268080 dashed;
+    color: #268080;
+  }
+
+  #mobile-image-1 {
+    position: absolute;
+    left: -20%;
+    display: block;
+    z-index: 10;
+    -webkit-animation: slide-left 6s ease-in-out;
+    animation: slide-left 6s ease-in-out;
+    height: 100%;
+  }
+
+  @keyframes slide-left {
+    0% {
+      left: 0%;
     }
 
+    50% {
+      left: -140%;
+    }
+
+    100% {
+      left: -20%;
+    }
+  }
 }
 
 @media screen and (max-width: 280px) {
 
-.card-header, a, p:not(.description, .title), .btn, li {
-  font-size: smaller;
-}
+  .card-header,
+  a,
+  p:not(.description, .title),
+  .btn,
+  li {
+    font-size: smaller;
+  }
 
-.title {
-  font-size: 1rem;
-}
+  .title {
+    font-size: 1rem;
+  }
 
-.standard-button {
-  margin: 1px;
-}
+  .standard-button {
+    margin: 1px;
+  }
 
-.quantity-form .quantity {
-display: flex;
-flex-direction: column;
-}
+  .quantity-form .quantity {
+    display: flex;
+    flex-direction: column;
+  }
 
-.quantity-form .quantity .standard-button {
-  margin-top: 5px;
-}
+  .quantity-form .quantity .standard-button {
+    margin-top: 5px;
+  }
 
-#logo-icon-left, #logo-icon-right {
-  display: none;
-}
+  #logo-icon-left,
+  #logo-icon-right {
+    display: none;
+  }
 
-button.navbar-toggler {
-  padding: 1px; 
-}
+  button.navbar-toggler {
+    padding: 1px;
+  }
 
-#lower-nav>.navbar>button.navbar-toggler {
-  padding-right: 1px;
-  margin-right: 10px;
-}
+  #lower-nav>.navbar>button.navbar-toggler {
+    padding-right: 1px;
+    margin-right: 10px;
+  }
 
-}
-
-.overlay-text-top {
-  font-family: 'Source Pro', sans-serif;
-  font-size: 1rem;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.473);
-  position: absolute;
-  top: 40%;
+    #featured-index-top {
+      position: relative;
+      height: 80px;
+      width: 100%;
+      margin: 0px auto;
+      text-transform: uppercase;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 300;
+      padding: 10px 0px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      border-bottom: 1px #268080 dashed;
+      color: #268080;
+    }
+  
+    #mobile-image-1 {
+      position: absolute;
+      left: -35%;
+      display: block;
+      z-index: 10;
+      -webkit-animation: slide-left 6s ease-in-out;
+      animation: slide-left 6s ease-in-out;
+      height: 100%;
+    }
+  
+    @keyframes slide-left {
+      0% {
+        left: 0%;
+      }
+  
+      50% {
+        left: -140%;
+      }
+  
+      100% {
+        left: -35%;
+      }
+    }
 }

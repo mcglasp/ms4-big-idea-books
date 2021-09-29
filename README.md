@@ -1,5 +1,7 @@
 # **Big Idea Books:** Curated Non-fiction For Kids
 
+<img src="readme-assets/responsiveness.png" alt="Responsiveness screenshot">
+
 [Go to site: ms4-big-idea-books.herokuapp.com](https://ms4-big-idea-books.herokuapp.com/)
 
 # Strategy
@@ -327,19 +329,25 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 
 # Credits & Acknowledgements
 
-- Code
+**Code**
 
 Some of the code in this project was either taken from of built upon that covered in the Boutique Ado project. I have noted in the code where this is the case, but it is mainly the case within the Checkout app. I have done my best to write this from scratch in order to understand the processes involved, customising as I go. However, it is necessarily similar — or even identical — at times due to the very specific nature of these processes and the need for them to operate precisely, therefore I have not veered far from the original code.
 
-- Content
+Specific credit is due to Stackoverflow user Henty who gave me guidance on the best way to approach setting up my Campaign model.
+
+**Content & Data**
 
 The dataset was made up of the publicly available official descriptions distributed for these products. Any non-item-related content was written by myself. Prices are representative only, and set to best demonstrate the functioning of the site, rather than official product RRPs.
 
-- Media
+**Media**
 
     - All the book covers were those officially released for each product and are publicly available.
     - The home page images were made by me using Adobe Photoshop.
     - The genre badges were created by me using mainly fontawesome icons, and in one case using an icon made in Photoshop.
     - The 'cogs' theme was created by www.heropatterns.com.
 
-- Thanks
+**Resources**
+
+
+
+**Thanks**

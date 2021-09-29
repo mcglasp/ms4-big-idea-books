@@ -2,56 +2,66 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid d-block d-sm-none">
+    <div id="featured-index-top" class="row cogs">
+        <div class="white-fade-index">
+            <h4 class="pt-3">Our pick of the day is...</h4>
+        </div>
+    </div>
     <div class="img-row">
-            <div class="overlay-text-top" href="{% url 'items' %}?&sort=newly_listed">view our latest collections</div>
-        <img id="mobile-image-1" class="" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="">  
+        <a href="{% url 'item_detail' 35 %}">
+            <img id="mobile-image-1" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="Book collection"></a>
     </div>
 </div>
-
 <div class="container-fluid d-none d-sm-block">
-        <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <a class="overlay-text" href="{% url 'items' %}?&sort=newly_listed">from little astronomers...
-                   </a>
-                    <img id="image-1" src="{{ MEDIA_URL }}space_collection.jpg" alt="Space books collection">
-                </div>
-                <div class="carousel-item">
-                    <a class="overlay-text" href="{% url 'items' %}?&sort=newly_listed">...to curious minds
-                   </a>                    
-                   <img id="image-2" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="Gift books collection">
-                </div>
+    <div id="featured-collections-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a class="overlay-text" href="{% url 'items' %}?&sort=newly_listed">from little astronomers...
+                </a>
+                <img id="image-1" src="{{ MEDIA_URL }}space_collection.jpg" alt="Space books collection">
+            </div>
+            <div class="carousel-item">
+                <a class="overlay-text" href="{% url 'items' %}?&sort=newly_listed">...to curious minds
+                </a>
+                <img id="image-2" src="{{ MEDIA_URL }}beautiful_collection.jpg" alt="Gift books collection">
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            {% for item in items|slice:':4' %}
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 item">
-                <div class="item-card card">
-                    <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top cogs" alt="..."></a>
-                    <div class="card-body">
-                        <a href="{% url 'item_detail' item.id %}">
-                            <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong></p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+</div>
+<div class="container-fluid">
+    <div id="featured-index-bottom" class="row cogs">
+        <div class="white-fade-index">
+            <h4 class="pt-3">A few of our featured titles...</h4>
         </div>
     </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% for item in items|slice:':4' %}
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 item">
+            <div class="item-card card">
+                <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}"
+                        class="card-img-top cogs" alt="..."></a>
+                <div class="card-body">
+                    <a href="{% url 'item_detail' item.id %}">
+                        <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}
 
 {% block postloadjs %}
 <script>
-$(document).ready(function()
-{
-    $('.carousel').carousel({
-      interval: 2000
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: 2000
+        });
+        $('.carousel').carousel('next');
     });
-    $('.carousel').carousel('next');
-});
-
 </script>
 {% endblock %}
