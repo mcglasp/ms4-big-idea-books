@@ -1,15 +1,5 @@
 Hello {{ order.customer_name }}
 
-This is to confirm that we've received your order. Please check the details below:
-
-Order Number: {{ order.order_number }}
-Order summary: 
-{% for o in order.lineitems.all %}
-<tr>
-    <td colspan="2" class="text-truncate d-inline-block m-0">{{ o.item.title }}</td>
-    <td colspan="1" class="text-muted"> x {{ o.quantity }}</td>
-    <td colspan="2" class="text-end pr-4">{{ o.line_total }}</td>
-</tr>
-{% endfor %}
+This is to confirm that we've received your order {{ order.order_number }}.
 
 Many thanks for shopping at Big Idea Books, we look forward to seeing you again soon.

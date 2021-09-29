@@ -1,12 +1,11 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from items.models import Item, Campaign
+from items.models import Item
 from django.contrib import messages
 
 
 def basket_contents(request):
     """Manages the basket contents and displays basket data across the site"""
-    
     basket = request.session.get('basket', {})
     dict_to_compare = basket
     d_keys = dict_to_compare.keys()
@@ -18,8 +17,9 @@ def basket_contents(request):
             continue
         else:
             dict_to_compare.pop(key)
-            messages.error(request, "An item in your basket has been deleted as it is not currently available.")
-  
+            messages.error(request, ('An item in your basket has been deleted '
+                                     'as it is not currently available.'))
+
     basket = dict_to_compare
     basket_items = []
     total_items = 0
@@ -41,10 +41,10 @@ def basket_contents(request):
                     'price': price,
                     'quantity': value,
                 })
-                
+
         total = round(total, 2)
         grand_total = round(delivery_cost + float(total), 2)
-    
+
     else:
         grand_total = 0
 
@@ -58,5 +58,3 @@ def basket_contents(request):
     }
 
     return context
-
-

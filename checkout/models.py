@@ -12,7 +12,9 @@ class Order(models.Model):
     order_number = models.CharField(
         max_length=15, null=True, blank=True, 
         default=create_order_number) 
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, 
+                                     null=True, blank=True, 
+                                     related_name='orders')
     customer_name = models.CharField(max_length=60, null=False, blank=False)
     email_address = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
@@ -21,15 +23,24 @@ class Order(models.Model):
     town_or_city = models.CharField(max_length=40, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     order_date = models.DateTimeField(auto_now_add=True)
-    delivery_cost = models.DecimalField(max_digits=3, decimal_places=2, null=False, default=settings.STANDARD_DELIVERY_COST, editable=False)
-    basket_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    original_basket = models.TextField(null=False, blank=False, default='')
-    stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
+    delivery_cost = models.DecimalField(
+        max_digits=3, decimal_places=2, null=False, 
+        default=settings.STANDARD_DELIVERY_COST,
+        editable=False)
+    basket_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0)
+    grand_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0)
+    original_basket = models.TextField(
+        null=False, blank=False, default='')
+    stripe_pid = models.CharField(
+        max_length=254, null=False, blank=False, default='')
 
     def calculate_total(self):
-        self.basket_total = self.lineitems.aggregate(Sum('line_total'))['line_total__sum'] or 0
-        self.grand_total = float(self.basket_total) + settings.STANDARD_DELIVERY_COST
+        self.basket_total = self.lineitems.aggregate(
+            Sum('line_total'))['line_total__sum'] or 0
+        self.grand_total = float(
+            self.basket_total) + settings.STANDARD_DELIVERY_COST
         self.save()
 
     def __str__(self):
@@ -39,10 +50,14 @@ class Order(models.Model):
 
 class LineItem(models.Model):
 
-    related_order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
-    item = models.ForeignKey(Item, null=False, blank=False, on_delete=models.CASCADE)
+    related_order = models.ForeignKey(
+        Order, null=False, blank=False, on_delete=models.CASCADE, 
+        related_name='lineitems')
+    item = models.ForeignKey(
+        Item, null=False, blank=False, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=0)
-    line_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+    line_total = models.DecimalField(
+        max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
 
     def save(self, *args, **kwargs):
 

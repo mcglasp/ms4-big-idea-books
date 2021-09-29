@@ -146,10 +146,13 @@ def item_detail(request, item_id):
         else:
             related_lookup = related_genres[0]
 
-        related_items = Item.objects.filter(genre__name=related_lookup).exclude(id=item_id).filter(active=True).exclude(image='')
+        related_items = Item.objects.filter(
+            genre__name=related_lookup).exclude(id=item_id).filter(
+            active=True).exclude(image='')
         
         if related_items.count() == 0:
-            related_items  = Item.objects.exclude(id=item_id).filter(active=True).exclude(image='').order_by('-date_added')
+            related_items = Item.objects.exclude(id=item_id).filter(
+                active=True).exclude(image='').order_by('-date_added')
     
     else:
         messages.error(request, 'Sorry, that item is not currently available.')
@@ -177,22 +180,29 @@ def add_item(request):
         title = request.POST.get("title")
         description = request.POST.get("description")
         if form.is_valid():
-            check_item = Item.objects.filter(title=title, description=description)
+            check_item = Item.objects.filter(
+                title=title, description=description)
             if check_item.exists() is True:
-                messages.error(request, "There's a book in the shop with this title and description. Please check your existing items and make this listing unique.")
+                messages.error(
+                    request, 'There is a book in the shop with this title and'
+                    'description. Please check your existing items and make' 
+                    'this listing unique.')
             else:
                 form.save()
-                saved_item = Item.objects.get(title=title, description=description)
+                saved_item = Item.objects.get(
+                    title=title, description=description)
                 item_id = saved_item.id
                 instance = get_object_or_404(Item, pk=item_id)
-                # Add author to database if not already added, associate it with added item
+                # Add author to database if not already added, 
+                # associate it with added item
                 author_array = request.POST.get("authors")
                 authors = author_array.split(';')
                 for author in authors:
                     if len(author) > 0:
                         first = author.split(" ")[0]
                         last = author.split(" ")[1]
-                        this_author = Author.objects.get_or_create(first_name=first, surname=last)
+                        this_author = Author.objects.get_or_create(
+                            first_name=first, surname=last)
                         (name, disregard) = this_author
                         author_to_attach = name
                         instance.author.add(author_to_attach)
@@ -202,7 +212,8 @@ def add_item(request):
         else:
             
             form = ItemForm(request.POST, request.FILES)
-            messages.error(request, "There's something wrong with your form, please check for errors.")
+            messages.error(request, 'There is something wrong with your form,'
+                                    'please check for errors.')
             
     else:
         form = ItemForm()
@@ -230,14 +241,16 @@ def update_item(request, item_id):
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
-            # Add author to database if not already added, associate it with added item
+            # Add author to database if not already added, 
+            # associate it with added item
             author_array = request.POST.get("authors")
             authors = author_array.split(';')
             for author in authors:
                 if len(author) > 0:
                     first = author.split(" ")[0]
                     last = author.split(" ")[1]
-                    this_author = Author.objects.get_or_create(first_name=first, surname=last)
+                    this_author = Author.objects.get_or_create(
+                        first_name=first, surname=last)
                     (name, disregard) = this_author
                     author_to_attach = name
                     item.author.add(author_to_attach)
@@ -246,7 +259,8 @@ def update_item(request, item_id):
             return redirect(reverse('item_detail', args=[item.id]))
 
         else:
-            messages.error(request, 'Failed to update product. Please check form fields.')
+            messages.error(
+                request, 'Failed to update product. Please check form fields.')
     else:
         form = ItemForm(instance=item)
 
@@ -288,7 +302,8 @@ def delete_item(request, item_id):
 def create_campaign(request):
     """ Create a sales campaign """
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
-    not_available = Item.objects.filter(campaign__isnull=False).filter(active=True)
+    not_available = Item.objects.filter(
+        campaign__isnull=False).filter(active=True)
 
     if request.method == "POST":
         form = CampaignForm(request.POST, request.FILES)
@@ -297,13 +312,15 @@ def create_campaign(request):
         # Check for existing campaign with same name
         check_name = Campaign.objects.filter(campaign_name=campaign_name)
         if check_name.exists():
-            messages.error(request, 'Sorry, a campaign with this name already exists')
+            messages.error(
+                request, 'Sorry, a campaign with this name already exists')
         else:
             # return reverse('create_campaign')
             form.save()
             for list_item in included_items:
                 list_item = Item.objects.get(pk=list_item)
-                list_item.campaign = Campaign.objects.get(campaign_name=campaign_name)
+                list_item.campaign = Campaign.objects.get(
+                    campaign_name=campaign_name)
                 list_item.set_sale_price = request.POST.get('fixed_price')
                 list_item.save()
             messages.success(request, 'Your campaign has been created.')
@@ -384,7 +401,8 @@ def update_campaign(request, campaign_id):
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
     # List of included items to compare against
     original_inclusion_list = campaign.item_set.all()
-    not_available_list = Item.objects.filter(campaign__isnull=False).filter(active=True)
+    not_available_list = Item.objects.filter(
+        campaign__isnull=False).filter(active=True)
     not_available = not_available_list.difference(original_inclusion_list)
     
     if request.method == "POST":

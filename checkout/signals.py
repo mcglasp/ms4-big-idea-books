@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from .models import LineItem
 
 
+# Code for signals adapted from Boutique Ado
 @receiver(post_save, sender=LineItem)
 def update_on_save(sender, instance, created, **kwargs):
     """

@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
+from django.shortcuts import (render, redirect, reverse, HttpResponse,
+                              get_object_or_404)
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib import messages
@@ -13,12 +14,12 @@ from basket.contexts import basket_contents
 import stripe
 import json
 
+# checkout and cache_checkout_data functions based on
+# Boutique Ado code
 
 @require_POST
 def cache_checkout_data(request):
     try:
-        print('cache 1')
-
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
@@ -28,9 +29,8 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        print('cache 2')
-
-        messages.error(request, 'Sorry, we cannot process your payment right now.')
+        messages.error(
+            request, 'Sorry, we cannot process your payment right now.')
         return HttpResponse(content=e, status=400)
 
 
@@ -69,10 +69,11 @@ def checkout(request):
                         item=item,
                         quantity=item_data,
                     )
-                    item.quantity_sold = line_item.quantity + item.quantity_sold
+                    item.quantity_sold = (
+                        line_item.quantity + item.quantity_sold)
                     item.save(update_fields=['quantity_sold'])
                     line_item.save()
-	            
+
                 except Product.DoesNotExist:
                     messages.error(request, (
                         'One of your selected items is no longer available.')
@@ -81,10 +82,12 @@ def checkout(request):
                     return redirect(reverse('view_basket'))
 
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('order_confirmation', args=[order.order_number]))
+            return redirect(reverse(
+                'order_confirmation', args=[order.order_number]))
 
         else:
-            messages.error(request, 'It looks like there\'s an error with your form.')
+            messages.error(
+                request, 'It looks like there\'s an error with your form.')
     else:
         basket = request.session.get('basket', {})
         if not basket:

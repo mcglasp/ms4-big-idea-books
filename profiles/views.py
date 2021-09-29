@@ -12,7 +12,7 @@ from items.models import Item
 @login_required
 def profile(request):
     """ 
-    Displays a logged-in user's default details and order history 
+    Displays a logged-in user's default details and order history
     """
     # check for any previous orders
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -38,9 +38,15 @@ def profile(request):
 
     if 'q' in request.GET:
         order_query = request.GET['q']
-        order_queries = Q(lineitems__item__title__icontains=order_query) | Q(order_number__icontains=order_query) | Q(lineitems__item__author__first_name__icontains=order_query) | Q(lineitems__item__author__surname__icontains=order_query) | Q(lineitems__item__genre__name__icontains=order_query)
+        order_queries = (
+                Q(lineitems__item__title__icontains=order_query) |
+                Q(order_number__icontains=order_query) |
+                Q(lineitems__item__author__first_name__icontains=order_query) |
+                Q(lineitems__item__author__surname__icontains=order_query) |
+                Q(lineitems__item__genre__name__icontains=order_query)
+                )
         orders = profile.orders.filter(order_queries).distinct()
-
+        
     template = 'profiles/profile.html'
 
     context = {

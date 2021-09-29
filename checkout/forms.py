@@ -15,6 +15,7 @@ class OrderForm(forms.ModelForm):
         Add placeholders and classes, remove auto-generated
         labels and set autofocus on first field
         """
+        # Placeholder code from Boutique Ado project
         super().__init__(*args, **kwargs)
         placeholders = {
             'customer_name': 'Full Name',

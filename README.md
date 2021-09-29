@@ -147,8 +147,20 @@ I have tried to strike a balance here, including a friendly colour-scheme and su
 
 Please see the separate [Testing & Validation]('testing.md') document for full test details and findings.
 
+## Future Development
 
-**Deployment**
+There are a number of features I would like to add to the site, as well as some areas for improvement within existing apps.
+
+**Campaign Creator**
+I'm pleased with the current implementation of the campaigns & sales feature of the site, and feel that it is a useful tool for site owners, however, it could go much further. For example, I'd like to develop this into a more complex 'Campaign Creator', which would enable users to create multibuy options and 'free x with every purchase of y'-type campaigns. The feature could also include a coupon option, though this should also be possible as a separate feature. The build challenge with this, and the main reason this has not yet been implemented is that some complex coding would need to be implemented into the basket app, cross-referencing each product against each available campaign, and then relating that to the specific contents of that basket. All perfectly acheivable, but not something I felt was a priority above other considerations for the creation of a minimum viable product, especially considering the extensive and complex testing this feature would require once implemented.
+
+**Product reviews**
+A popular addition to any e-commerce site is, of course, the ability for customers to leave product reviews, and is certainly something I will consider adding in the future. Given the time constraints for this project, I decided that the campaign feature would be of more value to the site owner, so decided to concentrate on that for the minimum viable product in preference to the review feature.
+
+**Add Items admin options**
+A simple addition to the Add Item page would be a choice of destination after adding an item. For example, the current 'Add Item' submits the form and returns you to the Add Item page, assuming you might wish to add another item. However, this could instead redirect the user to the page of the item you've just added, which could be useful. With this option, the user would be presented with two submit buttons on the form: one would submit the form and redirect the user to the item detail page, as mentioned above, and a second 'Submit form and add another item' button would give the option to submit the form and be returned to the blank Add Item form, as is currently the case.
+
+# Deployment
 
 *Heroku*
 
@@ -317,8 +329,17 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 
 - Code
 
+Some of the code in this project was either taken from of built upon that covered in the Boutique Ado project. I have noted in the code where this is the case, but it is mainly the case within the Checkout app. I have done my best to write this from scratch in order to understand the processes involved, customising as I go. However, it is necessarily similar — or even identical — at times due to the very specific nature of these processes and the need for them to operate precisely, therefore I have not veered far from the original code.
+
 - Content
 
+The dataset was made up of the publicly available official descriptions distributed for these products. Any non-item-related content was written by myself. Prices are representative only, and set to best demonstrate the functioning of the site, rather than official product RRPs.
+
 - Media
+
+    - All the book covers were those officially released for each product and are publicly available.
+    - The home page images were made by me using Adobe Photoshop.
+    - The genre badges were created by me using mainly fontawesome icons, and in one case using an icon made in Photoshop.
+    - The 'cogs' theme was created by www.heropatterns.com.
 
 - Thanks

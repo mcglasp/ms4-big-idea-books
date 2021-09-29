@@ -6,7 +6,7 @@
     <div class="row">
         <div class="ol-sm-12 col-md-6 col-lg-6">
             <div class="card m-3">
-                <div class="card-header zig-zag">
+                <div class="card-header cogs">
                     <div class="white-fade"></div>
                     <h3 id="top-layer-orders">Your orders</h3>
                 </div>
@@ -57,7 +57,7 @@
                     <p class="p-1">
                         Why not take a look at our featured books?
                     </p>
-                    <div class="row zig-zag pt-3 pb-3">
+                    <div class="row cogs pt-3 pb-3">
                         {% for featured in featured_items|slice:":3" %}
                         <div class="col-4">
                             <a class="related-item" href="{% url 'item_detail' featured.id %}"><img
@@ -72,7 +72,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="card m-3">
-                <div class="card-header zig-zag">
+                <div class="card-header cogs">
                     <div class="white-fade"></div>
                     <h3 id="top-layer-orders">Your details</h3>
                 </div>

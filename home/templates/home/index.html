@@ -29,7 +29,7 @@
             {% for item in items|slice:':4' %}
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 item">
                 <div class="item-card card">
-                    <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top zig-zag" alt="..."></a>
+                    <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top cogs" alt="..."></a>
                     <div class="card-body">
                         <a href="{% url 'item_detail' item.id %}">
                             <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong></p>

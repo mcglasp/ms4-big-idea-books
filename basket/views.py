@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from items.models import Item
-from checkout.models import LineItem
 
 
 def view_basket(request):
@@ -23,15 +22,16 @@ def add_to_basket(request, item_id):
             basket[item_id] += quantity
         else:
             basket[item_id] = quantity
-    
-        messages.success(request, f'{item.title} has been added to your basket.')
+
+        messages.success(request,
+                         f'{item.title} has been added to your basket.')
         request.session['basket'] = basket
         return redirect(redirect_url)
 
-    else: 
-        messages.error(request, f'Sorry, {item.title} is not currently available.')
+    else:
+        messages.error(request,
+                       f'Sorry, {item.title} is not currently available.')
         return redirect('items')
-
 
 
 def update_quantity(request, item_id):
@@ -47,7 +47,8 @@ def update_quantity(request, item_id):
 
     else:
         basket.pop(item_id)
-        messages.success(request, f'{item.title} has been removed from your basket.')
+        messages.success(request,
+                         f'{item.title} has been removed from your basket.')
 
     request.session['basket'] = basket
 
@@ -61,7 +62,6 @@ def remove_from_basket(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     basket.pop(item_id)
     request.session['basket'] = basket
-    messages.success(request, f'{item.title} has been removed from your basket.')
-
+    messages.success(request,
+                     f'{item.title} has been removed from your basket.')
     return redirect(reverse('view_basket'))
-

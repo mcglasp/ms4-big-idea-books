@@ -13,7 +13,7 @@
         {% endif %}
         {% if items.count is 0 %}
         <div class="col-md-7 col-sm-12">
-        <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
+            <p>Oh dear, it looks like there's nothing available. Why not widen your search?</p>
         </div>
         {% else %}
         <div class="col-md-7 col-sm-12">
@@ -44,7 +44,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cancel">No!
                             Cancel</button>
-                        <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary" aria-label="Delete item">Yes, delete</a>
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-secondary"
+                            aria-label="Delete item">Yes, delete</a>
                     </div>
                 </div>
             </div>
@@ -56,13 +57,12 @@
                 {% if request.user.is_superuser %}
                 <div class="user-controls card-footer">
                     <a class="btn btn-outline-warning btn-sm" href="{% url 'update_item' item.id %}">Edit</a>
-                        <a class="btn btn-outline-warning btn-sm" id="{{ item.id }}" href="#" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal{{ item.id }}">Delete</a>
-                    
+                    <a class="btn btn-outline-warning btn-sm" id="{{ item.id }}" href="#" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{ item.id }}">Delete</a>
                 </div>
                 {% endif %}
                 <a href="{% url 'item_detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.image }}"
-                        class="card-img-top zig-zag" alt="..."></a>
+                        class="card-img-top cogs" alt="..."></a>
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.id %}">
                         <p class="title-author"><strong class="item-card-title">{{ item.title }}</strong>
@@ -86,7 +86,7 @@
                         {% endfor %}
                     </p>
                     <div class="row price-row">
-                        <div class="col-6">
+                        <div class="col-md-6">
                             {% if item.set_sale_price != 0.00 %}
                             <p class="item-card-price"><span class="strike">£{{ item.price }}</span></p>
                             <p class="item-card-price sale">£{{ item.set_sale_price }}</p>
@@ -98,10 +98,10 @@
                             <p class="item-card-price">£{{ item.price }}</p>
                             {% endif %}
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <form class="items-add-form" action="{% url 'add_to_basket' item.id %}" method="POST">
                                 {% csrf_token %}
-                                <input class="qty_input" type="number" name="quantity" value="1" min="1" max="99"
+                                <input class="w-75 qty_input" type="number" name="quantity" value="1" min="1" max="99"
                                     data-item_id="{{ item.id }}" id="id_qty_{{ item.id }}">
                                 <button class="btn btn-outline-secondary" type="submit" aria-label="Add to basket"><i
                                         class="fas fa-cart-plus"></i></button>

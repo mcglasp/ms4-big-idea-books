@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <div class="card m-3">
-        <div class="card-header zig-zag">
+        <div class="card-header cogs">
             <div class="white-fade"></div>
             <h3>Your basket</h3>
         </div>
@@ -45,11 +45,9 @@
                     <div class="price">£{{ item.price | line_total:item.quantity | floatformat:2}}</div>
                 </div>
             </div>
-
             {% if not forloop.last %}
             <hr>
             {% endif %}
-
             {% endfor %}
             <div id="totals">
                 <p class="">Standard UK delivery: £{{ delivery_cost }}</p>

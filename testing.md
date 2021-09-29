@@ -152,8 +152,15 @@ Expected behaviour:
 Hard deletion of an item should be possible from the Django database, particularly for items with no relation to other tables.
 
 Found:
-An IntegrityError was thrown, with specific reference to an item with a product key of 252. This was precisey the error that was previously being thrown on the front-end. Item 252 did not exist, and there were no references to it in any other table. In discussion with my mentor it was decided that there was clearly some corruption of the data, and that the database should be deleted and rebuilt.
+An IntegrityError was thrown, with specific reference to an item with a product key of 252. This was precisey the error that was previously being thrown on the front-end. Item 252 did not exist, and there were no references to it in any other table.
 
+Solution:
+In discussion with my mentor it was decided that there was clearly some corruption of the data, and that the database should be deleted and rebuilt. To do this I went to Heroku and selected the Heroku Postgres database, and selected Reset. Back in Gitpod, we renamed the migrations, rather than deleting them and attempted to remigrate to the reset database. This was not enough for Django to detect changes, however, so it was necessary to delete the migrations entirely and then migrate the apps to the new database once more. After this, a new superuser was created and I manually loaded the data back into the site via the deployed front end, as this also represented a good opportunity to thoroughly test that aspect of the site. After creating a couple of dummy items we were able to test both front-end and admin delete functions and confirmed that the database was now functioning correctly.
+
+## Known Issues
+
+**Custom 404 page styling**
+The custom 404 page I have added to the site behaves unpredictably in how it renders. Most of the time it will successfully pick up CSS styling, but occassionally it will not. I have tested this extensively with Debug set to false in development, and also on the deployed site and have been unable to reliably recreate the error. Having discussed this with fellow students on Slack, and researched custom 404 implementation I have concluded that my method should work correctly (as indeed it does much of the time), so have decided to continue to research the cause of its unpredictable behaviour in the course of future development.
 
 # User Story Testing
 
