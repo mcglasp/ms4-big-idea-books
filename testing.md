@@ -228,48 +228,71 @@ Specific error messages are displayed to the user if there is an error with the 
 
 Users are able to view their entire order history via their account profile page, or search for a specific product, author or order number.
 
-#### **15**. "As a customer I want to be able to save my address details so that I don't have to re-enter it every time I visit."
+#### **15. "As a customer I want to be able to save my address details so that I don't have to re-enter it every time I visit."**
 
 <img src="readme-assets/save_default_info.png" alt="Save default customer information" width="30%">
 
 The account profile page provides a simple form for users to save their default information. They are also able to save or update this from the checkout page. If the information is already saved, it will be automatically populated on the checkout page.
 
-#### **16**. "As a customer I want to be able to log in and out from any page so that I can feel certain no-one else is able to view my account."
+#### **16. "As a customer I want to be able to log in and out from any page so that I can feel certain no-one else is able to view my account."**
 
 <img src="readme-assets/login.png" alt="Log-in dropdown menu" width="30%">
 <img src="readme-assets/logout.png" alt="Log-out dropdown menu" width="30%">
 
-#### **17**. "As a customer I want to be able to change my password so that I can manage my account's security."
+Account management buttons are available to users at the top-right, in the navbar. As the user scrolls down those buttons are repositioned in the lower nav using jQuery, so that they are always easily accessible.
+
+#### **17. "As a customer I want to be able to change my password so that I can manage my account's security."**
 
 <img src="readme-assets/change_password_button.png" alt="Change password button" width="30%">
 <img src="readme-assets/change_password_page.png" alt="Change password page" width="30%">
 
-#### **18**. "As a site owner I want to be able to add an item to the store so that I can quickly add new products as soon as they are available."
+Users can change their password easily by navigating to their account page via the account management dropdown, and clicking the Change Password button. A simple process, managed by Allauth, allows users to update their password quicly and easily.
+
+#### **18. "As a site owner I want to be able to add an item to the store so that I can quickly add new products as soon as they are available."**
 
 <img src="readme-assets/add_item_menu.png" alt="Navigate to add item from dropdown menu" width="30%">
 <img src="readme-assets/add_item_page.png" alt="Add item page" width="30%">
 
-#### **19**. "As a site owner I want to be able to update an existing item so that I can keep product information up-to-date."
+An add item button is available to logged-in staff users from the account dropdown menu. This takes them directly to the Add Item form.
+
+#### **19. "As a site owner I want to be able to update an existing item so that I can keep product information up-to-date."**
 
 <img src="readme-assets/edit_items_page.png" alt="Navigate to edit from items page" width="30%">
 <img src="readme-assets/edit_main_page.png" alt="Update an item page" width="30%">
 
-#### **20**. "As a site owner I want to be able to delete and item from the store so that I can remove items that are no longer needed on the store."
+Items can be edited by logged-in staff members by finding the product and clicking on the Edit button which appears at the top of the main views listing from each item, and also the item detail page.
+
+#### **20. "As a site owner I want to be able to delete and item from the store so that I can remove items that are no longer needed on the store."**
 
 <img src="readme-assets/item_delete.png" alt="Delete an item" width="30%">
 <img src="readme-assets/delete_modal.png" alt="Delete confirm" width="30%">
 
-#### **21**. "As a site owner I want to be able to create a sales campaign so that I can boost site revenue."
+Similarly to the item edit functionality, items can be deleted either via the main items page or the item detail page. A delete-confirm modal ensures that accidental user clicks do not result in item deletion.
+
+#### **21. "As a site owner I want to be able to create a sales campaign so that I can boost site revenue."**.
 
 <img src="readme-assets/create_campaign_menu.png" alt="Create a campaign button" width="30%">
 <img src="readme-assets/create_campaign_page.png" alt="Create a campaign page" width="30%">
 
-#### **22**. "As a site owner I want to be able to enable and disable campaigns in one click so that I can have a flash sale for short periods without much admin overhead."
+Logged-in staff users can navigation to a campaigns page. From here they can create a new campaign using a simple form that allows them to name the campaign, select products for inclusion and set a fixed price for those items.
+
+#### **22. "As a site owner I want to be able to enable and disable campaigns in one click so that I can have a flash sale for short periods without much admin overhead."**
 
 <img src="readme-assets/disable_enable_campaign.png" alt="Enable or disable, and delete a campaign" width="30%">
 <img src="readme-assets/manage_campaigns.png" alt="Manage all campaigns" width="30%">
 
+The campaign management page allows staff users to enable and disable campaigns at the click of a button. Included items retain their connection to a campaign until they are removed or the campaign is deleted. This ensures that campaigns can be quickly re-enabled as the items will not have been included in other enabled campaigns. Disabling a campaign simply reverts the items' prices to their base prices and vice versa.
+
 
 Validation
+
+Code validation was completed using the following online tools:
+
+- JSHint for Javascript and jQuery
+- W3C Markup Validation Service (HTML)
+- W3C CSS Validation Service
+- PEP8 Online (Python)
+- Autoprefixer at autoprefixer.github.io was used to ensure the widest possible CSS cross-platform compatibility.
+
 
 RUN AGAIN!

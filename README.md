@@ -1,4 +1,6 @@
-Big Idea Books: Curated Non-fiction For Kids
+# **Big Idea Books:** Curated Non-fiction For Kids
+
+[Go to site: ms4-big-idea-books.herokuapp.com](https://ms4-big-idea-books.herokuapp.com/)
 
 # Strategy
 Big Idea Books is a bookselling website specialising in non-fiction titles for children. The site is targeted to anyone buying for a child from preschool age up to early teen. It is expected that this will be mainly parents, but the site's UX has been carefully considered to guide customers to age-appropriate titles in a given area of interest: for example, prehistory for 8-10s or animals for preschoolers. It does this through intuitive navigation; creating a clear and simple customer journey.
@@ -13,7 +15,7 @@ It is understandable that these giants within their sector would suffer from the
 
 # Scope
 
-The below table outlines the 21 application features that I consider essential for a minimum viable product, all of which will are planned for implementation in from the earliest development stages.
+The below table outlines the 22 application features that I consider essential for a minimum viable product, all of which will are planned for implementation in from the earliest development stages.
 
 | User story ID	| As a... |	I want to be able to... | So that I can... |
 | ----------| ------|---------|---------|
@@ -60,29 +62,36 @@ The table below outlines those features that are 'nice-to-have' and not essentia
 
 The guiding principle for the stucture of this site is simplicity. Both the customer journery and the site owner's experience should be streamlined, obvious and robust.
 
-Home Page
+*Home Page*
+
 The user is presented with all they need to fully experience the site. A dropdown menu to log in, register or log out is displayed at the top at all times. Next to this is the basket, which drops down to reveal any basket contents, along with links to included items and a basket total. From here the user can go to their basket to manage its contents, or go directly to the checkout page.
 
 Further down we have links to navigate the store's catalogue, including subject categories and age categories, alongside a comprehensive search field.
 
 Further down current special offer or featured product campaigns are displayed.
 
-Catalogue Navigation
+*Catalogue Navigation*
+
 Once the user selects either a subject or age category, they are offered the chance to narrow it further by either age or subject (whichever was not first selected). For example, if I choose 'Prehistory' I will then be offered the chance to narrow by age, and visa-versa. A dropdown also appears to enable the user to sort the results by a number of criteria: price, a-z, newly listed, most discounted, most popular and featured. If a user selects 'Show All' from the navigation menu, the whole catalogue is displayed alphabetically, save for the featured items, which appear at the top.
 
-Selecting an Item
+*Selecting an Item*
+
 The user can click through to more comprehensive details on a product if they wish, from where they can add the item to their basket, or they can add the item to their basket directly from the search results.
 
-Managing The Shopping Basket
+*Managing The Shopping Basket*
+
 The basket is always available at the top of the screen. From here the user can see at a glance what they have selected and the total price of their basket. They can click through to an item's detail page from here, or navigate to the basket page to manage the basket as a whole and proceed to the checkout if they wish. From the basket drop-down the user can also go directly to the checkout.
 
-Checkout
+*Checkout*
+
 Accessible from both the basket drop-down or the manage basket page, the checkout is a single-page process. The basket contents are displayed, along with delivery cost, and users can click back through to product detail if they wish. To complete a purchase they must enter their details and click the payment button, whereupon they will be informed of either a successful purchase or any problems with their payment. Logged-in users will have their default contact information populated for them, or choose to save the information they input to their profile. Non-logged-in users are given the option to either log in or create an account.
 
-User Account
+*User Account*
+
 All users have the ability to create an account, whether they intend to make a purchase or not. Here they can save and update their contact details and search the details of their order history. They are able to search by title, author, genre or order number or select all orders.
 
-Site administration
+*Site administration*
+
 The site owner and authenticated staff members can add products to the store from the account dropdown always accessible at the top of the page. This link takes them to a page with all the fields necessary to add a comprehensive item listing. This also includes a field to add an author not previously listed on the site, who will then be added to the database automatically.
 
 The Add Item page is almost identical to the Update item page, which is accessible by searching for the item you wish to update and selecting 'Edit' directly from the search result. Alternatively the user can also select 'Edit' from the item detail page. The Update item page is automatically populated with existing information, which can then be changed by the user.
@@ -91,7 +100,8 @@ An important feature to note about the Add and Update item pages are the three p
 
 To prevent faulty pricing information reaching the live site, or indeed the database, the Discount and Set Sale Price fields are not enabled until a price above £0.00 is entered.
 
-Managing Campaigns
+*Managing Campaigns*
+
 The site owner can enable and disable all their campaigns from one page, from which they can also navigate to the 'create a campaign' form. Within this form they are given a list of items that are available to select as part of the campaign, and they are also shown a disabled list of items currently included in other campaigns and therefore not available for selection. They use this form to name and give a fixed price to their campaign. On creation of a campaign, each included item's set sale price is set to the campaign's fixed price. If the campaign is deactivated, the items remain attached to that campaign, so that they cannot be reapplied to another campaign, but their sale prices are reset to either their original base price, or the individual product's discounted price, if applicable. When the campaign is re-enabled, the prices are again set to the campaign's sale price. On deletion of a campaign, all references to that campaign are removed from its related items.
 
 ## Database Schema
@@ -118,14 +128,19 @@ I have tried to strike a balance here, including a friendly colour-scheme and su
 # Build & Testing
 
 ## Technologies & Libraries used
-- Python
-- HTML & CSS
-- Javascript & jQuery
 - Django
+- Python
+- Javascript & jQuery
 - PostgresSQL (SQLite for development)
+- HTML & CSS
 - Bootstrap
+- Fontawesome
 - Built using Gitpod
-- Deployed using Github, Heroku and Amazon Web Services
+- Deployed using Github, Heroku and Amazon Web 
+
+- Other services used during the build:
+- gauger.io/fonticon (Favicon fontawesome icon generator)
+- Favicon.io (Favicon file generator)
 
 
 # Testing & Validation
@@ -133,10 +148,172 @@ I have tried to strike a balance here, including a friendly colour-scheme and su
 Please see the separate [Testing & Validation]('testing.md') document for full test details and findings.
 
 
-Deployment
+**Deployment**
+
+*Heroku*
+
+- Log into (or create) your Heroku account and click Create New App.
+- Select the most appropriate region for your site.
+- From the Deploy tab, go to Deployment Method and select Github.
+- In Connect To Github, search for your repository. Click Connect.
+
+*Setting up the database*
+
+- From the Heroku Overview tab for your newly created app, click Configure Add-ons and search for Heroku Postgres.
+- Select the Hobby Dev tier, and click Submit Order Form.
+
+*Migrating To Your New Database*
+- Back in Gitpod, if you have existing data in Django's standard development database, SQLite, and you did not use a fixtures.json file to load it, use the following commands to save it:
+    - python3 manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json
+- Use the following commands in the Gitpod terminal to connect your new database to your project.
+    - pip3 install dj_database_url
+    - pip3 install psycopg2-binary
+    - pip3 freeze > requirements.txt (This will ensure that Heroku knows what to install to make the app run correctly.)
+- In settings.py, replace the default database in the DATABASES section with:
+    - 'default': dj_database_url.parse(os.environ.get('DATABASE_URL))
+        - You can get your new database URL from your Heroku app Settings > Config Vars > Database url. The url will need to be put into the Heroku Config Vars, and called DATABASE_URL. To connect to this database in development mode, this url is needed in a Gitpod environment variable also. For security reasons it is important that this is not copied into the code and saved into version control.
+- Rerun the apps' migrations to set up the new database. In the terminal, type:
+    - python3 manage.py migrate
+- If you used the dumpdata command above, you now need to run the following terminal command:
+    - python3 manage.py loaddata db.json
+
+- To complete Heroku deployment we need to do the following in the terminal:
+    - pip3 install gunicorn
+    - pip3 freeze > requirements.txt
+- Create a Procfile with the following content:
+    - web: gunicorn [APP NAME].wsgi:application
+- Log into Heroku via the Gitpod terminal, and then type the following:
+    - heroku config:set DISABLE_COLLECTSTATIC=1 --app [APP NAME]
+- In settings.py add the app's deployed url to an 'Allowed hosts' variable.
+- Deploy to Heroku using: git push heroku master.
+- In the Heroku Deploy tab, scroll down to Automatic deploys, and click the button to Enable.
+
+- It's important that you ensure the project's secret key is not saved into version control, so now is a good time to set it up in Heroku's Config Vars.
 
 
-Credits
+*AWS*
+
+Amazon Web Services' S3 cloud hosting is used to host the static files for this application. To set this up:
+
+- Log into or create an AWS account. Within the S3 service, click Create Bucket.
+- Name it, select an appropriate region and deselect Block Public Access.
+- Set the following bucket properties: Static website hosting, select Use this bucket to host a website, and set some default Index and Error urls (eg. index.html and error.html).
+- In the Permissions setting, configure CORS using the following code:
+
+```
+[
+  {
+      "AllowedHeaders": [
+          "Authorization"
+      ],
+      "AllowedMethods": [
+          "GET"
+      ],
+      "AllowedOrigins": [
+          "*"
+      ],
+      "ExposeHeaders": []
+  }
+]
+```
+
+-  Go to Bucket Policy and select Policy Generator. This will require the following settings:
+    - Type: S3 Bucket Policy
+    - Effect: Allow
+    - Principle: *
+    - AWS Service: Amazon S3
+    - Actions: GetObject
+    - ARN: Copy this from the Permissions tab.
+    - Click Add Statement
+    - Click Generate Policy
+    - Copy into Bucket Policy, adding /* at the end of the "Resource name"
+    - Save
+
+- Go to Access Control List, and set the Public Access to Everyone.
+- Go to Amazon's IAM service and go to Groups. Create a new group and name it.
+- Click 'Next' until you reach Create Group, and click that.
+- Click Policy > Create Policy.
+- From the JSON tab click Import Managed Policy.
+- Search for S3 and Import the S3 Full Access Policy.
+- Get the ARN from S3 and paste it into the Resource section of the Access Policy.
+- Click Review Policy name and describe it appropriately.
+- Click Create Policy.
+- Go to Groups > Manage [APP NAME] Group > Attach Policy.
+- Within the users page click Create User.
+- Name the user and select Programmatic Access.
+- Select next and Add the user to the group by clicking through to confirm Create User.
+- Downoad the .csv file which will contain the User Access and Secret Access Keys needed by Django.
+
+*Connect Django to S3*
+
+- Type the following into the Gitpod terminal:
+    - pip3 install boto3
+    - pip3 install django-storages
+    - pip3 freeze > requirements.txt
+- Add 'storages' to settings.py Installed Apps.
+- Define the following in settings.py:
+    - AWS_STORAGE_BUCKET_NAME
+    - AWS_S3_REGION_NAME
+- Add the following to Heroku's Config Vars and Gitpod's environment:
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+
+- Remove the Collect Static variable from Heroku. The custom_storages.py file will manage Static and Media files storage.
+
+- Media files can now be uploaded manually to S3, via the command line, or via the app front end or django admin, depending on the development stage of the app.
+
+*Setting up Stripe*
+- This procedure is for test purposes only.
+
+- Log into or create a Stripe account. 
+- Go to the Stripe dashboard and click Developers and Test Mode.
+- Copy the Public and Secret API keys (test).
+- Add the public and secret key variables to settings.py, ensuring that they are added to the environment, and do not show up in the code.
+- This will need to be set for both the Heroku environment and Gitpod.
+
+- In order to make use of the webhook code in the app it is necessary to do the following in Stripe:
+    - Go to the Webhooks tab in the Developer dashboard.
+    - Click Add Endpoint
+    - Enter the endpoint URL, which is the URL for the app's checkout page, plus "/wh", assuming this is the webhook url specified in the app.
+    - Set it to listen to all events and click Add Endpoint.
+    - To test this a test webhook can be sent from Stripe.
+
+*Setting up emails*
+
+- For Big Idea Books, I used Gmail to setup email handling.
+- Log into or create a Gmail Account.
+- Go to Settings.
+- Go to Other Account Settings.
+- It is necessary to add 2-step verification.
+- A new option should appear after verification called 'App passwords'.
+- Under device, select Other and type Django.
+- Copy the supplied 16-digit character.
+- Add this to Heroku's config vars as EMAIL_HOST_PASSWORD.
+- Add another config var called EMAIL_HOST_USER, which will be set to the gmail account.
+- Add these variables to settings.py, including the following:
+    - EMAIL BACKEND: django.core.mail.backends.smpt.EmailBackend
+    - EMAIL_USE_TLS: True
+    - EMAIL_PORT: 587
+    - EMAIL_HOST: smpt.gmail.com
+    - DEFAULT_FROM_EMAIL / EMAIL_HOST_USER / EMAIL_HOST_PASSWORD: All set in the environment in both Gitpod and Heroku.
+
+**Forking the GitHub Repository**
+
+- Log in to GitHub and locate the GitHub Repository.
+- At the top of the Repository, locate and click the Fork button.
+- After a moment the forked repository should appear in your GitHub account.
+
+**Making a Local Clone**
+
+- Log in to GitHub and locate the GitHub Repository.
+- Under the repository name, click 'Clone or download'.
+- To clone the repository using https, copy the link under 'Clone with https'.
+- Open Git Bash.
+- Change the current working directory to the location where you want the cloned directory to be made.
+- Type git clone, and then paste the copied URL.
+- Press Enter.
+
+# Credits & Acknowledgements
 
 - Code
 
