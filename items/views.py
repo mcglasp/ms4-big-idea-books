@@ -4,9 +4,8 @@ from django.db.models.functions import Lower
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.db import IntegrityError
 from .models import Item, Author, Campaign
-from .forms import ItemForm, AuthorDataForm, CampaignForm
+from .forms import ItemForm, CampaignForm
 
 
 def all_items(request):
@@ -185,7 +184,7 @@ def add_item(request):
             if check_item.exists() is True:
                 messages.error(
                     request, 'There is a book in the shop with this title and'
-                    'description. Please check your existing items and make' 
+                    'description. Please check your existing items and make'
                     'this listing unique.')
             else:
                 form.save()
@@ -193,7 +192,7 @@ def add_item(request):
                     title=title, description=description)
                 item_id = saved_item.id
                 instance = get_object_or_404(Item, pk=item_id)
-                # Add author to database if not already added, 
+                # Add author to database if not already added,
                 # associate it with added item
                 author_array = request.POST.get("authors")
                 authors = author_array.split(';')
@@ -207,7 +206,8 @@ def add_item(request):
                         author_to_attach = name
                         instance.author.add(author_to_attach)
                 
-                messages.success(request, f"{title} has been added to the shop")
+                messages.success(
+                    request, f"{title} has been added to the shop")
                 return redirect('add_item')
         else:
             
@@ -223,16 +223,15 @@ def add_item(request):
         'authors_select': authors_select,
     }
 
-
     return render(request, 'items/add_item.html', context)
 
 @login_required
 @staff_member_required
 def update_item(request, item_id):
-    """ 
+    """
     A view to update existing product information.
     """
-    
+
     authors_select = Author.objects.all()
 
     item = get_object_or_404(Item, pk=item_id)
@@ -254,7 +253,7 @@ def update_item(request, item_id):
                     (name, disregard) = this_author
                     author_to_attach = name
                     item.author.add(author_to_attach)
-        
+
             messages.success(request, 'This item has been successfully updated.')
             return redirect(reverse('item_detail', args=[item.id]))
 
@@ -270,7 +269,7 @@ def update_item(request, item_id):
         'item': item,
         'authors_select': authors_select,
     }
-    
+
     return render(request, template, context)
 
 
@@ -311,7 +310,6 @@ def create_campaign(request):
             messages.error(
                 request, 'Sorry, a campaign with this name already exists')
         else:
-            # return reverse('create_campaign')
             form.save()
             for list_item in included_items:
                 list_item = Item.objects.get(pk=list_item)
@@ -351,7 +349,7 @@ def manage_campaigns(request):
 @login_required
 @staff_member_required
 def deactivate_campaign(request, campaign_id):
-    """ 
+    """
     Disable a campaign, without deleting it.
     Included products will remain unavailable for inclusion in other campaigns
     """
@@ -361,7 +359,7 @@ def deactivate_campaign(request, campaign_id):
     for item_instance in included_items:
         item_instance.set_sale_price = 0.00
         item_instance.save()
-    
+
     campaign.active = False
     campaign.save()
     
@@ -388,11 +386,12 @@ def activate_campaign(request, campaign_id):
 
     return redirect(reverse('manage_campaigns'))
 
+
 @login_required
 @staff_member_required
 def update_campaign(request, campaign_id):
     """ Update an existing campaign """
-    
+
     campaign = get_object_or_404(Campaign, pk=campaign_id)
     available = Item.objects.filter(campaign__isnull=True).filter(active=True)
     # List of included items to compare against
@@ -400,7 +399,7 @@ def update_campaign(request, campaign_id):
     not_available_list = Item.objects.filter(
         campaign__isnull=False).filter(active=True)
     not_available = not_available_list.difference(original_inclusion_list)
-    
+
     if request.method == "POST":
         form = CampaignForm(request.POST, request.FILES, instance=campaign)
         form.save()
@@ -419,10 +418,10 @@ def update_campaign(request, campaign_id):
             list_item.campaign = current_campaign
             list_item.set_sale_price = fixed_price
             list_item.save()
-        
+
         messages.success(request, 'Campaign successfully updated.')
         return redirect('manage_campaigns')
-        
+
     else:
         form = CampaignForm(instance=campaign)
 
@@ -434,7 +433,7 @@ def update_campaign(request, campaign_id):
         'form': form,
         'campaign': campaign
     }
-    
+
     return render(request, 'items/update_campaign.html', context)
 
 

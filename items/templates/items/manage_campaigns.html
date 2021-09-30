@@ -22,7 +22,6 @@
                     {% if campaigns|length > 0 %}
                     {% for campaign in campaigns %}
                     <div class="row d-flex ">
-
                         <!-- DELETE CAMPAIGN MODAL -->
                         <div class="modal fade" id="deleteModal{{ campaign.id }}" tabindex="-1" role="dialog"
                             aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -47,7 +46,6 @@
                             </div>
                         </div>
                         <!-- END MODAL -->
-
                         <div class="row campaign-details justify-content-between">
                             <div class="col-md-3">
                                 <a href="{% url 'update_campaign' campaign.id %}"><h5 class="p-2 text-center">{{ campaign.campaign_name }}</h5></a>
@@ -72,28 +70,19 @@
                                         data-bs-target="#deleteModal{{ campaign.id }}" aria-label="Delete campaign">Delete</a>
                                 </div>
                             </div>
-
                         </div>
-                    
-                        {% if not forloop.last %}
-                        
-                        {% endif %}
                     </div>   
                     {% if not forloop.last %}  
                     <hr>
                     {% endif %}                   
-                    {% endfor %}
-                    
+                    {% endfor %}  
                     {% else %}
-                    <div class="row">
-                        
                         <div class="row">
                             <p>Looks like you don't currently have any campaigns. Why not <a
                                     href="{% url 'create_campaign' %}"> set
-                                    one up?</a></p>
+                                    one up?</a>
+                            </p>
                         </div>
-                        
-                    </div>
                     {% endif %}
                 </div>
             </div>

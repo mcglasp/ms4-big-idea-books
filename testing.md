@@ -5,7 +5,7 @@ Testing specification:
 - Browsers used to test: Chrome (desktop and mobile), Safari (desktop, iPad, mobile), Firefox (desktop).
 - For responsiveness on hardware that I did not have access to, the responsinator.com was used.
 
-The following functions have been tested using, where applicable, superuser access privilages, end-user logged-in privilages, or unauthenticated-user access:
+The following functions have been tested using, where applicable, superuser access privileges, end-user logged-in privileges, or unauthenticated-user access:
 
 ## 1. Item search and navigation: 
 
@@ -53,9 +53,11 @@ The following functions have been tested using, where applicable, superuser acce
 - Works as expected. 'Bought' several items using official Stripe test card.
 
 #### 3.3 Create an order when the user has closed the window before confirmation.
-- As expected, the order is still processed. However, I had reservations about whether this was the correct procedure when testing. To test this I 'bought' an item and closed the window while the payment authorisation screen overlay was displayed. On reopening the closed tab I say that the order had been created, and this was also confirmed in Stripe. However, the basket only gets deleted on rendering the order confirmation view, which can only happen if the window is still open. It seemed to me that this could cause problems and, potentially, lead a customer to pay for an item twice. To test whether this was possible I attempted to go through the checout process again with the currently loaded basket. It came back that there had been a processing error, suggesting that the order had already been found with those existing basket details and payment intent details.
+- As expected, the order is still processed. However, I had reservations about whether this was the correct procedure when testing. To test this I 'bought' an item and closed the window while the payment authorisation screen overlay was displayed. On reopening the closed tab I say that the order had been created, and this was also confirmed in Stripe. However, the basket only gets deleted on rendering the order confirmation view, which can only happen if the window is still open. It seemed to me that this could cause problems and, potentially, lead a customer to pay for an item twice. To test whether this was possible I attempted to go through the checkout process again with the currently loaded basket. It came back that there had been a processing error, suggesting that the order had already been found with those existing basket details and payment intent details.
 
 On the one hand, this behaviour is correct in that it does what we intend it to do (ie. still processing an order and preventing duplicate payments), but I am less sure that this process represents good UX. I will further research this as part of future development.
+
+I asked a tutor to test this behaviour and discussed the issue with them. They felt that it was behaving normally and experienced no issues with cached basket items.
 
 #### 3.4 Receive appropriate feedback on a successful purchase, including via email.
 - Emails not being received to real email.
@@ -74,7 +76,7 @@ Solution: Once the endpoint was corrected the emails were sent and received corr
 
 ## 4. User profile:
 #### 4.1 Create a user profile by registering on the site.
-- Works as expected. Created a new user profile using a temporary email address; verified the email using the ink recieved; logged into the account.
+- Works as expected. Created a new user profile using a temporary email address; verified the email using the ink received; logged into the account.
 #### 4.2 View order history on a profile page.
 - Works as expected. Created an order and checked for that order in order history.
 #### 4.3 Search order history via keywords for genre, title, author and order number.
@@ -89,14 +91,14 @@ Solution: Once the endpoint was corrected the emails were sent and received corr
 #### 5.1 Add an item to the store via front-end form.
 - Form works as expected.
 - Error found. 
-Expected behaviour: a single success message should appear on a successful submittion to the database. 
-Found behaviour: the success message appears, but occassionally twice; one above the other. 
+Expected behaviour: a single success message should appear on a successful submission to the database. 
+Found behaviour: the success message appears, but occasionally twice; one above the other. 
 Solution: on examination of the code, it was found that the success message was being called at the inner-most part of the add_item function, which is the add author loop. In cases where an item has more than one author, therefore, the message will be called for every author that is added. The solution was simply to move the message to the outer loop.
 
 #### 5.2 Update an existing item via front-end form.
 - Works as expected. Changed title, author, price, discount amount and image.
-#### 5.3 Recieve appropriate validation feedback on add/update item form.
-- Works as expected. Incorrectly and partically filled out form to check for validation messages.
+#### 5.3 Receive appropriate validation feedback on add/update item form.
+- Works as expected. Incorrectly and partially filled out form to check for validation messages.
 #### 5.4 Apply individual discounts to items and have that change reflected throughout the site.
 - Error found when applying a discount to an existing item. 
 Expected behaviour: if the base price is above 0, the discount field should become enabled. 
@@ -110,7 +112,7 @@ Update: later testing revealed that the discount field was now not properly enab
 #### 5.7 Items that are 'soft-deleted' should no longer be visible to the user, soft-deletion should not impact on accessibility of related data, ie. order history search that includes deleted line items.
 - Error found. Found behaviour: Items that had been deleting were appearing as a 0.00 empty order on order history. An IntegrityError try/except block was designed to negate this. However, it was clearly not a broad enough exception to work as expected.
 Expected behaviour: items that have been deleted but previously purchased should show up as normal in order history.
-Solution: on consideration of the pros and cons of the soft-delete function, I decided to make that the default behaviour for item deletion. Hard delete is still available and functioning correctly from the Django admin, but I felt it waas far prefereable to be able to gain access to information on deleted items from the front end, even if they are not available to purchase or select, over the ability to hard-delete them from the front end.
+Solution: on consideration of the pros and cons of the soft-delete function, I decided to make that the default behaviour for item deletion. Hard delete is still available and functioning correctly from the Django admin, but I felt it was far preferable to be able to gain access to information on deleted items from the front end, even if they are not available to purchase or select, over the ability to hard-delete them from the front end.
 
 ## 6. Campaign management - Staff users
 #### 6.1 Create a sales campaign for a number of products.
@@ -150,12 +152,15 @@ Solution: on consideration of the pros and cons of the soft-delete function, I d
 #### 8.3 The design of the site should behave responsively across the tested platforms and browsers.
 - The site design appears as intended on Firefox and Chrome on desktop, and Safari and Chrome on mobile. Minor styling issues were found on Safari desktop. For example, on the Items page, the quantity input overlapped the other content. Since I had already run the code through an autoprefixer at this point, I decided to make some specific minor changes to account for the problem.
 
+## 9. Accessibility Review
+A full accessibility review of every page on the site was conducted using Lighthouse. The main issues stemmed from missing aria labelling and insufficient colour contrast on some text. All of the issues have since been addressed.
+
 
 ## Significant Build Challenges
 
 ### **Deletion Errors After Campaign Implementation**
 
-The Campaign functionality was originally constructed so that the Campaign model contained a list of included items, which were then cross-referenced in the view against all items. However, an error occured that demonstrated the flaw in this approach:
+The Campaign functionality was originally constructed so that the Campaign model contained a list of included items, which were then cross-referenced in the view against all items. However, an error occurred that demonstrated the flaw in this approach:
 
 Deleting a campaign behaved as expected. However, deleting an item that was associated with a campaign generated an IntegrityError with specific reference to 'campaign_campaign_included_items', suggesting that the Campaign's included_items field still referenced that item, and the delete failed. Removing the item from the campaign prior to deletion did not fix the error. In investigating the issue I uncovered what I felt to be a larger problem with the design of the Item and Campaign models; the Item did not reference the Campaign at all, but the Campaign included a ManyToMany field that held a list of items included in the Campaign. This was not an obvious issue at first, but revealed problems when trying to update included items when editing campaigns. It also became evident that allowing an Item to be included in more than one campaign was problematic. For example, if a user included an item in the £5 sale, and then created a £10 sale, they could include both, thereby undermining the campaign itself and likely causing the database to throw an error.
 
@@ -183,7 +188,16 @@ In discussion with my mentor it was decided that there was clearly some corrupti
 
 **Custom 404 page styling**
 
-The custom 404 page I have added to the site behaves unpredictably in how it renders. Most of the time it will successfully pick up CSS styling, but occassionally it will not. I have tested this extensively with Debug set to false in development, and also on the deployed site and have been unable to reliably recreate the error. Having discussed this with fellow students on Slack, and researched custom 404 implementation, I have concluded that my method should work correctly (as indeed it does much of the time), so have decided to continue to research the cause of its unpredictable behaviour in the course of future development.
+The custom 404 page I have added to the site behaves unpredictably in how it renders. Most of the time it will successfully pick up CSS styling, but occasionally it will not. I have tested this extensively with Debug set to false in development, and also on the deployed site and have been unable to reliably recreate the error. Having discussed this with fellow students on Slack, and researched custom 404 implementation, I have concluded that my method should work correctly (as indeed it does much of the time), so have decided to continue to research the cause of its unpredictable behaviour in the course of future development.
+
+**Double orders**
+
+On one occasion I noticed that for a period of a couple of hours, during site testing, database was creating two orders — with different order numbers — per checkout. The problem came and went, and I check through the code and Stripe events thoroughly. Tutors I spoke to were also unable to identify any error, and it was only spotted because I happened to be testing the order history functionality at the time. As we were unable to account for the cause, and it has since not occurred again, I have decided to note it is a potential issue for the future.
+There was speculation from a tutor that this could be caused by a confluence of webhook behaviour and asynchronous code, but this can only be speculation.
+
+**CSS Styling Issues**
+
+Despite correcting the problem on numerous occasions, I have been unable to permanently prevent the basket dropdown hover event from jumping in front of the basket quantity pill. 
 
 # User Story Testing
 
@@ -191,9 +205,9 @@ The custom 404 page I have added to the site behaves unpredictably in how it ren
 
 <img src="readme-assets/all_items.png" alt="Show all items" width="30%">
 
-Add to basket buttons, with a quantity input, are available on each item that is dispayed on the main items page.
+Add to basket buttons, with a quantity input, are available on each item that is displayed on the main items page.
 
-#### **2. "As a customer I want to be able read about the products in detail so I can	find out the price, author, subject and suggested age recommendation and read the description."**
+#### **2. "As a customer I want to be able read about the products in detail so I can   find out the price, author, subject and suggested age recommendation and read the description."**
 
 <img src="readme-assets/item_detail.png" alt="Read item detail" width="30%">
 
@@ -325,5 +339,6 @@ Code validation was completed using the following online tools:
 - W3C CSS Validation Service
 - PEP8 Online (Python)
 - Autoprefixer at autoprefixer.github.io was used to ensure the widest possible CSS cross-platform compatibility.
+- Lighthouse
 
 As of 30th September 2021, no validation errors were reported by the above tools. However, I have found the tools' error reporting to be variable throughout the development process. As I cannot account for the change and have worked to clear every error they have reported, I must simply report that there are no errors at the point of submission of the project.

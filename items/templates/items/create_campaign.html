@@ -60,9 +60,9 @@
 // Prevent form from submitting if fewer than 3 items have been selected.
 $( "#item-form" ).submit(function(e) {
   if ($('.available :checkbox:checked').length > 2) {
-  return
+  return;
   } else {
-    $('#check-not-valid').text("You must select at least three items.")
+    $('#check-not-valid').text("You must select at least three items.");
   e.preventDefault();
   }
 });

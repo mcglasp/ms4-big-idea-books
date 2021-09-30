@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.db import models
 from .models import Genre, Author, Age_range, Item, Campaign
 
 # Register your models here.

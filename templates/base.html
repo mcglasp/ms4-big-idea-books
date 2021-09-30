@@ -13,14 +13,11 @@
   <link rel="manifest" href="{{ MEDIA_URL }}favicon_io/site.webmanifest">
   {% endblock %}
 
-  {% block extra_meta %}
-  {% endblock %}
-
   {% block core_css %}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap"
@@ -30,37 +27,27 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Manrope:wght@200&family=Milonga&family=Source+Sans+Pro:wght@300;400;600&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
   {% endblock %}
 
   {% block extra_css %}
   {% endblock %}
 
   {% block core_js %}
-
-
   <script src="https://js.stripe.com/v3/"></script>
   <script src="https://kit.fontawesome.com/28c549be5f.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
   </script>
-
   {% endblock %}
 
-  {% block extra_js %}
-  {% endblock %}
-
-  <title>Big Idea Books | Curated non-fiction for kids {% block extra_title %}{% endblock %}</title>
-
+  <title>Big Idea Books | Curated non-fiction for kids</title>
 </head>
 
 <body>
   {% include 'includes/user_account.html' %}
-  {% block header %}
   <header class="cogs">
     <h1 id=logo-header><i id="logo-icon-left" class="fas fa-crow"></i><a href="/">Big Idea Books</a><i
         id="logo-icon-right" class="fas fa-dove"></i></h1>
@@ -68,11 +55,8 @@
     <div id="header-icons-left"><i class="fas fa-motorcycle"></i><i class="fas fa-truck-monster"></i></div>
     <div id="header-icons-right"><i class="fas fa-tree"></i><i class="fas fa-map-signs"></i></div>
   </header>
-  {% endblock %}
   <main>
     {% include 'includes/nav.html' %}
-    {% block subhead %}
-    {% endblock %}
     {% block messages %}
     {% if messages %}
     <div class="message-container">
@@ -88,8 +72,10 @@
     </div>
     {% endif %}
     {% endblock %}
+
     {% block content %}
     {% endblock %}
+
   </main>
   {% block footer %}
   {% include 'includes/footer.html' %}
@@ -104,7 +90,6 @@
 
     $(window).scroll(function () {
       var scrollPos = $(document).scrollTop();
-      // console.log(scrollPos)
       if (scrollPos > 185) {
         $('#user-admin-box-top').addClass('visually-hidden');
         $('#user-admin-box-lower').removeClass('visually-hidden');
@@ -116,10 +101,24 @@
         $('#lower-nav').css('z-index', 'unset');
       }
     });
-  </script>
 
+    $('#sort-select').change(function() {
+      let selector = $(this);
+      let currentUrl = new URL(window.location);
+      let queryString = new URLSearchParams(currentUrl.search);
+      let selectedVal = selector.val();
+    
+      let qtoString = queryString.toString();
+      let alteredString = qtoString.replace("%2C",",");
+    
+      let newString = `?${alteredString}&sort=${selectedVal}`;
+      let alteredNewString = newString.replace("%3D", "=");
+      let string = alteredNewString;
+      document.location = string;
+    });
+    
+  </script>
   {% endblock %}
 
 </body>
-
 </html>

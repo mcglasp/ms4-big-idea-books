@@ -88,7 +88,7 @@
   {% block postloadjs %}
   {{ block.super }}
   <script>
-      let storedAuthors = $('.just-text').map(function () {
+let storedAuthors = $('.just-text').map(function () {
           return $(this).text();
       }).toArray();
 
@@ -122,7 +122,7 @@
                   alreadyInput.push(newValue);
               }
           } else {
-              alert('Please select an author')
+              alert('Please select an author');
           }
       });
 
@@ -172,7 +172,7 @@
                   let updated_price = price_field.val();
                   price_field.val(updated_price);
               }
-          })
+          });
 
           $('#id_price').change(function () {
               let price_field = $('#id_price');

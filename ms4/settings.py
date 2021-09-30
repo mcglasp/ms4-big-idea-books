@@ -7,12 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ms4-big-idea-books.herokuapp.com', 'localhost']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,7 +94,6 @@ STANDARD_DELIVERY_COST = 2.99
 
 WSGI_APPLICATION = 'ms4.wsgi.application'
 
-
 # Database
 
 if 'DATABASE_URL' in os.environ:
@@ -113,7 +109,6 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
 
 # Password validation
 
@@ -139,7 +134,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 

@@ -66,19 +66,18 @@
 </div>
 
 {% endblock %}
-
 {% block postloadjs %}
 {{ block.super }}
 <script>
   // Prevent form from submitting if fewer than 3 items have been selected.
   $("#item-form").submit(function (e) {
-    let avail = $('.available :checkbox:checked').length
-    let included = $('.original :checkbox:checked').length
-    let total = avail + included
+    let avail = $('.available :checkbox:checked').length;
+    let included = $('.original :checkbox:checked').length;
+    let total = avail + included;
     if (total > 2) {
-      return
+      return;
     } else {
-      $('#check-not-valid').text("You must select at least three items.")
+      $('#check-not-valid').text("You must select at least three items.");
       e.preventDefault();
     }
   });

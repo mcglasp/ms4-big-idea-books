@@ -4,48 +4,66 @@
 
 [Go to site: ms4-big-idea-books.herokuapp.com](https://ms4-big-idea-books.herokuapp.com/)
 
+The site can be view at 2 authorisation levels (as well as non-authorised) for which credentials are given below:
+
+**End user**
+
+Username: enduser
+
+Password: customer78
+
+**Staff member/Site owner**
+
+Username: admin
+
+Password: adMin8
+
+---
+
 # Strategy
 Big Idea Books is a bookselling website specialising in non-fiction titles for children. The site is targeted to anyone buying for a child from preschool age up to early teen. It is expected that this will be mainly parents, but the site's UX has been carefully considered to guide customers to age-appropriate titles in a given area of interest: for example, 'prehistory for 8-10s' or 'animals for preschoolers'. It does this through intuitive navigation; creating a clear and simple customer journey.
 
 For the store owner the content management system is designed with ease of use and flexibility in mind. Titles can be created or updated directly from a home page navigation link, and can also be deleted directly from search results. The system does not force the user to adhere to particular pricing structures or sales campaign models; the site owner can add percentage discounts or fixed sale prices as they wish, and all totals will be calculated for them.
 
-The business case for this was inspired by my own experience of buying books for children. While plenty of other book-buying options exist online, I've found that most are overwhelmingly focused on fiction, whereas my two young sons are die-hard non-fiction fans. Of course the non-fiction titles are easy to search for if you know their titles, but when browsing for something new the sorting and filtering options are often not specific enough for my requirements. Amazon offers users the ability to filter results by age and subject, but it has such an extensive catalogue that it is overwhelming and often includes titles that have been too broadly categorised, for example, 'Trains' strongly suggests that it will be largely non-fiction, but for a busy mum, it would be far prefereable to be able to specify that, rather than have to sift through the likes of 'Thomas The Tank Engine' to find the more suitable 'How Trains Work'.
+The business case for this was inspired by my own experience of buying books for children. While plenty of other book-buying options exist online, I've found that most are overwhelmingly focused on fiction, whereas my two young sons are die-hard non-fiction fans. Of course the non-fiction titles are easy to search for if you know their titles, but when browsing for something new the sorting and filtering options are often not specific enough for my requirements. Amazon offers users the ability to filter results by age and subject, but it has such an extensive catalogue that it is overwhelming and often includes titles that have been too broadly categorised, for example, 'Trains' strongly suggests that it will be largely non-fiction, but for a busy mum, it would be far preferable to be able to specify that, rather than have to sift through the likes of 'Thomas The Tank Engine' to find the more suitable 'How Trains Work'.
 
 Waterstones works much better in respect of the above comments. However, it too features an overwhelmingly large catalogue that is time-consuming to sort through, and also suffers from being too broadly categorised.
 
 It is understandable that these giants within their sector would suffer from the relatively positive problem of too large a choice of stock, and therefore Big Idea Books does not aim to take them on or even attempt to better their customer journey. What Big Idea Books does aim to do is offer parents and gift-buyers an alternative and straightforward solution to finding beautifully written and designed non-fiction; almost a 'personal-shopper' experience. The tagline 'Curated Non-fiction For Kids' spells out the store's aims precisely; these are items that have been carefully selected for inclusion in the cataloge and displayed to the user under appropriate filters to give customers a clear and straightforward shopping experience.
 
+---
+
 # Scope
 
 The below table outlines the 22 application features that I consider essential for a minimum viable product, all of which will are planned for implementation from the earliest development stages.
 
-| User story ID	| As a... |	I want to be able to... | So that I can... |
+| User story ID | As a... | I want to be able to... | So that I can... |
 | ----------| ------|---------|---------|
 |--|--|**Viewing & Selecting Products** |---|
-| 1 |	customer |	view all of the products |	select and buy one or more |    
-| 2	| customer |	read about the products in detail |	find out the price, author, subject and suggested age recommendation and read the description.| 
-| 3	| customer |	search by keyword | quickly find exactly what I'm looking for |
+| 1 |   customer |  view all of the products |  select and buy one or more |    
+| 2 | customer |    read about the products in detail | find out the price, author, subject and suggested age recommendation and read the description.| 
+| 3 | customer |    search by keyword | quickly find exactly what I'm looking for |
 |--|--|**Sorting & Filtering Products** |---|
-| 4 |	customer |	filter items by genre and age recommendation | identify the most suitable item to buy |
-| 5 |	customer |	sort search and filter results by price	| find a suitable product within my price range |
+| 4 |   customer |  filter items by genre and age recommendation | identify the most suitable item to buy |
+| 5 |   customer |  sort search and filter results by price | find a suitable product within my price range |
 |--|--|**Managing My Basket Items** |---|
-| 6	| customer	 | add a number of items to my basket directly from the search results | buy items when I see them, without clicking through to individual item details pages |
-| 7	| customer |	add one or more of the same item from the item detail page | buy what I want without navigating back to the search results |
-| 8	| customer |	remove items from my basket	| change my mind at the checkout |
-| 9	| customer |	change the quantity of items from within my basket | buy more or less of something without navigating back through the item listings |
-| 10 |	customer |	see my basket contents and total from wherever I am on the site	| avoid overspending |
+| 6 | customer   | add a number of items to my basket directly from the search results | buy items when I see them, without clicking through to individual item details pages |
+| 7 | customer |    add one or more of the same item from the item detail page | buy what I want without navigating back to the search results |
+| 8 | customer |    remove items from my basket | change my mind at the checkout |
+| 9 | customer |    change the quantity of items from within my basket | buy more or less of something without navigating back through the item listings |
+| 10 |  customer |  see my basket contents and total from wherever I am on the site | avoid overspending |
 |--|--|**Making Payment** |---|
-| 11 |	customer |	pay for my items without leaving the site | have a simpler customer journey from start to finish |	 
-| 12 |	customer |	be notified if there is an issue with my payment | easily identify and rectify the issue |
+| 11 |  customer |  pay for my items without leaving the site | have a simpler customer journey from start to finish |   
+| 12 |  customer |  be notified if there is an issue with my payment | easily identify and rectify the issue |
 |--|--|**My Account & Information** |---|
-| 13 |	customer |	view my order history |	check what I've bought and how much I've spent |
-| 15	| customer |	save my address details	| don't have to re-enter it every time I visit |
-| 16	| customer |	log in and out from any page |	feel certain no-one else is able to view my account |
-| 17	| customer |	change my password |	manage my account's security |
-| 18	| site owner | 	add an item to the store |	quickly add new products as soon as they are available |
+| 13 |  customer |  view my order history | check what I've bought and how much I've spent |
+| 15    | customer |    save my address details | don't have to re-enter it every time I visit |
+| 16    | customer |    log in and out from any page |  feel certain no-one else is able to view my account |
+| 17    | customer |    change my password |    manage my account's security |
+| 18    | site owner |  add an item to the store |  quickly add new products as soon as they are available |
 |--|--|**Managing The Store's Content** |---|
-| 19	| site owner	| update an existing item	 | keep product information up-to-date |
-| 20	| site owner	| delete and item from the store |	remove items that are no longer needed on the store |
+| 19    | site owner    | update an existing item    | keep product information up-to-date |
+| 20    | site owner    | delete and item from the store |  remove items that are no longer needed on the store |
 |--|--|**Building Sales Campaigns**|--|--|
 | 21 | site owner | create a sales campaign | boost site revenue |
 | 22 | site owner | enable and disable campaigns in one click | have a flash sale for short periods without much admin overhead |
@@ -53,16 +71,17 @@ The below table outlines the 22 application features that I consider essential f
 
 The table below outlines those features that are 'nice-to-have' and not essential to the succesful launch of the MVP, as outlined above. These features may or may not be implemented, depending on the scope of the initial development stage.
 
-| User story ID	| As a... |	I want to be able to... | So that I can... |
+| User story ID | As a... | I want to be able to... | So that I can... |
 | ----------| ------|---------|---------|
-| 24	| site owner	| add, delete and update authors via the store front end |	ensure the catalogue is up-to-date |
+| 24    | site owner    | add, delete and update authors via the store front end |  ensure the catalogue is up-to-date |
 | 25 | customer | research and purchase subscription options | buy subscriptions as a larger gift; receive newly added and recommended products as they are launched |
 | 26 | customer | add an item to a wishlist for later purchase | keep track of titles I might like to purchase in future, or send the list to family and friends for gift ideas |
 
+---
 
 # Structure 
 
-The guiding principle for the stucture of this site is simplicity. Both the customer journey and the site owner's experience should be streamlined, obvious and robust.
+The guiding principle for the structure of this site is simplicity. Both the customer journey and the site owner's experience should be streamlined, obvious and robust.
 
 *Home Page*
 
@@ -111,6 +130,8 @@ The site is made up of four apps: Basket, Checkout, Item, Profile (and Home). Th
 
 <img src="readme-assets/database_schema.png" alt="Database diagram">
 
+---
+
 # Skeleton
 
 Initial wireframes for the project are shown below, representing the desktop and mobile views.
@@ -120,14 +141,17 @@ Initial wireframes for the project are shown below, representing the desktop and
 <img src="readme-assets/mobile_bib_wireframe.png" alt="Desktop wireframe" width="40%" style="margin: 5px">
 </div>
 
+---
+
 # Surface
 
-Their are two outwardly conflicting design considerations influencing the site's UI: the products on the site are wholly aimed at children to young teens; however, the most likely user is at least one or two generations above that. Balancing those seemingly incompatible influences is not a new design concept: consider that baby blankets, nappies and food packaging are decorated with bunnies or teddy bears, for example, when the only person to notice these elements will be their parents and carers. This is not an error of logic, but a consideration of what the adult customer wants for their child, or how they project that image onto them. When purchasing something for a child, parents will generally feel far more comfortable interacting with an environment that conveys their own ethos and desires. For example, security and gentleness for a baby blanket, health and vigour for baby food; and, in the case of Big Idea Books, creativity, imagination or knowledge.
+There are two outwardly conflicting design considerations influencing the site's UI: the products on the site are wholly aimed at children to young teens; however, the most likely user is at least one or two generations above that. Balancing those seemingly incompatible influences is not a new design concept: consider that baby blankets, nappies and food packaging are decorated with bunnies or teddy bears, for example, when the only person to notice these elements will be their parents and carers. This is not an error of logic, but a consideration of what the adult customer wants for their child, or how they project that image onto them. When purchasing something for a child, parents will generally feel far more comfortable interacting with an environment that conveys their own ethos and desires. For example, security and gentleness for a baby blanket, health and vigour for baby food; and, in the case of Big Idea Books, creativity, imagination or knowledge.
 
-The above considerations result in an avoidance of overly child-orientated design such as you might find on the Cbeebies website, which is designed for children to interact with on their own, but it is also far more child friendly than more general booksellers (Waterstones, Amazon) or even some succesful children's book stores, which feel educational to the point of being dry and particularly ill-suited to inspiring gift-buyers (see www.books2door.com)!
+The above considerations result in an avoidance of overly child-orientated design such as you might find on the Cbeebies website, which is designed for children to interact with on their own, but it is also far more child friendly than more general booksellers (Waterstones, Amazon) or even some successful children's book stores, which feel educational to the point of being dry and particularly ill-suited to inspiring gift-buyers (see www.books2door.com)!
 
-I have tried to strike a balance here, including a friendly colour-scheme and sutiable icons, but not splashing every element with a primary colour!
+I have tried to strike a balance here, including a friendly colour-scheme and suitable icons, but not splashing every element with a primary colour!
 
+---
 
 # Build & Testing
 
@@ -147,6 +171,7 @@ Other services used during the build:
 - gauger.io/fonticon (Favicon fontawesome icon generator)
 - Favicon.io (Favicon file generator)
 
+---
 
 # Testing & Validation
 
@@ -157,13 +182,15 @@ Please see the separate [Testing & Validation](testing.md) document for full tes
 There are a number of features I would like to add to the site, as well as some areas for improvement within existing apps.
 
 **Campaign Creator**
-I'm pleased with the current implementation of the campaigns & sales feature of the site, and feel that it is a useful tool for site owners. However, it could go much further. For example, I'd like to develop this into a more complex 'Campaign Creator', which would enable users to create multibuy options and 'get a free x with every purchase of y'-type campaigns. The feature could also include a coupon option, though this should also be possible as a separate feature. The build challenge with this, and the main reason this has not yet been implemented, is that some complex coding would need to be implemented into the basket app, cross-referencing each product against each available campaign, and then relating that to the specific contents of that basket. All perfectly acheivable, but not something I felt was a priority above other considerations for the creation of a minimum viable product, especially considering the extensive and complex testing this feature would require once implemented.
+I'm pleased with the current implementation of the campaigns & sales feature of the site, and feel that it is a useful tool for site owners. However, it could go much further. For example, I'd like to develop this into a more complex 'Campaign Creator', which would enable users to create multibuy options and 'get a free x with every purchase of y'-type campaigns. The feature could also include a coupon option, though this should also be possible as a separate feature. The build challenge with this, and the main reason this has not yet been implemented, is that some complex coding would need to be implemented into the basket app, cross-referencing each product against each available campaign, and then relating that to the specific contents of that basket. All perfectly achievable, but not something I felt was a priority above other considerations for the creation of a minimum viable product, especially considering the extensive and complex testing this feature would require once implemented.
 
 **Product reviews**
 A popular addition to any e-commerce site is, of course, the ability for customers to leave product reviews, and is certainly something I will consider adding in the future. Given the time constraints for this project, I decided that the campaign feature would be of more value to the site owner, so decided to concentrate on that for the minimum viable product in preference to the review feature.
 
 **Add Items admin options**
 A simple addition to the Add Item page would be a choice of destination after adding an item. For example, the current 'Add Item' submits the form and returns you to the Add Item page, assuming you might wish to add another item. However, this could instead redirect the user to the page of the item you've just added, which could be useful. With this option, the user would be presented with two submit buttons on the form: one would submit the form and redirect the user to the item detail page, as mentioned above, and a second 'Submit form and add another item' button would give the option to submit the form and be returned to the blank Add Item form, as is currently the case.
+
+---
 
 # Deployment
 
@@ -261,7 +288,7 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 - Within the users page click Create User.
 - Name the user and select Programmatic Access.
 - Select next and Add the user to the group by clicking through to confirm Create User.
-- Downoad the .csv file which will contain the User Access and Secret Access Keys needed by Django.
+- Download the .csv file which will contain the User Access and Secret Access Keys needed by Django.
 
 *Connect Django to S3*
 
@@ -332,6 +359,8 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 - Type git clone, and then paste the copied URL.
 - Press Enter.
 
+---
+
 # Credits & Acknowledgements
 
 **Code**
@@ -353,7 +382,7 @@ The dataset was made up of the publicly available official descriptions distribu
 
 **Resources**
 
-- Code Institute Full Stack Development course material, mentor and tutors.
+- Code Institute Full Stack Development course material, mentor and tutors
 - Slack community (general guidance and peer review)
 - Stack Overflow website
 - W3 Schools (specific code examples and tutorials)
@@ -364,11 +393,14 @@ The dataset was made up of the publicly available official descriptions distribu
 - JShint (Javascript code quality checker)
 - Google Chrome (developer tools)
 - Webaim.org (accessibility guidance)
+- Lighthouse
 - favicon.io (favicon generator)
 - Fonticon (favicon generator)
+- Boutique Ado student project
+- Django documentation
 
 **Thanks**
 
-Huge thanks are due to my mentor Antonio Rodriguez who has not only helped immessurably with my technical understanding of the project build, but has also shown enormous patience in guiding me through inevitable problems along the way.
+Huge thanks are due to my mentor Antonio Rodriguez who has not only helped immeasurably with my technical understanding of the project build, but has also shown enormous patience in guiding me through inevitable problems along the way.
 
 The Code Institute tutors have been an incredible and tireless resource, and have offered many hours of guidance throughout this project and the course as a whole.

@@ -5,8 +5,9 @@ from django.conf import settings
 from django.contrib import messages
 
 from .forms import OrderForm
-from profiles.forms import UserProfileForm
 from .models import Order, LineItem
+
+from profiles.forms import UserProfileForm
 from items.models import Item
 from profiles.models import UserProfile
 from basket.contexts import basket_contents
@@ -75,7 +76,7 @@ def checkout(request):
                     item.save(update_fields=['quantity_sold'])
                     line_item.save()
 
-                except Product.DoesNotExist:
+                except Item.DoesNotExist:
                     messages.error(request, (
                         'One of your selected items is no longer available.')
                     )

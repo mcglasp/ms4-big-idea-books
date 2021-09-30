@@ -173,6 +173,17 @@ li.list-group-item {
   opacity: 0.8 !important;
 }
 
+/* CREDIT Carlin Scott of Stackoverflow for how to reposition Bootstrap modal */
+
+.modal-body {
+  max-height: 75vh;
+}
+
+.modal-dialog {
+  top: 30vh;
+  right: 5vw;
+}
+
 /* Footer */
 
 footer {
@@ -754,6 +765,7 @@ h1#logo-header a {
 }
 
 /* CREDIT Image modal code from W3Schools */
+
 .img-modal {
   display: none;
   /* Hidden by default */
@@ -1155,15 +1167,6 @@ button.btn.btn-outline-secondary {
   border-radius: .25rem;
 }
 
-.square-button:not(#age-genre>.square-button):hover,
-.square-button i:not(#age-genre>.square-button):hover {
-  background-color: #e9ecef;
-}
-
-.square-button:not(#age-genre>.square-button):active {
-  background-color: #cc5500 !important;
-}
-
 .icon-row {
   margin-top: 7px;
 }
@@ -1312,7 +1315,6 @@ h5.p-2:active {
   height: 100%;
 }
 
-
 @keyframes slide-left {
   0% {
     left: 0%;
@@ -1321,31 +1323,9 @@ h5.p-2:active {
   100% {
     left: -15%;
   }
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Media Queries */
-
 
 @media screen and (max-width: 1200px) {
 
@@ -1379,7 +1359,6 @@ h5.p-2:active {
   .overlay-text {
     font-size: 2rem;
   }
-
 }
 
 @media screen and (max-width: 500px) {
@@ -1536,7 +1515,8 @@ h5.p-2:active {
 
   .card-header,
   a,
-  p:not(.description, .title),
+  p:not(.description),
+  p:not(.title),
   .btn,
   li {
     font-size: smaller;

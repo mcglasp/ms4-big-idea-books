@@ -11,7 +11,7 @@ from items.models import Item
 
 @login_required
 def profile(request):
-    """ 
+    """
     Displays a logged-in user's default details and order history
     """
     # check for any previous orders
@@ -45,7 +45,7 @@ def profile(request):
                 Q(lineitems__item__genre__name__icontains=order_query)
                 )
         orders = profile.orders.filter(order_queries).distinct()
-        
+
     template = 'profiles/profile.html'
 
     context = {

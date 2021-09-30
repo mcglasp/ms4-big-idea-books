@@ -1,7 +1,5 @@
 from django import forms
-# from .widgets import CustomClearableFileInput
 from .models import Item, Genre, Age_range, Author, Campaign
-
 
 
 class ItemForm(forms.ModelForm):
@@ -13,7 +11,6 @@ class ItemForm(forms.ModelForm):
             'sku', 'quantity_sold', 'image_url', 'final_price',
             'date_added','set_sale_price','original_sale_price',
             'active', 'campaign')
-    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

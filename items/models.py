@@ -2,14 +2,13 @@ from django.db import models
 from datetime import datetime
 from .utils import create_new_sku, format_discount
 
-# Create your models here.
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
-    
+
     def __str__(self):
         return self.name
-    
+
 
 class Age_range(models.Model):
     age_range = models.CharField(max_length=254)
@@ -67,7 +66,7 @@ class Item(models.Model):
                 self.final_price = self.price - discount_amount
             else:
                 self.final_price = self.price
-        
+
         super().save(*args, **kwargs)
 
     def __str__(self):

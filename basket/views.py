@@ -17,7 +17,7 @@ def add_to_basket(request, item_id):
         redirect_url = request.POST.get('redirect_url')
         quantity = int(request.POST.get('quantity'))
         basket = request.session.get('basket', {})
-
+        # This method was taken from the Boutique Ado project
         if item_id in list(basket.keys()):
             basket[item_id] += quantity
         else:
