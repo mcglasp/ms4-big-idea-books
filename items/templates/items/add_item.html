@@ -19,7 +19,7 @@
                                 <p class="italic">Select an existing author or add a new one in the fields below.</p>
                                 <div class="inline-author-input">
                                     <select id="id_authors" class="form-select">
-                                        <option disabled selected></option>
+                                        <option value="Select" disabled selected>Select</option>
                                         {% for author in authors_select %}
                                         <option value="{{ author }}">{{ author }}</option>
                                         {% endfor %}
@@ -39,8 +39,8 @@
                                         author</button>
                                 </div>
                                 <p class="bold">Selected Authors</p>
-                                <div id="store-authors" class="form-control" readonly></div>
-                                <textarea class="visually-hidden" id="hidden-authors" type="textarea" name="authors"
+                                <div id="store-authors" class="form-control"></div>
+                                <textarea class="visually-hidden" id="hidden-authors" name="authors"
                                     required></textarea>
                                 {{ form.genre | as_crispy_field }}
                                 {{ form.age_range | as_crispy_field }}
@@ -60,6 +60,9 @@
                                         class="btn btn-secondary standard-button" aria-label="Cancel">Cancel</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -68,8 +71,7 @@
 {% block postloadjs %}
 {{ block.super }}
 <script>
-
-/*
+    /*
 ADD AUTHOR: The user can select an existing
 author from the dropdown menu or create
 a new author. The code below add the author
@@ -80,119 +82,122 @@ is validated and passed to the view function.
 */
 
 
-let alreadyInput = [];
+    let alreadyInput = [];
 
-$("#add_author_1").click(function (e) {
-    e.preventDefault;
-    let newValue = $("#id_authors").val();
-    let node = document.createElement("span");
-    let alreadyHiddenText = document.getElementById("hidden-authors");
-    let hiddenTextToAdd = document.createTextNode(`${newValue};`);
-    if (alreadyInput.includes(newValue)) {
-        alert('You have already selected this author');
-    } else {
-        node.innerHTML =
-            `${newValue} <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`;
-        alreadyHiddenText.appendChild(hiddenTextToAdd);
-        $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1 mb-1');
-        $('#store-authors').append(node);
-        alreadyInput.push(newValue);
-    }
-});
-
-$("#add_author_2").click(function (e) {
-    e.preventDefault;
-    let valueFirstname = $.trim($("#id_first_name").val());
-    let valueSurname = $.trim($("#id_surname").val());
-    if (valueFirstname != "" && valueSurname != "") {
-        let newValue = `${valueFirstname} ${valueSurname}`;
-        console.log(valueFirstname);
-        let node = document.createElement("span");
-        let alreadyHiddenText = document.getElementById("hidden-authors");
-        let hiddenTextToAdd = document.createTextNode(`${newValue};`);
-        if (newValue != " ") {
+    $("#add_author_1").click(function (e) {
+        e.preventDefault;
+        let newValue = $("#id_authors").val()
+        if (newValue != null) {
+            let node = document.createElement("span");
+            let alreadyHiddenText = document.getElementById("hidden-authors");
+            let hiddenTextToAdd = document.createTextNode(`${newValue};`);
             if (alreadyInput.includes(newValue)) {
                 alert('You have already selected this author');
             } else {
                 node.innerHTML =
-                    `${newValue} <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`;
+                    `${newValue} <span onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></span>`;
                 alreadyHiddenText.appendChild(hiddenTextToAdd);
                 $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1 mb-1');
                 $('#store-authors').append(node);
                 alreadyInput.push(newValue);
             }
         } else {
-            alert('Please select or enter an author name');
+            alert('Please select an author')
         }
-    } else {
-        alert('Please make sure you have entered both a first and last name');
+    });
+
+    $("#add_author_2").click(function (e) {
+        e.preventDefault;
+        let valueFirstname = $.trim($("#id_first_name").val());
+        let valueSurname = $.trim($("#id_surname").val());
+        if (valueFirstname != "" && valueSurname != "") {
+            let newValue = `${valueFirstname} ${valueSurname}`;
+            let node = document.createElement("span");
+            let alreadyHiddenText = document.getElementById("hidden-authors");
+            let hiddenTextToAdd = document.createTextNode(`${newValue};`);
+            if (newValue != " ") {
+                if (alreadyInput.includes(newValue)) {
+                    alert('You have already selected this author');
+                } else {
+                    node.innerHTML =
+                        `${newValue} <a onclick="deleteThis(this)" class="p-1"><i class="fas fa-times"></i></a>`;
+                    alreadyHiddenText.appendChild(hiddenTextToAdd);
+                    $(node).attr('class', 'badge rounded-pill bg-light text-dark ml-1 mb-1');
+                    $('#store-authors').append(node);
+                    alreadyInput.push(newValue);
+                }
+            } else {
+                alert('Please select or enter an author name');
+            }
+        } else {
+            alert('Please make sure you have entered both a first and last name');
+        }
+    });
+
+    function deleteThis(elem) {
+        $(elem).parent('span').remove();
+        let string = document.getElementById('hidden-authors').innerHTML;
+        let term = elem.parentElement.textContent.trim();
+        let replaced = string.replace(term, '');
+        document.getElementById('hidden-authors').innerHTML = replaced;
     }
-});
 
-function deleteThis(elem) {
-    $(elem).parent('span').remove();
-    let string = document.getElementById('hidden-authors').innerHTML;
-    let term = elem.parentElement.textContent.trim();
-    let replaced = string.replace(term, '');
-    document.getElementById('hidden-authors').innerHTML = replaced;
-}
+    /* 
+    Code below enables the discount field if a price
+    higher than £0.00 has been entered. Also clears
+    the field for user input and, if left blank,
+    repopulates the field with 0.00 data suitable
+    for validation.
+    */
 
-/* 
-Code below enables the discount field if a price
-higher than £0.00 has been entered. Also clears
-the field for user input and, if left blank,
-repopulates the field with 0.00 data suitable
-for validation.
-*/
+    $(document).ready(function () {
+        let discount = $('#id_discount');
+        discount.prop('disabled', true);
+        $('#id_price').focusin(function () {
+            let price_field = $('#id_price');
+            if (price_field.val() == '0.0') {
+                price_field.val("");
+            } else if (price_field.val() == '0.00') {
+                price_field.val("");
+            } else if (price_field.val() == '0') {
+                price_field.val('0.00');
+            } else {
+                let updated_price = price_field.val();
+                price_field.val(updated_price);
+            }
+        });
 
-$(document).ready(function () {
-    let discount = $('#id_discount');
-    discount.prop('disabled', true);
-    $('#id_price').focusin(function () {
-        let price_field = $('#id_price');
-        if (price_field.val() == '0.0') {
-            price_field.val("");
-        } else if (price_field.val() == '0.00') {
-            price_field.val("");
-        } else if (price_field.val() == '0') {
-            price_field.val('0.00');
-        } else {
-            let updated_price = price_field.val();
-            price_field.val(updated_price);
-        }
+        $('#id_price').change(function () {
+            let price_field = $('#id_price');
+            if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() ==
+                    "0")) {
+                price_field.val("0.00");
+                discount.val('0');
+                discount.prop('disabled', true);
+            } else {
+                let updated_price = price_field.val();
+                price_field.val(updated_price);
+                discount.prop('disabled', false);
+            }
+        });
+
+        $('#id_discount').focusin(function () {
+            if ((discount.val() == '0') || (discount.val() == '0.00')) {
+                discount.val("");
+            } else {
+                let updated_discount = discount.val();
+                discount.val(updated_discount);
+            }
+        });
+
+        $('#id_discount').blur(function () {
+            if (discount.val() == '') {
+                discount.val("0");
+            } else {
+                let updated_discount = discount.val();
+                discount.val(updated_discount);
+            }
+        });
     });
-
-    $('#id_price').change(function () {
-        let price_field = $('#id_price');
-        if ((price_field.val() == "") || (price_field.val() == "0.0") || (price_field.val() ==
-                "0")) {
-            price_field.val("0.00");
-            discount.val('0');
-            discount.prop('disabled', true);
-        } else {
-            let updated_price = price_field.val();
-            price_field.val(updated_price);
-            discount.prop('disabled', false);
-        }
-    });
-
-    $('#id_discount').focusin(function () {
-        if ((discount.val() == '0') || (discount.val() == '0.00')) {
-            discount.val("");
-        } else {
-            let updated_discount = discount.val();
-            discount.val(updated_discount);
-        }
-    });
-
-    $('#id_discount').blur(function () {
-        if (discount.val() == '') {
-            discount.val("0");
-        } else {
-            let updated_discount = discount.val();
-            discount.val(updated_discount);
-        }
-    });
-});
 </script>
 {% endblock %}

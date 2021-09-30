@@ -12,6 +12,7 @@ import time
 
 # Webhook handlers based on Boutique Ado code
 
+
 class StripeWH_Handler:
     """Handle Stripe webhooks"""
 
@@ -92,7 +93,7 @@ class StripeWH_Handler:
                 )
                 order_exists = True
                 break
-            except Exception:
+            except Order.DoesNotExist:
                 attempt += 1
                 time.sleep(1)
         if order_exists:
@@ -134,7 +135,6 @@ class StripeWH_Handler:
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
 
-        print('here')
         self._send_confirmation_email(order)
         return HttpResponse(
             content=f'Webhook received: {event["type"]}'
@@ -145,8 +145,6 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.payment_failed webhook from Stripe
         """
-        print('intent failed here')
-
         return HttpResponse(
             content=f'Webhook received: {event["type"]}',
             status=200)

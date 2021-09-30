@@ -12,13 +12,12 @@
             {% if basket_items|length > 0 %}
             {% for item in basket_items %}
             <div class="row line-item">
-                <div class="col-md-2 col-sm-4"><a
-                    href="{% url 'item_detail' item.item.id %}">
-                    <img class="line-item-img" src="{{ MEDIA_URL }}{{ item.item.image }}" alt="Item image"></a>
+                <div class="col-md-2 col-sm-4"><a href="{% url 'item_detail' item.item.id %}">
+                        <img class="line-item-img" src="{{ MEDIA_URL }}{{ item.item.image }}" alt="Item image"></a>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <p class="line-title"><strong><a
-                                href="{% url 'item_detail' item.item.id %}">{{ item.item.title }}</strong></a>
+                    <p class="line-title"><a
+                            href="{% url 'item_detail' item.item.id %}"><strong>{{ item.item.title }}</strong></a>
                         {% for author in item.item.author.all %}
                         {% if forloop.first %}
                         by
@@ -26,7 +25,8 @@
                         {{ author }}
                         {% if not forloop.last %}{% if not forloop.first %}, {% else %} &
                         {% endif %}{% endif %}
-                        {% endfor %}</p>
+                        {% endfor %}
+                    </p>
                     <p class="text-truncate">{{ item.item.description }}</p>
                     <p>£{{ item.price|floatformat:2 }}</p>
                     <div class="update-controls">
@@ -35,8 +35,10 @@
                             <p class="mb-1">Update quantity:</p>
                             <input class="quantity-input form-control" type="number" name="quantity"
                                 value="{{ item.quantity }}" aria-label="Selected quantity">
-                            <button class="btn" type="submit" aria-label="Update quantity"><i class="fas fa-sync"></i></button>
-                            <a href="{% url 'remove_from_basket' item.item.id %}" aria-label="Remove the basket"><i class="far fa-trash-alt"></i></a>
+                            <button class="btn" type="submit" aria-label="Update quantity"><i
+                                    class="fas fa-sync"></i></button>
+                            <a href="{% url 'remove_from_basket' item.item.id %}" aria-label="Remove the basket"><i
+                                    class="far fa-trash-alt"></i></a>
                         </form>
                     </div>
                 </div>
@@ -52,9 +54,13 @@
             <div id="totals">
                 <p class="">Standard UK delivery: £{{ delivery_cost }}</p>
                 <p class="price">Total: £{{ grand_total }}</p>
-                <a class="btn btn-secondary standard-button mt-3" href="{% url 'checkout' %}" aria-label="Go to checkout">Go to checkout</a>
-                {% else %}
-                <p>There are no items in your basket.</p>
-                {% endif %}
+                <a class="btn btn-secondary standard-button mt-3" href="{% url 'checkout' %}"
+                    aria-label="Go to checkout">Go to checkout</a>
             </div>
-            {% endblock %}
+            {% else %}
+            <p>There are no items in your basket.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

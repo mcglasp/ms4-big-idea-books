@@ -283,12 +283,12 @@ nav,
   top: 5px;
 }
 
-#search-field {
+#search-field, #search-field-profile {
   margin: 3px;
   left: 5px;
 }
 
-#search-field .form-control {
+#search-field .form-control, #search-field-profile .form-control {
   margin-right: 3px;
 }
 
@@ -933,6 +933,7 @@ select#id_author {
 
 .card-body>form input.form-control:focus,
 #search-field input:focus,
+#search-field-profile input:focus,
 #sort-select:focus,
 .form-check-input:focus {
   border-color: transparent;
@@ -963,6 +964,7 @@ select#id_author {
   height: -moz-fit-content;
   height: fit-content;
   margin-bottom: 1rem;
+  background-color:rgba(0, 0, 0, .125);
 }
 
 #store-authors .badge.rounded-pill {
@@ -1063,7 +1065,7 @@ button.btn {
   border-radius: .25rem;
 }
 
-#search-field .standard-button {
+#search-field .standard-button, #search-field-profile .standard-button {
   color: #268080;
   background-color: #fff;
   border-color: transparent;
@@ -1071,7 +1073,7 @@ button.btn {
   margin-left: 2px;
 }
 
-#search-field .standard-button:hover {
+#search-field .standard-button:hover, #search-field-profile .standard-button:hover {
   background-color: #268080;
   border-color: transparent;
   height: 38px;

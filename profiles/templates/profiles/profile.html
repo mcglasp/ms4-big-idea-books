@@ -4,14 +4,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="ol-sm-12 col-md-6 col-lg-6">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="card m-3">
                 <div class="card-header cogs">
                     <div class="white-fade"></div>
-                    <h3 id="top-layer-orders">Your orders</h3>
+                    <h3>Your orders</h3>
                 </div>
                 <div class="card-body">
-                    <div id="search-field">
+                    <div id="search-field-profile">
                         <form class="" method="GET" action="{% url 'profile' %}">
                             <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"
                                 name="q" required>
@@ -24,24 +24,20 @@
                     {% if orders %}
                     {% for order in orders %}
                     <hr>
-                    <table class="table">
-                        <div class="list-group-flush">
-                            <p class="list-item m-0 pl-2"><strong>Order Number:</strong> {{ order.order_number }}</p>
-                            <p class="list-item m-0 pl-2"><strong>Order Date:</strong>
-                                {{ order.order_date|date:'d-m-Y' }}:</p>
-                        </div>
+                    <p class="list-item m-0 pl-2"><strong>Order Number:</strong> {{ order.order_number }}</p>
+                    <p class="list-item m-0 pl-2"><strong>Order Date:</strong>
+                        {{ order.order_date|date:'d-m-Y' }}:</p>
                         {% for o in order.lineitems.all %}
-                        <tr>
-                            <td colspan="2" class="text-truncate d-inline-block m-0">{{ o.item.title }}</td>
-                            <td colspan="1" class="text-muted"> x {{ o.quantity }}</td>
-                            <td colspan="2" class="text-end pr-4">{{ o.line_total }}</td>
-                        </tr>
+                        <div class="m-0 pl-2 d-flex justify-content-between">
+                            <span class="list-item text-truncate d-inline-block m-0">{{ o.item.title }}</span>
+                            <span class="text-muted"> x {{ o.quantity }}</span>
+                            <span class="text-end">{{ o.line_total }}</span>
+                        </div>
                         {% endfor %}
-                        <tr>
-                            <td colspan="3" class="d-inline-block m-0">Total basket cost:</td>
-                            <td colspan="2" class="text-end">{{ order.basket_total }}</td>
-                        </tr>
-                    </table>
+                        <p class="m-0 pl-2 d-flex justify-content-between">
+                            <span class="list-item d-inline-block m-0"><strong>Total basket cost:</strong> </span>
+                            <span class="text-end"><strong>{{ order.basket_total }}</strong></span>
+                        </p>
                     {% endfor %}
                     {% elif orders is None %}
                     <p class="p-1">Search by order number, product name or author, or select 'Show all'.</p>
@@ -53,19 +49,6 @@
                     <p class="p-1">
                         You don't yet have any orders to display.
                     </p>
-                    {% if featured_items %}
-                    <p class="p-1">
-                        Why not take a look at our featured books?
-                    </p>
-                    <div class="row cogs pt-3 pb-3">
-                        {% for featured in featured_items|slice:":3" %}
-                        <div class="col-4">
-                            <a class="related-item" href="{% url 'item_detail' featured.id %}"><img
-                                    src="{{ MEDIA_URL }}{{ featured.image }}" alt=""></a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -74,11 +57,13 @@
             <div class="card m-3">
                 <div class="card-header cogs">
                     <div class="white-fade"></div>
-                    <h3 id="top-layer-orders">Your details</h3>
+                    <h3>Your details</h3>
                 </div>
                 <div class="card-body">
-                    <p><a class="btn btn-secondary standard-button" href="{% url 'account_change_password' %}">Change
-                            password</a></p>
+                    <p>
+                        <a class="btn btn-secondary standard-button" href="{% url 'account_change_password' %}">Change
+                            password</a>
+                    </p>
                     <form class="" action="{% url 'profile' %}" method="POST">
                         {% csrf_token %}
                         {{ info_form|crispy }}

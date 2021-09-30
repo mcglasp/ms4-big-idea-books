@@ -5,19 +5,19 @@
 [Go to site: ms4-big-idea-books.herokuapp.com](https://ms4-big-idea-books.herokuapp.com/)
 
 # Strategy
-Big Idea Books is a bookselling website specialising in non-fiction titles for children. The site is targeted to anyone buying for a child from preschool age up to early teen. It is expected that this will be mainly parents, but the site's UX has been carefully considered to guide customers to age-appropriate titles in a given area of interest: for example, prehistory for 8-10s or animals for preschoolers. It does this through intuitive navigation; creating a clear and simple customer journey.
+Big Idea Books is a bookselling website specialising in non-fiction titles for children. The site is targeted to anyone buying for a child from preschool age up to early teen. It is expected that this will be mainly parents, but the site's UX has been carefully considered to guide customers to age-appropriate titles in a given area of interest: for example, 'prehistory for 8-10s' or 'animals for preschoolers'. It does this through intuitive navigation; creating a clear and simple customer journey.
 
 For the store owner the content management system is designed with ease of use and flexibility in mind. Titles can be created or updated directly from a home page navigation link, and can also be deleted directly from search results. The system does not force the user to adhere to particular pricing structures or sales campaign models; the site owner can add percentage discounts or fixed sale prices as they wish, and all totals will be calculated for them.
 
-The business case for this was inspired by my own experience of buying books for children. While plenty of other book-buying options existing online, I've found that most are overwhelmingly focussed on fiction, whereas my two young sons are die-hard non-fiction fans. Of course the non-fiction titles are easy to search for if you know their titles, but when browsing for something new the sorting and filtering options are often not specific enough for my requirements. Amazon offers users the ability to filter results by age and subject, but it has such an extensive catalogue that it is overwhelming and often includes titles that have been too broadly categorised, for example, 'Trains' strongly suggests that it will be largely non-fiction, but for a busy mum, it would be far prefereable to be able to specify that, rather than have to sift through the likes of 'Thomas The Tank Engine' to find the more suitable 'How Trains Work'.
+The business case for this was inspired by my own experience of buying books for children. While plenty of other book-buying options exist online, I've found that most are overwhelmingly focused on fiction, whereas my two young sons are die-hard non-fiction fans. Of course the non-fiction titles are easy to search for if you know their titles, but when browsing for something new the sorting and filtering options are often not specific enough for my requirements. Amazon offers users the ability to filter results by age and subject, but it has such an extensive catalogue that it is overwhelming and often includes titles that have been too broadly categorised, for example, 'Trains' strongly suggests that it will be largely non-fiction, but for a busy mum, it would be far prefereable to be able to specify that, rather than have to sift through the likes of 'Thomas The Tank Engine' to find the more suitable 'How Trains Work'.
 
-Waterstones work much better in respect of above comments. However, it too features an overwhelmingly large catalogue that is time-consuming to sort through, and also suffers from being too broadly categorised.
+Waterstones works much better in respect of the above comments. However, it too features an overwhelmingly large catalogue that is time-consuming to sort through, and also suffers from being too broadly categorised.
 
-It is understandable that these giants within their sector would suffer from the relatively positive problem of too large a choice of stock, and therefore Big Idea Books does not aim to take them on or even attempt to better their customer journey. What Big Idea Books does aim to do is offer parents and gift-buyers an alternative and straightforward to solution to finding beautifully written and designed non-fiction; almost a 'personal-shopper' experience. The tagline 'Curated Non-fiction For Kids' spells out the store's aims precisely; these are items that have been carefully selected for inclusion in the cataloge and displayed to the user under appropriate filters to give customers a clear and straightforward shopping experience.
+It is understandable that these giants within their sector would suffer from the relatively positive problem of too large a choice of stock, and therefore Big Idea Books does not aim to take them on or even attempt to better their customer journey. What Big Idea Books does aim to do is offer parents and gift-buyers an alternative and straightforward solution to finding beautifully written and designed non-fiction; almost a 'personal-shopper' experience. The tagline 'Curated Non-fiction For Kids' spells out the store's aims precisely; these are items that have been carefully selected for inclusion in the cataloge and displayed to the user under appropriate filters to give customers a clear and straightforward shopping experience.
 
 # Scope
 
-The below table outlines the 22 application features that I consider essential for a minimum viable product, all of which will are planned for implementation in from the earliest development stages.
+The below table outlines the 22 application features that I consider essential for a minimum viable product, all of which will are planned for implementation from the earliest development stages.
 
 | User story ID	| As a... |	I want to be able to... | So that I can... |
 | ----------| ------|---------|---------|
@@ -27,7 +27,7 @@ The below table outlines the 22 application features that I consider essential f
 | 3	| customer |	search by keyword | quickly find exactly what I'm looking for |
 |--|--|**Sorting & Filtering Products** |---|
 | 4 |	customer |	filter items by genre and age recommendation | identify the most suitable item to buy |
-| 5 |	customer |	sort search and filter results by price	find a suitable product within my price range | |
+| 5 |	customer |	sort search and filter results by price	| find a suitable product within my price range |
 |--|--|**Managing My Basket Items** |---|
 | 6	| customer	 | add a number of items to my basket directly from the search results | buy items when I see them, without clicking through to individual item details pages |
 | 7	| customer |	add one or more of the same item from the item detail page | buy what I want without navigating back to the search results |
@@ -62,7 +62,7 @@ The table below outlines those features that are 'nice-to-have' and not essentia
 
 # Structure 
 
-The guiding principle for the stucture of this site is simplicity. Both the customer journery and the site owner's experience should be streamlined, obvious and robust.
+The guiding principle for the stucture of this site is simplicity. Both the customer journey and the site owner's experience should be streamlined, obvious and robust.
 
 *Home Page*
 
@@ -98,20 +98,22 @@ The site owner and authenticated staff members can add products to the store fro
 
 The Add Item page is almost identical to the Update item page, which is accessible by searching for the item you wish to update and selecting 'Edit' directly from the search result. Alternatively the user can also select 'Edit' from the item detail page. The Update item page is automatically populated with existing information, which can then be changed by the user.
 
-An important feature to note about the Add and Update item pages are the three pricing fields: Price, Discount and Set Sale Price. The basic principle is that the user choose to apply either a percentage discount to the product or a set sale price, but the set sale price will always override the discounted price. As an example, if the recommended retail price (RRP) is £10, and the site owner wishes to apply a 10% discount to that product, then the price will be displayed as £9 (noting that it is a sale price). If the owner then wishes to run a 'flash sale' for that or a number of items, they can leave that percentage discount information in tact and price the item at, say, £5 for as long as they wish. When they then remove that Set Sale Price, the price will automatically revert to the discounted price.
+An important feature to note about the Add and Update item pages are the three pricing fields: Price, Discount and Set Sale Price. The basic principle is that the user can choose to apply either a percentage discount to the product or a set sale price, but the set sale price will always override the discounted price. As an example, if the recommended retail price (RRP) is £10, and the site owner wishes to apply a 10% discount to that product, then the price will be displayed as £9 (noting that it is a sale price). If the owner then wishes to run a 'flash sale' campaign for a number of items, including this one, they can leave that percentage discount information in tact and price the item at, say, £5 for as long as they wish. When they then remove that campaign, the price will automatically revert to the discounted price.
 
-To prevent faulty pricing information reaching the live site, or indeed the database, the Discount and Set Sale Price fields are not enabled until a price above £0.00 is entered.
+To prevent faulty pricing information reaching the live site, or indeed the database, the Discount field is not enabled until a price above £0.00 is entered.
 
 *Managing Campaigns*
 
 The site owner can enable and disable all their campaigns from one page, from which they can also navigate to the 'create a campaign' form. Within this form they are given a list of items that are available to select as part of the campaign, and they are also shown a disabled list of items currently included in other campaigns and therefore not available for selection. They use this form to name and give a fixed price to their campaign. On creation of a campaign, each included item's set sale price is set to the campaign's fixed price. If the campaign is deactivated, the items remain attached to that campaign, so that they cannot be reapplied to another campaign, but their sale prices are reset to either their original base price, or the individual product's discounted price, if applicable. When the campaign is re-enabled, the prices are again set to the campaign's sale price. On deletion of a campaign, all references to that campaign are removed from its related items.
 
 ## Database Schema
-The site is made up of four apps: Basket, Checkout, Item, Profile. They contain the following models: (Checkout) Order, LineItems; (Items) Item, Author, Genre, Age_range, Campaign; (Profile) UserProfile. Their relationships are shown in the diagram below.
+The site is made up of four apps: Basket, Checkout, Item, Profile (and Home). They contain the following models: (Checkout) Order, LineItems; (Items) Item, Author, Genre, Age_range, Campaign; (Profile) UserProfile. Their relationships are shown in the diagram below.
 
 <img src="readme-assets/database_schema.png" alt="Database diagram">
 
 # Skeleton
+
+Initial wireframes for the project are shown below, representing the desktop and mobile views.
 
 <div class="wireframes" width="100%" style="display: flex; align-items: center">
 <img src="readme-assets/desktop_bib_wireframe.png" alt="Desktop wireframe" width="55%" style="margin: 5px">
@@ -120,9 +122,9 @@ The site is made up of four apps: Basket, Checkout, Item, Profile. They contain 
 
 # Surface
 
-Their are two outwardly conflicting design considerations influencing the site's UI: the products on the site are wholly aimed at children to young teens; however, the most likely user is at least one or two generations above that. Balancing those seemingly incompatible influences is not a new design concept: consider that baby blankets, nappies and food packaging are decorated with bunnies or teddy bears, for example, when the only person to notice these elements will be their parents and carers. This is not an error of logic, but a consideration of what the adult customer wants for their child, or how they project that image onto them. When purchasing something for a child, parents will generally feel far more comfortable interacting with an environment that conveys their own ethos and desires. For example, security and gentleness for a baby blanket, health and vigour for a baby food; and, in the case or Big Idea Books, creativity, imagination or knowledge.
+Their are two outwardly conflicting design considerations influencing the site's UI: the products on the site are wholly aimed at children to young teens; however, the most likely user is at least one or two generations above that. Balancing those seemingly incompatible influences is not a new design concept: consider that baby blankets, nappies and food packaging are decorated with bunnies or teddy bears, for example, when the only person to notice these elements will be their parents and carers. This is not an error of logic, but a consideration of what the adult customer wants for their child, or how they project that image onto them. When purchasing something for a child, parents will generally feel far more comfortable interacting with an environment that conveys their own ethos and desires. For example, security and gentleness for a baby blanket, health and vigour for baby food; and, in the case of Big Idea Books, creativity, imagination or knowledge.
 
-The above considerations result in an avoidance of overly child-orientated design such as you might find of the Cbeebies website, which is designed for children to interact with on their own, but is also far more child friendly than either more general booksellers (Waterstones, Amazon) or even some succesful children's book stores, which feel educational to the point of being dry and particularly ill-suited to inspiring gift-buyers (see www.books2door.com)!
+The above considerations result in an avoidance of overly child-orientated design such as you might find on the Cbeebies website, which is designed for children to interact with on their own, but it is also far more child friendly than more general booksellers (Waterstones, Amazon) or even some succesful children's book stores, which feel educational to the point of being dry and particularly ill-suited to inspiring gift-buyers (see www.books2door.com)!
 
 I have tried to strike a balance here, including a friendly colour-scheme and sutiable icons, but not splashing every element with a primary colour!
 
@@ -137,24 +139,25 @@ I have tried to strike a balance here, including a friendly colour-scheme and su
 - HTML & CSS
 - Bootstrap
 - Fontawesome
-- Built using Gitpod
-- Deployed using Github, Heroku and Amazon Web 
 
-- Other services used during the build:
+- Built using Gitpod
+- Deployed using Github, Heroku and Amazon Web Services
+
+Other services used during the build:
 - gauger.io/fonticon (Favicon fontawesome icon generator)
 - Favicon.io (Favicon file generator)
 
 
 # Testing & Validation
 
-Please see the separate [Testing & Validation]('testing.md') document for full test details and findings.
+Please see the separate [Testing & Validation](testing.md) document for full test details and findings.
 
 ## Future Development
 
 There are a number of features I would like to add to the site, as well as some areas for improvement within existing apps.
 
 **Campaign Creator**
-I'm pleased with the current implementation of the campaigns & sales feature of the site, and feel that it is a useful tool for site owners, however, it could go much further. For example, I'd like to develop this into a more complex 'Campaign Creator', which would enable users to create multibuy options and 'free x with every purchase of y'-type campaigns. The feature could also include a coupon option, though this should also be possible as a separate feature. The build challenge with this, and the main reason this has not yet been implemented is that some complex coding would need to be implemented into the basket app, cross-referencing each product against each available campaign, and then relating that to the specific contents of that basket. All perfectly acheivable, but not something I felt was a priority above other considerations for the creation of a minimum viable product, especially considering the extensive and complex testing this feature would require once implemented.
+I'm pleased with the current implementation of the campaigns & sales feature of the site, and feel that it is a useful tool for site owners. However, it could go much further. For example, I'd like to develop this into a more complex 'Campaign Creator', which would enable users to create multibuy options and 'get a free x with every purchase of y'-type campaigns. The feature could also include a coupon option, though this should also be possible as a separate feature. The build challenge with this, and the main reason this has not yet been implemented, is that some complex coding would need to be implemented into the basket app, cross-referencing each product against each available campaign, and then relating that to the specific contents of that basket. All perfectly acheivable, but not something I felt was a priority above other considerations for the creation of a minimum viable product, especially considering the extensive and complex testing this feature would require once implemented.
 
 **Product reviews**
 A popular addition to any e-commerce site is, of course, the ability for customers to leave product reviews, and is certainly something I will consider adding in the future. Given the time constraints for this project, I decided that the campaign feature would be of more value to the site owner, so decided to concentrate on that for the minimum viable product in preference to the review feature.
@@ -163,6 +166,8 @@ A popular addition to any e-commerce site is, of course, the ability for custome
 A simple addition to the Add Item page would be a choice of destination after adding an item. For example, the current 'Add Item' submits the form and returns you to the Add Item page, assuming you might wish to add another item. However, this could instead redirect the user to the page of the item you've just added, which could be useful. With this option, the user would be presented with two submit buttons on the form: one would submit the form and redirect the user to the item detail page, as mentioned above, and a second 'Submit form and add another item' button would give the option to submit the form and be returned to the blank Add Item form, as is currently the case.
 
 # Deployment
+
+The following steps were necessary to successfully deploy this site:
 
 *Heroku*
 
@@ -250,7 +255,7 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 - From the JSON tab click Import Managed Policy.
 - Search for S3 and Import the S3 Full Access Policy.
 - Get the ARN from S3 and paste it into the Resource section of the Access Policy.
-- Click Review Policy name and describe it appropriately.
+- Click Review Policy, name and describe it appropriately.
 - Click Create Policy.
 - Go to Groups > Manage [APP NAME] Group > Attach Policy.
 - Within the users page click Create User.
@@ -331,7 +336,7 @@ Amazon Web Services' S3 cloud hosting is used to host the static files for this 
 
 **Code**
 
-Some of the code in this project was either taken from of built upon that covered in the Boutique Ado project. I have noted in the code where this is the case, but it is mainly the case within the Checkout app. I have done my best to write this from scratch in order to understand the processes involved, customising as I go. However, it is necessarily similar — or even identical — at times due to the very specific nature of these processes and the need for them to operate precisely, therefore I have not veered far from the original code.
+Some of the code in this project was either taken from or built upon that covered in the Boutique Ado project. I have noted in the code where this is the case, but it is mainly the case within the Checkout app. I have done my best to write this from scratch in order to understand the processes involved, customising as I go. However, it is necessarily similar — or even identical — at times due to the very specific nature of these processes and the need for them to operate precisely, therefore I have not veered far from the original code.
 
 Specific credit is due to Stackoverflow user Henty who gave me guidance on the best way to approach setting up my Campaign model.
 
@@ -348,6 +353,22 @@ The dataset was made up of the publicly available official descriptions distribu
 
 **Resources**
 
-
+- Code Institute Full Stack Development course material, mentor and tutors.
+- Slack community (general guidance and peer review)
+- Stack Overflow website
+- W3 Schools (specific code examples and tutorials)
+- The Responsinator (check responsiveness)
+- AmIResponsive (check responsiveness)
+- Autoprefixer CSS online (increase compatibility across browsers)
+- Jigsaw and W3 Schools (code validators)
+- JShint (Javascript code quality checker)
+- Google Chrome (developer tools)
+- Webaim.org (accessibility guidance)
+- favicon.io (favicon generator)
+- Fonticon (favicon generator)
 
 **Thanks**
+
+Huge thanks are due to my mentor Antonio Rodriguez who has not only helped immessurably with my technical understanding of the project build, but has also shown enormous patience in guiding me through inevitable problems along the way.
+
+The Code Institute tutors have been an incredible and tireless resource, and have offered many hours of guidance throughout this project and the course as a whole.

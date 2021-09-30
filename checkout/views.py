@@ -17,6 +17,7 @@ import json
 # checkout and cache_checkout_data functions based on
 # Boutique Ado code
 
+
 @require_POST
 def cache_checkout_data(request):
     try:
@@ -82,6 +83,7 @@ def checkout(request):
                     return redirect(reverse('view_basket'))
 
             request.session['save_info'] = 'save-info' in request.POST
+
             return redirect(reverse(
                 'order_confirmation', args=[order.order_number]))
 

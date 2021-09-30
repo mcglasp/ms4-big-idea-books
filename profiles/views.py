@@ -18,7 +18,6 @@ def profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     orders = None
     previous_orders = profile.orders.all()
-    featured_items = Item.objects.filter(featured=True).filter(active=True)
 
     if previous_orders:
         previous_orders = True
@@ -53,7 +52,6 @@ def profile(request):
         'info_form': info_form,
         'orders': orders,
         'previous_orders': previous_orders,
-        'featured_items': featured_items,
     }
 
     return render(request, template, context)

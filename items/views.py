@@ -278,21 +278,17 @@ def update_item(request, item_id):
 @staff_member_required
 def delete_item(request, item_id):
     """
-    Delete a database item: if product is not included in a 
-    customer's Order lineitem from a previous order, make 
-    it active=False, otherwise delete.
+    Delete a database item: make 
+    it active=False to maintain order history
+    records. Hard delete is possible via admin.
     """
 
     item = get_object_or_404(Item, pk=item_id)
-    try:
-        item.campaign = None
-        item.save()
-        item.delete()
-    except IntegrityError:
-        item.active = False
-        item.save()
-    finally:
-        messages.success(request, 'Product successfully deleted!')
+
+    item.campaign = None
+    item.active = False
+    item.save()
+    messages.success(request, 'Product successfully deleted!')
 
     return redirect(reverse('items'))
 

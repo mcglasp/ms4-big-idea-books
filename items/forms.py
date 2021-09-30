@@ -28,22 +28,23 @@ class ItemForm(forms.ModelForm):
         self.fields['featured'].label = '<span class="bold">Featured?</span>'
         '<span class="italic"> Tick this box to feature'
         'this product on the home page  </span>'
-        self.fields['genre'].label = '<span class="bold">Genre</span>'
-        '<span class="italic">'
-        'Hold down Cmd to select more than one  </span>'
+        self.fields['genre'].label = ('<span class="bold">Genre</span>'
+                                      '<span class="italic">'
+                                      ' Hold down Cmd to select more than one'
+                                      ' </span>')
         self.fields['genre'].required = True
         self.fields['age_range'].label = '<span class="bold">Target age</span>'
         '<span class="italic"> Hold down Cmd to select more than one  </span>'
-        self.fields['discount'].label = '<span class="bold">Discount in %'
-        '</span> <span class="italic"> Enter a percentage </span>'
+        self.fields['discount'].label = ('<span class="bold">Discount in %'
+                                         '</span> <span class="italic"> Enter'
+                                         ' a percentage </span>')
         self.fields['title'].label = "<span class='bold'>Title </span>"
         self.fields[
-            'description'].label = "<span class='bold'>Description'  </span>"
+            'description'].label = "<span class='bold'>Description  </span>"
         self.fields['price'].label = "<span class='bold'>Price  </span>"
         self.fields['price'].widget.attrs['min'] = 0.00
         self.fields['price'].widget.attrs['min'] = 0.00
         self.fields['discount'].widget.attrs['min'] = 0
-        self.fields['discount'].widget.attrs['default'] = 0
         self.fields['discount'].required = False
 
 
@@ -71,7 +72,10 @@ class CampaignForm(forms.ModelForm):
             'placeholder'] = 'Eg. £1 book sale this weekend!'
         self.fields['campaign_name'].initial = ''
         self.fields[
-        'campaign_name'].label = '<span class="bold">'
-        'Choose a name for your campaign</span><span class="italic">'
-        'This will appear wherever you advertise your sale on the site.</span>'
+            'campaign_name'].label = ('<span class="bold">'
+                                      'Choose a name for your campaign </span>'
+                                      '<span class="italic">'
+                                      'This will appear wherever you \n'
+                                      'advertise your sale on the site.'
+                                      '</span>')
 

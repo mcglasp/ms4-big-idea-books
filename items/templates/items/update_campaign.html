@@ -22,7 +22,7 @@
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="{{ a.pk }}" id="{{ a.pk }}"
                   name="included_items">
-                <label class="form-check-label" for="defaultCheck1">
+                <label class="form-check-label" for="{{ a.pk }}">
                   {{ a }}
                 </label>
               </div>
@@ -32,8 +32,8 @@
             <div class="include-container original">
               {% for o in original_inclusion_list %}
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{ o.pk }}" name="already_included" checked>
-                <label class="form-check-label" for="defaultCheck1">
+                <input id="form-check-input{{ o.id }}" class="form-check-input" type="checkbox" value="{{ o.pk }}" name="already_included" checked>
+                <label class="form-check-label" for="form-check-input{{ o.id }}">
                   {{ o }}
                 </label>
               </div>
@@ -43,8 +43,8 @@
             <div class="include-container not-available">
               {% for n in not_available %}
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{ n }}" id="" disabled>
-                <label class="form-check-label" for="defaultCheck1">
+                <input class="form-check-input" type="checkbox" value="{{ n }}" id="form-check-input{{ n.id }}" disabled>
+                <label class="form-check-label" for="form-check-input{{ n.id }}">
                   {{ n }}
                 </label>
               </div>
